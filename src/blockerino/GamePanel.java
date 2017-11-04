@@ -1,5 +1,8 @@
 package blockerino;
 
+import blockerino.util.*;
+import blockerino.states.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,13 +20,16 @@ public class GamePanel extends JPanel implements Runnable {
     private BufferedImage bufferedImage;
     private Graphics2D graphics2D;
 
+    private MouseHandler mouse;
+    private KeyHandler key;
+
+    private GameStateManager gameStateManager;
+
     GamePanel(int _width, int _height) {
         height = _height;
         width = _width;
 
         setPreferredSize(new Dimension(_width, _height));
-        setFocusable(true);
-        requestFocus();
     }
 
     public void addNotify() {
@@ -39,6 +45,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) bufferedImage.getGraphics();
+
+        mouse = new MouseHandler();
+        key = new KeyHandler(this);
+        addKeyListener(key);
+        requestFocus();
+        gameStateManager = new GameStateManager();
     }
 
     @Override
@@ -50,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         double deltaTime = 0;
         requestFocus();
+        //TODO Keylistener not working with constant requestFocus
         while (running) {
             double nanoSecondsPerCount = 1000000000.0 / fps;
             long now = System.nanoTime();
@@ -57,8 +70,10 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = now;
             while (deltaTime >= 1) {
                 update();
+                input(mouse, key);
                 deltaTime--;
             }
+            input(mouse, key);
             render();
             draw();
             if (System.currentTimeMillis() - timer > 1000) {
@@ -70,19 +85,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int x = 0;
 
-    private void input() {
+    private void input(MouseHandler mouse, KeyHandler key) {
 
     }
 
     private void update() {
-        x++;
-        System.out.println(x);
+        gameStateManager.update();
     }
 
     private void render() {
         if (graphics2D != null) {
             graphics2D.setColor(new Color(66, 134, 244));
             graphics2D.fillRect(0, 0, width, height);
+            gameStateManager.render(graphics2D);
         }
     }
 
