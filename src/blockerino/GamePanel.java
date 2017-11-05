@@ -20,8 +20,8 @@ public class GamePanel extends JPanel implements Runnable {
     private BufferedImage bufferedImage;
     private Graphics2D graphics2D;
 
-    private MouseHandler mouse;
-    private KeyHandler key;
+    private MouseHandler mouseHandler;
+    private KeyHandler keyHandler;
 
     private GameStateManager gameStateManager;
 
@@ -46,9 +46,8 @@ public class GamePanel extends JPanel implements Runnable {
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) bufferedImage.getGraphics();
 
-        mouse = new MouseHandler();
-        key = new KeyHandler(this);
-        addKeyListener(key);
+        keyHandler = new KeyHandler(this);
+        mouseHandler = new MouseHandler(this);
         requestFocus();
         gameStateManager = new GameStateManager();
     }
@@ -70,10 +69,10 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = now;
             while (deltaTime >= 1) {
                 update();
-                input(mouse, key);
+                input(mouseHandler, keyHandler);
                 deltaTime--;
             }
-            input(mouse, key);
+            input(mouseHandler, keyHandler);
             render();
             draw();
             if (System.currentTimeMillis() - timer > 1000) {
@@ -85,8 +84,8 @@ public class GamePanel extends JPanel implements Runnable {
 
     private int x = 0;
 
-    private void input(MouseHandler mouse, KeyHandler key) {
-
+    private void input(MouseHandler _mouse, KeyHandler _key) {
+        gameStateManager.input(_mouse, _key);
     }
 
     private void update() {

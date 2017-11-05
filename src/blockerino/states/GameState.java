@@ -2,7 +2,6 @@ package blockerino.states;
 
 import java.awt.*;
 
-
 import blockerino.util.*;
 
 /**
@@ -13,7 +12,7 @@ public abstract class GameState {
     private GameStateManager gameStateManager;
 
     public GameState(GameStateManager _gameStateManager) {
-        gameStateManager = _gameStateManager;
+        this.gameStateManager = _gameStateManager;
 
     }
 

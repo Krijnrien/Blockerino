@@ -21,6 +21,7 @@ public class KeyHandler implements KeyListener {
     public Key escape = new Key();
 
     public KeyHandler(GamePanel _gamePanel) {
+        _gamePanel.addKeyListener(this);
     }
 
     public void releaseAll() {
@@ -36,9 +37,7 @@ public class KeyHandler implements KeyListener {
     }
 
     public void toggle(KeyEvent e, boolean pressed) {
-        if (e.getKeyCode() == KeyEvent.VK_W) {
-            up.toggle(pressed);
-        }
+        if (e.getKeyCode() == KeyEvent.VK_W) up.toggle(pressed);
         if (e.getKeyCode() == KeyEvent.VK_S) down.toggle((pressed));
         if (e.getKeyCode() == KeyEvent.VK_A) left.toggle((pressed));
         if (e.getKeyCode() == KeyEvent.VK_D) right.toggle((pressed));
