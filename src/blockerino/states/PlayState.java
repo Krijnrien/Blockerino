@@ -18,7 +18,7 @@ public class PlayState extends GameState {
     public void input(MouseHandler _mouse, KeyHandler _key) {
         System.out.println("input");
             if(_key.up.down){
-                System.out.println("w");
+                System.out.println("width");
             }
     }
 

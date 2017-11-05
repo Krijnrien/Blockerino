@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    private static int width;
-    private static int height;
+    public static int width;
+    public static int height;
 
     private Thread thread;
     private boolean running = false;
