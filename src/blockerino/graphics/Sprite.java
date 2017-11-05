@@ -26,7 +26,7 @@ public class Sprite {
         SPRITESHEET = loadSprite(_file);
 
         wSprite = SPRITESHEET.getWidth() / width;
-        hSprite = SPRITESHEET.getWidth() / height;
+        hSprite = SPRITESHEET.getHeight() / height;
     }
 
     public Sprite(String _file, int _w, int _h) {
@@ -37,7 +37,7 @@ public class Sprite {
         SPRITESHEET = loadSprite(_file);
 
         wSprite = SPRITESHEET.getWidth() / _w;
-        hSprite = SPRITESHEET.getWidth() / _h;
+        hSprite = SPRITESHEET.getHeight() / _h;
     }
 
     public void setSize(int _width, int _height) {
@@ -93,7 +93,7 @@ public class Sprite {
     }
 
     public BufferedImage[] getSpriteFromSpriteArray(int _i) {
-        return spriteArray(_i);
+        return spriteArray[_i];
 
     }
 
