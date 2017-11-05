@@ -32,7 +32,7 @@ public class Player extends Entity {
 
         if (down) {
             dy += acc;
-            if (dy < maxSpeed) {
+            if (dy > maxSpeed) {
                 dy = maxSpeed;
             }
         } else {
@@ -106,7 +106,7 @@ public class Player extends Entity {
         if (_key.right.down) {
 
         }
-        if (_key.up.down) {
+        if (_key.right.down) {
             right = true;
         } else {
             right = false;

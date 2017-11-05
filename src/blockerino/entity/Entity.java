@@ -3,8 +3,6 @@ package blockerino.entity;
 import blockerino.graphics.Animation;
 import blockerino.graphics.Sprite;
 import blockerino.util.AABB;
-import blockerino.util.KeyHandler;
-import blockerino.util.MouseHandler;
 import blockerino.util.Vector2f;
 
 import java.awt.*;
@@ -12,10 +10,10 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-    private final int UP = 0;
-    private final int DOWN = 1;
-    private final int RIGHT = 2;
-    private final int LEFT = 4;
+    private final int UP = 3;
+    private final int DOWN = 2;
+    private final int RIGHT = 0;
+    private final int LEFT = 1;
 
     protected Animation animation;
     protected Sprite sprite;
@@ -34,9 +32,9 @@ public abstract class Entity {
     protected float dx;
     protected float dy;
 
-    protected float maxSpeed;
-    protected float acc;
-    protected float deacc;
+    protected float maxSpeed = 3f;
+    protected float acc = 2f;
+    protected float deacc = 0.3f;
 
     protected AABB hitBounds;
     protected AABB bounds;
@@ -91,19 +89,19 @@ public abstract class Entity {
 
     public void animate() {
         if (up) {
-            if (currentAnimation != UP || animation.getDelay() == 1) {
+            if (currentAnimation != UP || animation.getDelay() == -1) {
                 setAnimation(UP, sprite.getSpriteFromSpriteArray(UP), 5);
             }
         } else if (down) {
-            if (currentAnimation != DOWN || animation.getDelay() == 1) {
+            if (currentAnimation != DOWN || animation.getDelay() == -1) {
                 setAnimation(DOWN, sprite.getSpriteFromSpriteArray(DOWN), 5);
             }
         } else if (left) {
-            if (currentAnimation != LEFT || animation.getDelay() == 1) {
+            if (currentAnimation != LEFT || animation.getDelay() == -1) {
                 setAnimation(LEFT, sprite.getSpriteFromSpriteArray(LEFT), 5);
             }
         } else if (right) {
-            if (currentAnimation != RIGHT || animation.getDelay() == 1) {
+            if (currentAnimation != RIGHT || animation.getDelay() == -1) {
                 setAnimation(RIGHT, sprite.getSpriteFromSpriteArray(RIGHT), 5);
             }
         } else {
@@ -119,11 +117,11 @@ public abstract class Entity {
             hitBounds.setYOffset(size / 2);
             hitBounds.setXOffset(-size / 2);
         } else if (left) {
-            hitBounds.setYOffset(-size);
-            hitBounds.setXOffset(0);
-        } else if (right) {
+            hitBounds.setXOffset(-size);
             hitBounds.setYOffset(0);
+        } else if (right) {
             hitBounds.setXOffset(0);
+            hitBounds.setYOffset(0);
         }
 
     }
@@ -135,9 +133,5 @@ public abstract class Entity {
     }
 
     public abstract void render(Graphics2D _graphics2D);
-
-    public void input(KeyHandler _key, MouseHandler _mouse) {
-
-    }
 
 }

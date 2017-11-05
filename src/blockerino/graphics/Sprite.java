@@ -27,6 +27,7 @@ public class Sprite {
 
         wSprite = SPRITESHEET.getWidth() / width;
         hSprite = SPRITESHEET.getHeight() / height;
+        loadSpriteArray();
     }
 
     public Sprite(String _file, int _w, int _h) {
@@ -38,6 +39,7 @@ public class Sprite {
 
         wSprite = SPRITESHEET.getWidth() / _w;
         hSprite = SPRITESHEET.getHeight() / _h;
+        loadSpriteArray();
     }
 
     public void setSize(int _width, int _height) {
@@ -76,10 +78,11 @@ public class Sprite {
     }
 
     public void loadSpriteArray() {
-        spriteArray = new BufferedImage[wSprite][hSprite];
-        for (int x = 0; x < wSprite; x++) {
-            for (int y = 0; y < hSprite; y++) {
-                spriteArray[x][y] = getSprite(x, y);
+        spriteArray = new BufferedImage[hSprite][wSprite];
+
+        for (int y = 0; y < hSprite; y++) {
+            for (int x = 0; x < wSprite; x++) {
+                spriteArray[y][x] = getSprite(x, y);
             }
         }
     }
@@ -123,10 +126,11 @@ public class Sprite {
             if (_word.charAt(i) != 32) {
                 _graphics2D.drawImage(_font.getFont(_word.charAt(i)), (int) x, (int) y, _width, _height, null);
             }
+            x += _xOffset;
+            y += _yOffset;
         }
 
-        x += _xOffset;
-        y += _yOffset;
+
     }
 }
 

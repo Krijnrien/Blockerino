@@ -54,7 +54,6 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("kek");
         toggle(e, true);
     }
 
