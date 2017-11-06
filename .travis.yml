@@ -8,6 +8,4 @@ cache:
   - $HOME/.m2
 
 script:
-  - ./mvnw clean install
-  - ./mvnw clean install
   - bash <(curl -s https://codecov.io/bash)
