@@ -1,5 +1,7 @@
 package blockerino;
 
+import blockerino.resources.ResourceHandler;
+import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.states.*;
 
@@ -45,6 +47,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) bufferedImage.getGraphics();
+
+        Texture t = new Texture(1, "air", "blocks/air_temp.png");
+        ResourceHandler.addResource(t);
 
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
