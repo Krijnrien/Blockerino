@@ -48,7 +48,7 @@ public abstract class Entity {
         hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
 
         animation = new Animation();
-        setAnimation(RIGHT, _sprite.getSpriteFromSpriteArray(RIGHT), 10);
+        //setAnimation(RIGHT, _sprite.getSpriteFromSpriteArray(RIGHT), 10);
     }
 
     public void setSprite(Sprite _sprite) {
@@ -87,6 +87,7 @@ public abstract class Entity {
         animation.setDelay(_delay);
     }
 
+    /*
     public void animate() {
         if (up) {
             if (currentAnimation != UP || animation.getDelay() == -1) {
@@ -108,6 +109,7 @@ public abstract class Entity {
             setAnimation(currentAnimation, sprite.getSpriteFromSpriteArray(currentAnimation), -1);
         }
     }
+    */
 
     private void setHitBoxDirection() {
         if (up) {
@@ -127,7 +129,7 @@ public abstract class Entity {
     }
 
     public void update() {
-        animate();
+        //animate();
         setHitBoxDirection();
         animation.update();
     }
