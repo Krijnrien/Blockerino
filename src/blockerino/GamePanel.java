@@ -2,6 +2,7 @@ package blockerino;
 
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
+import blockerino.resources.blocks.BlockAir;
 import blockerino.util.*;
 import blockerino.states.*;
 
@@ -48,13 +49,26 @@ public class GamePanel extends JPanel implements Runnable {
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) bufferedImage.getGraphics();
 
-        Texture t = new Texture(1, "air", "blocks/air_temp.png");
-        ResourceHandler.addResource(t);
+        loadTextures();
+        loadBlocks();
 
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
         requestFocus();
         gameStateManager = new GameStateManager();
+    }
+
+    private void loadTextures(){
+        Texture t_air = new Texture(1, "air", "blocks/air_temp.png");
+        ResourceHandler.addTexture(t_air);
+
+        Texture player = new Texture(2, "player", "entity/linkFormatted.png", 8, 4);
+        ResourceHandler.addTexture(player);
+    }
+
+    private void loadBlocks(){
+        BlockAir b_air = new BlockAir(1, "air");
+        ResourceHandler.addBlock(b_air);
     }
 
     @Override

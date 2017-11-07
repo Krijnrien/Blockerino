@@ -1,8 +1,10 @@
 package blockerino.world;
 
 import blockerino.graphics.Sprite;
+import blockerino.resources.Block;
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
+import blockerino.resources.blocks.BlockAir;
 import blockerino.util.Vector2f;
 
 import java.awt.*;
@@ -12,7 +14,7 @@ public class Chunk {
     private int xPos;
     private int yPos;
 
-    private final int TILE_SIZE = 32; //TODO should'nt be necessary when the rendering is based on a viewport
+    private Sprite[][] sprites;
 
     private Block[][] blockData;
 
@@ -34,7 +36,7 @@ public class Chunk {
             for (int j = 0; j < chunkSize; j++) {
                 //TODO read from file or generate from worldgen
 
-                blockData[i][j] = new Block(0);
+                blockData[i][j] = new BlockAir(0);
             }
         }
     }
