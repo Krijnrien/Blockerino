@@ -25,7 +25,7 @@ public class Chunk {
 
     /**
      * Fill the blockdata with blocks, id = 0
-     * @param chunkSize
+     * @param chunkSize size of chunk
      */
     private void construct(int chunkSize) {
         blockData = new Block[chunkSize][chunkSize];
@@ -42,14 +42,13 @@ public class Chunk {
     /**
      * TODO When the rendering is based on a viewport, remove the " .. * TILE_SIZE" and setting the image size to 1
      * Render the chunk on screen
-     * @param chunkSize
+     * @param chunkSize size of chunk
      */
     public void render(Graphics2D _graphics2, int chunkSize) {
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
 
-                int textureId = ResourceHandler.getLoadedResourceId(Texture.class, 1);
-                Texture texture = (Texture)ResourceHandler.getResource(textureId);
+                Texture texture = ResourceHandler.getLoadedTexture(1);
                 Sprite sprite = new Sprite(texture,
                                             new Vector2f(i * TILE_SIZE + xPos, j * TILE_SIZE + yPos),
                                             new Vector2f(TILE_SIZE, TILE_SIZE));
