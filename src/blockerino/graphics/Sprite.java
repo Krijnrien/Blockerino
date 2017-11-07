@@ -43,8 +43,16 @@ public class Sprite {
     }
     */
 
+    public Texture getTexture(){
+        return texture;
+    }
+
     public void render(Graphics2D _graphics2D) {
-        _graphics2D.drawImage(texture.getSpriteSheet(), (int) position.x, (int) position.y, (int)scale.x, (int)scale.y, null);
+        _graphics2D.drawImage(texture.getImageData(), (int) position.x, (int) position.y, (int)scale.x, (int)scale.y, null);
+    }
+
+    public void render(Graphics2D _graphics2D, int _posX, int _posY) {
+        _graphics2D.drawImage(texture.getImageData(), _posX, _posY, (int)scale.x, (int)scale.y, null);
     }
 
     public void setSize(int _width, int _height) {
