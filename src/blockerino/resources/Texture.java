@@ -7,50 +7,81 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+/**
+ * Texture holds either a single image buffer or an array of image buffers
+ */
 public class Texture extends Resource{
-    private BufferedImage SPRITESHEET = null;
-    private final int TILE_SIZE = 32;
-
-    public int width;
-    public int height;
+    private BufferedImage[] imageData;
 
     public Texture(int _id, String _name, String _file) {
 
         super(_id, _name);
 
-        width = TILE_SIZE;
-        height = TILE_SIZE;
+        System.out.println("Loading" + _file + "...");
+        load(_file);
+    }
+
+    public Texture(int _id, String _name, String _file, int _tileCols, int _tileRows) {
+
+        super(_id, _name);
 
         System.out.println("Loading" + _file + "...");
-        SPRITESHEET = loadSprite(_file);
+        load(_file);
 
-        //loadSpriteArray();
+        splitImageData(_tileCols, _tileRows);
     }
 
     @Override
-    public void load() {
-        super.load();
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public BufferedImage loadSprite(String _file) {
-        BufferedImage sprite = null;
+    public void load(String _file){
         try {
-            sprite = ImageIO.read(getClass().getClassLoader().getResourceAsStream(_file));
+            imageData = new BufferedImage[1];
+            imageData[0] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(_file));
         } catch (IOException e) {
             //TODO proper error handling
             System.out.println("ERROR" + e);
         }
+    }
 
-        return sprite;
+    public int getWidth() {
+        return imageData[0].getWidth();
+    }
+
+    public int getHeight() {
+        return imageData[0].getHeight();
+    }
+
+    public int getWidth(int _tileID) {
+        return imageData[_tileID].getWidth();
+    }
+
+    public int getHeight(int _tileID) {
+        return imageData[_tileID].getHeight();
+    }
+
+    /**
+     * Split the image data into a grid of tiles.
+     * @param _tileCols
+     * @param _tileRows
+     */
+    private void splitImageData(int _tileCols, int _tileRows)
+    {
+        int tileCount = _tileCols * _tileRows;
+        BufferedImage[] newImageData = new BufferedImage[tileCount];
+
+        int chunkWidth = getWidth() / _tileCols;
+        int chunkHeight = getHeight() / _tileRows;
+
+        int i = 0;
+        for (int y = 0; y < getHeight(); y += chunkHeight) {
+            for (int x = 0; x < getWidth(); x += chunkWidth) {
+
+                newImageData[i++] = imageData[0].getSubimage(x, y, chunkWidth, chunkHeight);
+            }
+        }
+
+        imageData = newImageData;
     }
 
     /*
@@ -65,13 +96,34 @@ public class Texture extends Resource{
     }
     */
 
-    public BufferedImage getSpriteSheet() {
-        return SPRITESHEET;
+    public BufferedImage getImageData() {
+        return imageData[0];
     }
 
+    public BufferedImage getImageData(int _i){
+        return imageData[_i];
+    }
+
+    public BufferedImage[] getImageDataArray(){
+        return imageData;
+    }
+
+    public BufferedImage[] getPartOfImageDataArray(int _start, int _end){
+        return Arrays.copyOfRange(imageData, _start, _end);
+    }
+
+    /*
+    public BufferedImage[] getRowOfImageDataArray(int _row){
+        int start = 0;
+        int end = 0;
+    }
+    */
+
+    /*
     public BufferedImage getSprite(int _x, int _y) {
         return SPRITESHEET.getSubimage(_x * width, _y * height, width, height);
     }
+    */
 
     /*
     public BufferedImage[] getSpriteFromSpriteArray(int _i) {

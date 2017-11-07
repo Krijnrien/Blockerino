@@ -48,8 +48,13 @@ public class GamePanel extends JPanel implements Runnable {
         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         graphics2D = (Graphics2D) bufferedImage.getGraphics();
 
-        Texture t = new Texture(1, "air", "blocks/air_temp.png");
-        ResourceHandler.addResource(t);
+
+        Texture t_air = new Texture(1, "air", "blocks/air_temp.png");
+        ResourceHandler.addTexture(t_air);
+
+        Texture player = new Texture(2, "player", "entity/linkFormatted.png", 8, 4);
+        ResourceHandler.addTexture(player);
+
 
         keyHandler = new KeyHandler(this);
         mouseHandler = new MouseHandler(this);
