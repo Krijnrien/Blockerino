@@ -12,22 +12,20 @@ import java.util.Arrays;
 /**
  * Texture holds either a single image buffer or an array of image buffers
  */
-public class Texture extends Resource{
+public class Texture{
     private BufferedImage[] imageData;
     private String file;
 
-    public Texture(int _id, String _name, String _file) {
+    public Texture(String _file) {
 
-        super(_id, _name);
         file = _file;
 
         System.out.println("Loading" + _file + "...");
         load();
     }
 
-    public Texture(int _id, String _name, String _file, int _tileCols, int _tileRows) {
+    public Texture(String _file, int _tileCols, int _tileRows) {
 
-        super(_id, _name);
         file = _file;
 
         System.out.println("Loading" + _file + "...");

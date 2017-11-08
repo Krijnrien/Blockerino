@@ -85,10 +85,7 @@ public class Player extends Entity {
     @Override
     public void render(Graphics2D _graphics2D) {
 
-        int textureId = ResourceHandler.getLoadedResourceId(Texture.class, 1);
-        Texture texture = (Texture)ResourceHandler.getResource(textureId);
-
-        _graphics2D.drawImage(texture.getSpriteSheet(), (int) position.x, (int) position.y, size, size, null);
+        _graphics2D.drawImage(animation.getImage(), (int) position.x, (int) position.y, size, size, null);
     }
 
     public void input(MouseHandler _mouse, KeyHandler _key) {

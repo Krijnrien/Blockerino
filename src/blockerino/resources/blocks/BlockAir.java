@@ -5,10 +5,8 @@ import blockerino.resources.ResourceHandler;
 
 public class BlockAir extends Block {
 
-    public BlockAir(int _id, String _name)
+    public BlockAir()
     {
-        super(_id, _name);
-
         setTexture(ResourceHandler.getLoadedTexture("air"));
     }
 }

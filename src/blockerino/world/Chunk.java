@@ -15,8 +15,9 @@ public class Chunk {
     private int yPos;
 
     private Sprite[][] sprites;
-
     private Block[][] blockData;
+
+    private final int BLOCK_SIZE = 16;
 
     public Chunk(int chunkSize, int _xPos, int _yPos) {
         xPos = _xPos;
@@ -31,12 +32,18 @@ public class Chunk {
      */
     private void construct(int chunkSize) {
         blockData = new Block[chunkSize][chunkSize];
+        sprites = new Sprite[chunkSize][chunkSize];
 
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
                 //TODO read from file or generate from worldgen
 
-                blockData[i][j] = new BlockAir(0);
+                blockData[i][j] = new BlockAir();
+
+                Texture texture = blockData[i][j].getTexture();
+                sprites[i][j] = new Sprite(texture,
+                                            new Vector2f((i * BLOCK_SIZE) + (xPos * BLOCK_SIZE * chunkSize), (j * BLOCK_SIZE) + (yPos * BLOCK_SIZE * chunkSize)),
+                                            new Vector2f(BLOCK_SIZE, BLOCK_SIZE));
             }
         }
     }
@@ -50,13 +57,7 @@ public class Chunk {
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
 
-                int textureId = ResourceHandler.getLoadedResourceId(Texture.class, 1);
-                Texture texture = (Texture)ResourceHandler.getResource(textureId);
-                Sprite sprite = new Sprite(texture,
-                                            new Vector2f(i * TILE_SIZE + xPos, j * TILE_SIZE + yPos),
-                                            new Vector2f(TILE_SIZE, TILE_SIZE));
-
-                sprite.render(_graphics2);
+                sprites[i][j].render(_graphics2);
             }
         }
     }

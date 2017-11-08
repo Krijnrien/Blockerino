@@ -2,6 +2,7 @@ package blockerino.states;
 
 import blockerino.entity.Player;
 import blockerino.graphics.Sprite;
+import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.graphics.Font;
@@ -22,7 +23,7 @@ public class PlayState extends GameState {
 
         world = new World(16);
 
-        player = new Player(new Sprite(new Texture(1, "player", "entity/linkFormatted.png")),  new Vector2f(300,300), 128);
+        player = new Player(new Sprite(ResourceHandler.getLoadedTexture(2)),  new Vector2f(300,300), 128);;
     }
 
     public void update() {

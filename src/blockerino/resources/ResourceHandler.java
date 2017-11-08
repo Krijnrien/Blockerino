@@ -1,19 +1,21 @@
 package blockerino.resources;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ResourceHandler {
 
-    private static List<Texture> loadedTextures = new ArrayList<>();
-    private static List<Block> loadedBlocks = new ArrayList<>();
+    private static Map<ResourceHandle, Texture> loadedTextures = new HashMap<>();
+    private static Map<ResourceHandle, Block> loadedBlocks = new HashMap<>();
 
-    public static void addTexture(Texture _texture){
-        loadedTextures.add(_texture);
+    public static void addTexture(int _id, String _name, Texture _texture){
+        loadedTextures.put(new ResourceHandle(_id, _name), _texture);
     }
 
-    public static void addBlock(Block _block){
-        loadedBlocks.add(_block);
+    public static void addBlock(int _id, String _name, Block _block){
+        loadedBlocks.put(new ResourceHandle(_id, _name), _block);
     }
 
     /**
@@ -22,9 +24,10 @@ public class ResourceHandler {
      * @return Texture if found, null if not
      */
     public static Texture getLoadedTexture(int _id) {
-        for (int i = 0; i < loadedTextures.size(); i++) {
-            if (loadedTextures.get(i).getID() == _id) {
-                return loadedTextures.get(i);
+        for ( ResourceHandle rhandle : loadedTextures.keySet() ) {
+
+            if (rhandle.getId() == _id) {
+                return loadedTextures.get(rhandle);
             }
         }
 
@@ -37,9 +40,10 @@ public class ResourceHandler {
      * @return Texture if found, null if not
      */
     public static Texture getLoadedTexture(String _name) {
-        for (int i = 0; i < loadedTextures.size(); i++) {
-            if (loadedTextures.get(i).getName() == _name) {
-                return loadedTextures.get(i);
+        for ( ResourceHandle rhandle : loadedTextures.keySet() ) {
+
+            if (rhandle.getName() == _name) {
+                return loadedTextures.get(rhandle);
             }
         }
 
@@ -47,9 +51,10 @@ public class ResourceHandler {
     }
 
     public static Block getLoadedBlock(int _id) {
-        for (int i = 0; i < loadedBlocks.size(); i++) {
-            if (loadedBlocks.get(i).getID() == _id) {
-                return loadedBlocks.get(i);
+        for ( ResourceHandle rhandle : loadedBlocks.keySet() ) {
+
+            if (rhandle.getId() == _id) {
+                return loadedBlocks.get(rhandle);
             }
         }
 
@@ -57,9 +62,10 @@ public class ResourceHandler {
     }
 
     public static Block getLoadedBlock(String _name) {
-        for (int i = 0; i < loadedBlocks.size(); i++) {
-            if (loadedBlocks.get(i).getName() == _name) {
-                return loadedBlocks.get(i);
+        for ( ResourceHandle rhandle : loadedBlocks.keySet() ) {
+
+            if (rhandle.getName() == _name) {
+                return loadedBlocks.get(rhandle);
             }
         }
 

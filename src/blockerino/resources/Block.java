@@ -1,12 +1,10 @@
 package blockerino.resources;
 
-public abstract class Block extends Resource{
+public abstract class Block{
 
     private Texture texture = null;
 
-    public Block(int _id, String _name){
-        super(_id, _name);
-    }
+    public Block(){ }
 
     public Texture getTexture(){
         return texture;

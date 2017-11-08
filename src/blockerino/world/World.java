@@ -20,9 +20,13 @@ public class World {
         generateDebuggingWorld();
     }
 
-    public void generateDebuggingWorld()
-    {
-        loadedChunks.add(new Chunk(chunkSize, 0, 0));
+    public void generateDebuggingWorld() {
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j ++){
+                loadedChunks.add(new Chunk(chunkSize, i, j));
+            }
+        }
     }
 
     /**

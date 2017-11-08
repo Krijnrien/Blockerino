@@ -59,16 +59,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     private void loadTextures(){
-        Texture t_air = new Texture(1, "air", "blocks/air_temp.png");
-        ResourceHandler.addTexture(t_air);
 
-        Texture player = new Texture(2, "player", "entity/linkFormatted.png", 8, 4);
-        ResourceHandler.addTexture(player);
+        ResourceHandler.addTexture(1, "air", new Texture("blocks/air_temp.png"));
+        ResourceHandler.addTexture(2, "player", new Texture("entity/linkFormatted.png", 8, 4));
     }
 
     private void loadBlocks(){
-        BlockAir b_air = new BlockAir(1, "air");
-        ResourceHandler.addBlock(b_air);
+
+        ResourceHandler.addBlock(1, "air", new BlockAir());
     }
 
     @Override

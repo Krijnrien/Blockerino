@@ -48,7 +48,7 @@ public abstract class Entity {
         hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
 
         animation = new Animation();
-        //setAnimation(RIGHT, _sprite.getSpriteFromSpriteArray(RIGHT), 10);
+        setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
     }
 
     public void setSprite(Sprite _sprite) {
@@ -87,29 +87,36 @@ public abstract class Entity {
         animation.setDelay(_delay);
     }
 
-    /*
+    public void setAnimation(int _currentAnimation, BufferedImage _frame, int _delay) {
+        BufferedImage[] frames = new BufferedImage[1];
+        frames[0] = _frame;
+
+        currentAnimation = _currentAnimation;
+        animation.setFrames(frames);
+        animation.setDelay(_delay);
+    }
+
     public void animate() {
         if (up) {
             if (currentAnimation != UP || animation.getDelay() == -1) {
-                setAnimation(UP, sprite.getSpriteFromSpriteArray(UP), 5);
+                setAnimation(UP, sprite.getTexture().getPartOfImageDataArray(24, 31), 5);
             }
         } else if (down) {
             if (currentAnimation != DOWN || animation.getDelay() == -1) {
-                setAnimation(DOWN, sprite.getSpriteFromSpriteArray(DOWN), 5);
+                setAnimation(DOWN, sprite.getTexture().getPartOfImageDataArray(16, 23), 5);
             }
         } else if (left) {
             if (currentAnimation != LEFT || animation.getDelay() == -1) {
-                setAnimation(LEFT, sprite.getSpriteFromSpriteArray(LEFT), 5);
+                setAnimation(LEFT, sprite.getTexture().getPartOfImageDataArray(8, 15), 5);
             }
         } else if (right) {
             if (currentAnimation != RIGHT || animation.getDelay() == -1) {
-                setAnimation(RIGHT, sprite.getSpriteFromSpriteArray(RIGHT), 5);
+                setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 5);
             }
         } else {
-            setAnimation(currentAnimation, sprite.getSpriteFromSpriteArray(currentAnimation), -1);
+            setAnimation(currentAnimation, sprite.getTexture().getImageData(), -1);
         }
     }
-    */
 
     private void setHitBoxDirection() {
         if (up) {
@@ -129,7 +136,7 @@ public abstract class Entity {
     }
 
     public void update() {
-        //animate();
+        animate();
         setHitBoxDirection();
         animation.update();
     }
