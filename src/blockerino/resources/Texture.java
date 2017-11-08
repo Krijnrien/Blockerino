@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 /**
  * Texture holds either a single image buffer or an array of image buffers
@@ -32,6 +33,11 @@ public class Texture{
         load();
 
         splitImageData(_tileCols, _tileRows);
+    }
+
+    public Texture(BufferedImage _imageData){
+        imageData = new BufferedImage[1];
+        imageData[0] = _imageData;
     }
 
     public void load(){
@@ -82,6 +88,16 @@ public class Texture{
         }
 
         imageData = newImageData;
+    }
+
+    public void drawOnImage(BufferedImage[] _images, Vector2f[] _positions){
+
+        Graphics g = imageData[0].getGraphics();
+
+        //Calculate new width and height
+        for (int i = 0; i < _images.length; i++) {
+            g.drawImage(_images[i], (int)_positions[i].x, (int)_positions[i].y, null);
+        }
     }
 
     /*

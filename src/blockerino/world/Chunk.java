@@ -10,19 +10,18 @@ import blockerino.util.Vector2f;
 import blockerino.world.generation.Generator;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
- * TODO Combine sprite array into a single sprite, reducing render calls. Update the sprite when chunk is being changed.
+ * Chunk is an allocation and display object for a grid(chunk) of blocks.
  */
 public class Chunk {
 
     private int xPos;
     private int yPos;
 
-    private Sprite[][] sprites;
+    private Sprite sprite = null;
     private Block[][] blockData;
-
-    private final int BLOCK_SIZE = 16;
 
     public Chunk(int _chunkSize, int _xPos, int _yPos, Generator _worldGen) {
         xPos = _xPos;
@@ -38,9 +37,9 @@ public class Chunk {
      */
     private void construct(int _chunkSize, Generator _worldGen) {
         blockData = new Block[_chunkSize][_chunkSize];
-        sprites = new Sprite[_chunkSize][_chunkSize];
 
         generateBlocks(_chunkSize, _worldGen);
+        createSprite(_chunkSize);
     }
 
     /**
@@ -49,6 +48,7 @@ public class Chunk {
      * @param _worldGen world generator
      */
     private void generateBlocks(int _chunkSize, Generator _worldGen){
+
         for (int i = 0; i < _chunkSize; i++) {
             for (int j = 0; j < _chunkSize; j++) {
 
@@ -59,26 +59,40 @@ public class Chunk {
                 else{
                     blockData[i][j] = new BlockAir();
                 }
-
-                // Create sprite of the block
-                Texture texture = blockData[i][j].getTexture();
-                sprites[i][j] = new Sprite(texture,
-                        new Vector2f((i * BLOCK_SIZE) + (xPos * BLOCK_SIZE), (j * BLOCK_SIZE) + (yPos * BLOCK_SIZE)),
-                        new Vector2f(BLOCK_SIZE, BLOCK_SIZE));
             }
         }
     }
 
     /**
-     * Render the chunk on screen
-     * @param chunkSize
+     * Create a single sprite from the blocks
+     * @param _chunkSize chunk size
      */
-    public void render(Graphics2D _graphics2, int chunkSize) {
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
+    private void createSprite(int _chunkSize){
+        BufferedImage[][] images = new BufferedImage[_chunkSize][_chunkSize];
+        Vector2f[][] positions = new Vector2f[_chunkSize][_chunkSize];
 
-                sprites[i][j].render(_graphics2);
+        Texture texture = new Texture(new BufferedImage(_chunkSize * World.BLOCK_SIZE, _chunkSize * World.BLOCK_SIZE, BufferedImage.TYPE_INT_ARGB));
+
+        // Get every block with its position and paint them onto the new texture
+        for (int i = 0; i < _chunkSize; i++) {
+            for (int j = 0; j < _chunkSize; j++) {
+
+                images[i][j] = blockData[i][j].getTexture().getImageData();
+                positions[i][j] = new Vector2f(i * World.BLOCK_SIZE, j * World.BLOCK_SIZE);
             }
+
+            // Draw row of blocks onto the texture
+            texture.drawOnImage(images[i], positions[i]);
         }
+
+        // Create new Sprite with our freshly painted texture
+        sprite = new Sprite(texture, new Vector2f(xPos, yPos), new Vector2f(_chunkSize * World.BLOCK_SIZE, _chunkSize * World.BLOCK_SIZE));
+    }
+
+    /**
+     * Render the chunk on screen
+     */
+    public void render(Graphics2D _graphics2) {
+        sprite.render(_graphics2);
     }
 }

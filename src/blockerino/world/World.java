@@ -15,6 +15,8 @@ public class World {
     private List<Chunk> loadedChunks;
     Generator worldGen;
 
+    public static final int BLOCK_SIZE = 16;
+
     public World(int _chunkSize, Generator _generator) {
         chunkSize = _chunkSize;
         worldGen = _generator;
@@ -28,20 +30,20 @@ public class World {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j ++){
-                loadedChunks.add(new Chunk(chunkSize, i * chunkSize, j * chunkSize, worldGen));
+                loadedChunks.add(new Chunk(chunkSize, i * chunkSize * BLOCK_SIZE, j * chunkSize * BLOCK_SIZE, worldGen));
             }
         }
     }
 
     /**
      * Render world chunk by chunk
-     * @param _graphics2D
+     * @param _graphics2D graphics2D Object
      */
     public void render(Graphics2D _graphics2D)
     {
         for(int i = 0; i < loadedChunks.size(); i++)
         {
-            loadedChunks.get(i).render(_graphics2D, chunkSize);
+            loadedChunks.get(i).render(_graphics2D);
         }
     }
 
