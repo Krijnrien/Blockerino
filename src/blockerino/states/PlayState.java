@@ -7,6 +7,7 @@ import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.graphics.Font;
 import blockerino.world.World;
+import blockerino.world.generation.SuperFlat;
 
 import java.awt.*;
 
@@ -21,7 +22,7 @@ public class PlayState extends GameState {
         font = new Font("font/ZeldaFont.png", 16, 16);
         //TODO Handle possible file not found error
 
-        world = new World(16);
+        world = new World(16, new SuperFlat(32));
 
         player = new Player(new Sprite(ResourceHandler.getLoadedTexture(2)),  new Vector2f(300,300), 128);;
     }

@@ -1,5 +1,7 @@
 package blockerino.world;
 
+import blockerino.world.generation.Generator;
+
 import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
@@ -11,11 +13,13 @@ public class World {
 
     private int chunkSize;
     private List<Chunk> loadedChunks;
+    Generator worldGen;
 
-    public World(int _chunkSize) {
+    public World(int _chunkSize, Generator _generator) {
         chunkSize = _chunkSize;
+        worldGen = _generator;
 
-        loadedChunks = new ArrayList<Chunk>();
+        loadedChunks = new ArrayList<>();
 
         generateDebuggingWorld();
     }
@@ -24,7 +28,7 @@ public class World {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j ++){
-                loadedChunks.add(new Chunk(chunkSize, i, j));
+                loadedChunks.add(new Chunk(chunkSize, i * chunkSize, j * chunkSize, worldGen));
             }
         }
     }

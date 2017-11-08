@@ -1,8 +1,10 @@
 package blockerino;
 
+import blockerino.resources.Resource;
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
 import blockerino.resources.blocks.BlockAir;
+import blockerino.resources.blocks.BlockStone;
 import blockerino.util.*;
 import blockerino.states.*;
 
@@ -61,12 +63,15 @@ public class GamePanel extends JPanel implements Runnable {
     private void loadTextures(){
 
         ResourceHandler.addTexture(1, "air", new Texture("blocks/air_temp.png"));
+        ResourceHandler.addTexture(2, "stone", new Texture("blocks/stone_temp.png"));
+
         ResourceHandler.addTexture(2, "player", new Texture("entity/linkFormatted.png", 8, 4));
     }
 
     private void loadBlocks(){
 
         ResourceHandler.addBlock(1, "air", new BlockAir());
+        ResourceHandler.addBlock(2, "stone", new BlockStone());
     }
 
     @Override

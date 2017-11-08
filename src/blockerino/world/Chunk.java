@@ -5,10 +5,15 @@ import blockerino.resources.Block;
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
 import blockerino.resources.blocks.BlockAir;
+import blockerino.resources.blocks.BlockStone;
 import blockerino.util.Vector2f;
+import blockerino.world.generation.Generator;
 
 import java.awt.*;
 
+/**
+ * TODO Combine sprite array into a single sprite, reducing render calls. Update the sprite when chunk is being changed.
+ */
 public class Chunk {
 
     private int xPos;
@@ -19,37 +24,52 @@ public class Chunk {
 
     private final int BLOCK_SIZE = 16;
 
-    public Chunk(int chunkSize, int _xPos, int _yPos) {
+    public Chunk(int _chunkSize, int _xPos, int _yPos, Generator _worldGen) {
         xPos = _xPos;
         yPos = _yPos;
 
-        construct(chunkSize);
+        construct(_chunkSize, _worldGen);
     }
 
     /**
-     * Fill the blockdata with blocks, id = 0
-     * @param chunkSize
+     * Construct a new chunk with dimensions chunkSize
+     * @param _chunkSize chunk size
+     * @param _worldGen world generator
      */
-    private void construct(int chunkSize) {
-        blockData = new Block[chunkSize][chunkSize];
-        sprites = new Sprite[chunkSize][chunkSize];
+    private void construct(int _chunkSize, Generator _worldGen) {
+        blockData = new Block[_chunkSize][_chunkSize];
+        sprites = new Sprite[_chunkSize][_chunkSize];
 
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
-                //TODO read from file or generate from worldgen
+        generateBlocks(_chunkSize, _worldGen);
+    }
 
-                blockData[i][j] = new BlockAir();
+    /**
+     * Generate blocks with generator
+     * @param _chunkSize chunk size
+     * @param _worldGen world generator
+     */
+    private void generateBlocks(int _chunkSize, Generator _worldGen){
+        for (int i = 0; i < _chunkSize; i++) {
+            for (int j = 0; j < _chunkSize; j++) {
 
+                // If the generator returns true on the given position, the position should be stone
+                if (_worldGen.getBooleanValue(i + xPos, j + yPos)) {
+                    blockData[i][j] = new BlockStone();
+                }
+                else{
+                    blockData[i][j] = new BlockAir();
+                }
+
+                // Create sprite of the block
                 Texture texture = blockData[i][j].getTexture();
                 sprites[i][j] = new Sprite(texture,
-                                            new Vector2f((i * BLOCK_SIZE) + (xPos * BLOCK_SIZE * chunkSize), (j * BLOCK_SIZE) + (yPos * BLOCK_SIZE * chunkSize)),
-                                            new Vector2f(BLOCK_SIZE, BLOCK_SIZE));
+                        new Vector2f((i * BLOCK_SIZE) + (xPos * BLOCK_SIZE), (j * BLOCK_SIZE) + (yPos * BLOCK_SIZE)),
+                        new Vector2f(BLOCK_SIZE, BLOCK_SIZE));
             }
         }
     }
 
     /**
-     * TODO When the rendering is based on a viewport, remove the " .. * TILE_SIZE" and setting the image size to 1
      * Render the chunk on screen
      * @param chunkSize
      */
