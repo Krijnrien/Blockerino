@@ -29,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler keyHandler;
 
     private GameStateManager gameStateManager;
+    private double deltaTime = 0.0;
 
     GamePanel(int _width, int _height) {
         height = _height;
@@ -80,7 +81,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
-
+        deltaTime = 0;
         requestFocus();
         //TODO Keylistener not working with constant requestFocus
         while (running) {
