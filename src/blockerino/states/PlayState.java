@@ -24,7 +24,7 @@ public class PlayState extends GameState {
 
         world = new World(16, new SuperFlat(32));
 
-        player = new Player(new Sprite(ResourceHandler.getLoadedTexture(2)),  new Vector2f(300,300), 128);;
+        player = new Player(new Sprite(ResourceHandler.getLoadedTexture(2)),  new Vector2f(300,300), 128);
     }
 
     public void update() {

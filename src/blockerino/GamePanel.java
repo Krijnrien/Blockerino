@@ -81,7 +81,6 @@ public class GamePanel extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
 
-        double deltaTime = 0;
         requestFocus();
         //TODO Keylistener not working with constant requestFocus
         while (running) {
