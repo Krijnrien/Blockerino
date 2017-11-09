@@ -53,7 +53,7 @@ public class Chunk {
             for (int j = 0; j < _chunkSize; j++) {
 
                 // If the generator returns true on the given position, the position should be stone
-                if (_worldGen.getBooleanValue(i + xPos, j + yPos)) {
+                if (_worldGen.getBooleanValue(i + (xPos / World.BLOCK_SIZE), j + (yPos / World.BLOCK_SIZE), 0)) {
                     blockData[i][j] = new BlockStone();
                 }
                 else{

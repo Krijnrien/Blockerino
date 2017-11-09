@@ -15,7 +15,7 @@ public class World {
     private List<Chunk> loadedChunks;
     Generator worldGen;
 
-    public static final int BLOCK_SIZE = 16;
+    public static final int BLOCK_SIZE = 8;
 
     public World(int _chunkSize, Generator _generator) {
         chunkSize = _chunkSize;
@@ -28,8 +28,8 @@ public class World {
 
     public void generateDebuggingWorld() {
 
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 3; j ++){
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 6; j ++){
                 loadedChunks.add(new Chunk(chunkSize, i * chunkSize * BLOCK_SIZE, j * chunkSize * BLOCK_SIZE, worldGen));
             }
         }

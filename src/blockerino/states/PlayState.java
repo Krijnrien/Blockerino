@@ -3,11 +3,10 @@ package blockerino.states;
 import blockerino.entity.Player;
 import blockerino.graphics.Sprite;
 import blockerino.resources.ResourceHandler;
-import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.graphics.Font;
 import blockerino.world.World;
-import blockerino.world.generation.SuperFlat;
+import blockerino.world.generation.NoiseGenerator;
 
 import java.awt.*;
 
@@ -22,7 +21,13 @@ public class PlayState extends GameState {
         font = new Font("font/ZeldaFont.png", 16, 16);
         //TODO Handle possible file not found error
 
-        world = new World(16, new SuperFlat(32));
+
+        NoiseGenerator worldGen = new NoiseGenerator(1337);
+        worldGen.setAmplitude(32);
+        worldGen.setFrequency(16);
+        worldGen.setAverageHeight(30);
+        world = new World(16, worldGen);
+
 
         player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player")),  new Vector2f(300,300), 128);
     }

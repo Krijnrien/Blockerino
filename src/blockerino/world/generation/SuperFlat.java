@@ -8,7 +8,8 @@ public class SuperFlat implements Generator {
         groundLevel = _groundLevel;
     }
 
-    public float getValue(float _x, float _y){
+    @Override
+    public double getValue(double _x, double _y, double _z){
         if (_y > groundLevel) { // Either the block is above or below the ground level
             return 1;
         }
@@ -17,7 +18,8 @@ public class SuperFlat implements Generator {
         }
     }
 
-    public boolean getBooleanValue(float _x, float _y){
+    @Override
+    public boolean getBooleanValue(double _x, double _y, double _z){
         if (_y > groundLevel) {
             return true;
         }
