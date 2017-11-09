@@ -1,6 +1,8 @@
 package blockerino.entity;
 
 import blockerino.graphics.Sprite;
+import blockerino.states.GameStateManager;
+import blockerino.util.GameStateEnum;
 import blockerino.util.KeyHandler;
 import blockerino.util.MouseHandler;
 import blockerino.util.Vector2f;
@@ -8,6 +10,8 @@ import blockerino.util.Vector2f;
 import java.awt.*;
 
 public class Player extends Entity {
+
+    private boolean escape;
 
 	public Player(Sprite _sprite, Vector2f _origin, int _size) {
 		super(_sprite, _origin, _size);
@@ -79,9 +83,16 @@ public class Player extends Entity {
 
 	}
 
+	private void menus(){
+		if(escape){
+            (new GameStateManager()).add(GameStateEnum.MENU);
+        }
+	}
+
 	public void update() {
 		super.update();
 		move();
+		menus();
 		position.x += dx; // get player X position
 		position.y += dy; // get player Y position
 	}
@@ -99,5 +110,6 @@ public class Player extends Entity {
 		right = _key.right.down;
 
 		attack = _key.attack.down;
+        escape = _key.escape.down;
 	}
 }

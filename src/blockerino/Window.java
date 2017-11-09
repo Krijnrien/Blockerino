@@ -1,14 +1,21 @@
 package blockerino;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class Window extends JFrame {
 
     private JFrame jFrame;
 
-    public Window() {
-        jFrame = new JFrame("blockerino2");
+    public JFrame getJFrame() {
+        return this.jFrame;
+    }
 
+    public void setJFrame(JFrame _jFrame) {
+        this.jFrame = _jFrame;
+    }
+
+    public void createWindow() {
+        JFrame jFrame = new JFrame("blockerino2");
         jFrame.setTitle("Blockerino");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.setContentPane(new GamePanel(1280, 720));
@@ -17,5 +24,6 @@ public class Window extends JFrame {
         jFrame.setVisible(true);
         jFrame.setFocusable(true);
         jFrame.requestFocus();
+        setJFrame(jFrame);
     }
 }

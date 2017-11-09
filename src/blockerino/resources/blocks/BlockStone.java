@@ -5,8 +5,8 @@ import blockerino.resources.ResourceHandler;
 
 public class BlockStone extends Block {
 
-    public BlockStone()
-    {
+    public BlockStone() {
         setTexture(ResourceHandler.getLoadedTexture("stone"));
+        setSolid(true);
     }
 }

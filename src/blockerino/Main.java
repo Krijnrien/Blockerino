@@ -6,7 +6,7 @@ public class Main {
         new Main();
     }
 
-    public Main(){
-        new Window();
+    public Main() {
+        new Window().createWindow();
     }
 }
