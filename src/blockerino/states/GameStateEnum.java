@@ -1,4 +1,4 @@
-package blockerino.util;
+package blockerino.states;
 
 public enum GameStateEnum {
     PLAY,

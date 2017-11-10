@@ -9,7 +9,7 @@ import blockerino.GamePanel;
 
 public class KeyHandler implements KeyListener {
 
-    public static List<Key> keys = new ArrayList<>();
+    private static List<Key> keys = new ArrayList<>();
 
     public Key up = new Key();
     public Key down = new Key();
@@ -24,37 +24,30 @@ public class KeyHandler implements KeyListener {
         _gamePanel.addKeyListener(this);
     }
 
-    public void releaseAll() {
-        for (Key key : keys) {
-            key.down = false;
-        }
+    private void toggle(KeyEvent e, boolean pressed) {
+        if (e.getKeyCode() == KeyEvent.VK_W) up.hold(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_S) down.hold(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_A) left.hold(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_D) right.hold(pressed);
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) attack.hold(pressed);
     }
 
-    public void tick() {
-        for (Key key : keys) {
-            key.tick();
-        }
+    private void pressed(KeyEvent e) {
+        //if (e.getKeyCode() == KeyEvent.VK_E) menu.toggle();
+        // if (e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle();
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) escape.toggle();
     }
 
-    public void toggle(KeyEvent e, boolean pressed) {
-        if (e.getKeyCode() == KeyEvent.VK_W) up.toggle(pressed);
-        if (e.getKeyCode() == KeyEvent.VK_S) down.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_A) left.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_D) right.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) attack.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_E) menu.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) enter.toggle((pressed));
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) escape.toggle((pressed));
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // nothing
+        // Not usable as always returns keyCode 0 / VK_UNDEFINED.
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         toggle(e, true);
+        pressed(e);
     }
 
     @Override
@@ -63,29 +56,28 @@ public class KeyHandler implements KeyListener {
     }
 
     public class Key {
-        public int presses, absorbs;
-        public boolean down, clicked;
+        public boolean down;
+        public boolean toggle;
 
-        public Key() {
+        Key() {
             keys.add(this);
         }
 
-        public void toggle(boolean pressed) {
-            if (pressed != down) {
-                down = pressed;
-            }
-            if (pressed) {
-                presses++;
+        void toggle() {
+            if (toggle == false) {
+                System.out.println("true");
+                toggle = true;
+            } else {
+                System.out.println("false");
+                toggle = false;
             }
         }
 
-        public void tick() {
-            if (absorbs < presses) {
-                absorbs++;
-                clicked = true;
-            } else {
-                clicked = false;
+        void hold(boolean _pressed) {
+            if (_pressed != down) {
+                down = _pressed;
             }
         }
+
     }
 }

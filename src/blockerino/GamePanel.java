@@ -20,7 +20,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-    public static int fps = 60;
 
     private BufferedImage bufferedImage;
     private Graphics2D graphics2D;
@@ -29,7 +28,9 @@ public class GamePanel extends JPanel implements Runnable {
     private KeyHandler keyHandler;
 
     private GameStateManager gameStateManager;
-    private double deltaTime = 0.0;
+
+    public GamePanel() {
+    }
 
     GamePanel(int _width, int _height) {
         height = _height;
@@ -61,7 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
         gameStateManager = new GameStateManager();
     }
 
-    private void loadTextures(){
+    private void loadTextures() {
 
         ResourceHandler.addTexture(1, "air", new Texture("blocks/air_temp.png"));
         ResourceHandler.addTexture(2, "stone", new Texture("blocks/stone_temp.png"));
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel implements Runnable {
         ResourceHandler.addTexture(3, "player", new Texture("entity/linkFormatted.png", 8, 4));
     }
 
-    private void loadBlocks(){
+    private void loadBlocks() {
 
         ResourceHandler.addBlock(1, "air", new BlockAir());
         ResourceHandler.addBlock(2, "stone", new BlockStone());
@@ -81,10 +82,11 @@ public class GamePanel extends JPanel implements Runnable {
 
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
-        deltaTime = 0;
+        double deltaTime = 0;
         requestFocus();
-        //TODO Keylistener not working with constant requestFocus
+        //TODO Keylistener not working without constant requestFocus
         while (running) {
+            int fps = 60;
             double nanoSecondsPerCount = 1000000000.0 / fps;
             long now = System.nanoTime();
             deltaTime += (now - lastTime) / nanoSecondsPerCount;
@@ -103,8 +105,6 @@ public class GamePanel extends JPanel implements Runnable {
         }
         stop();
     }
-
-    private int x = 0;
 
     private void input(MouseHandler _mouse, KeyHandler _key) {
         gameStateManager.input(_mouse, _key);
@@ -128,8 +128,7 @@ public class GamePanel extends JPanel implements Runnable {
         graphics.dispose();
     }
 
-
-    public synchronized void stop() {
+    private synchronized void stop() {
         running = false;
         try {
             System.out.println("Goodbye");
@@ -138,4 +137,5 @@ public class GamePanel extends JPanel implements Runnable {
             e.printStackTrace();
         }
     }
+
 }
