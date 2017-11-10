@@ -1,8 +1,11 @@
 package blockerino.world;
 
+import blockerino.entity.Entity;
 import blockerino.world.generation.Generator;
+import javafx.scene.Camera;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,9 +16,8 @@ public class World {
 
     private int chunkSize;
     private List<Chunk> loadedChunks;
-    Generator worldGen;
+    private Generator worldGen;
 
-    public static final int BLOCK_SIZE = 8;
 
     public World(int _chunkSize, Generator _generator) {
         chunkSize = _chunkSize;
@@ -24,13 +26,15 @@ public class World {
         loadedChunks = new ArrayList<>();
 
         generateDebuggingWorld();
+
+
     }
 
     public void generateDebuggingWorld() {
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 6; j ++){
-                loadedChunks.add(new Chunk(chunkSize, i * chunkSize * BLOCK_SIZE, j * chunkSize * BLOCK_SIZE, worldGen));
+                loadedChunks.add(new Chunk(chunkSize, i * chunkSize, j * chunkSize, worldGen));
             }
         }
     }

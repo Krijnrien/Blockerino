@@ -53,7 +53,7 @@ public class Chunk {
             for (int j = 0; j < _chunkSize; j++) {
 
                 // If the generator returns true on the given position, the position should be stone
-                if (_worldGen.getBooleanValue(i + (xPos / World.BLOCK_SIZE), j + (yPos / World.BLOCK_SIZE), 0)) {
+                if (_worldGen.getBooleanValue(i + xPos, j + yPos, 0)) {
                     blockData[i][j] = new BlockStone();
                 }
                 else{
@@ -71,14 +71,34 @@ public class Chunk {
         BufferedImage[][] images = new BufferedImage[_chunkSize][_chunkSize];
         Vector2f[][] positions = new Vector2f[_chunkSize][_chunkSize];
 
-        Texture texture = new Texture(new BufferedImage(_chunkSize * World.BLOCK_SIZE, _chunkSize * World.BLOCK_SIZE, BufferedImage.TYPE_INT_ARGB));
+        //Determine new Texture size
+        int highestWidth = 0;
+        int highestHeight = 0;
+
+        for (int i = 0; i < _chunkSize; i++) {
+            for (int j = 0; j < _chunkSize; j++) {
+
+                int blockTextureWidth = blockData[i][j].getTexture().getWidth();
+                int blockTextureHeight = blockData[i][j].getTexture().getHeight();
+
+                if (blockTextureWidth > highestWidth){
+                    highestWidth = blockTextureWidth;
+                }
+                if (blockTextureHeight > highestHeight){
+                    highestHeight = blockTextureHeight;
+                }
+            }
+        }
+
+        //Create new texture with calculated width and height
+        Texture texture = new Texture(new BufferedImage(_chunkSize * highestWidth, _chunkSize * highestHeight, BufferedImage.TYPE_INT_ARGB));
 
         // Get every block with its position and paint them onto the new texture
         for (int i = 0; i < _chunkSize; i++) {
             for (int j = 0; j < _chunkSize; j++) {
 
                 images[i][j] = blockData[i][j].getTexture().getImageData();
-                positions[i][j] = new Vector2f(i * World.BLOCK_SIZE, j * World.BLOCK_SIZE);
+                positions[i][j] = new Vector2f(i * highestWidth, j * highestHeight);
             }
 
             // Draw row of blocks onto the texture
@@ -86,7 +106,7 @@ public class Chunk {
         }
 
         // Create new Sprite with our freshly painted texture
-        sprite = new Sprite(texture, new Vector2f(xPos, yPos), new Vector2f(_chunkSize * World.BLOCK_SIZE, _chunkSize * World.BLOCK_SIZE));
+        sprite = new Sprite(texture, new Vector2f(xPos, yPos), new Vector2f(_chunkSize, _chunkSize));
     }
 
     /**
