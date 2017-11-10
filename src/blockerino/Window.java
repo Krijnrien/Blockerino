@@ -1,6 +1,8 @@
 package blockerino;
 
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class Window extends JFrame {
 
@@ -24,6 +26,14 @@ public class Window extends JFrame {
         jFrame.setVisible(true);
         jFrame.setFocusable(true);
         jFrame.requestFocus();
+        jFrame.addComponentListener(new ResizeListener());
         setJFrame(jFrame);
+    }
+
+    class ResizeListener extends ComponentAdapter {
+        public void componentResized(ComponentEvent e) {
+            GamePanel.width = e.getComponent().getWidth();
+            GamePanel.height = e.getComponent().getHeight();
+        }
     }
 }
