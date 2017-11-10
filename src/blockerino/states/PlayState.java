@@ -2,6 +2,7 @@ package blockerino.states;
 
 import blockerino.entity.Player;
 import blockerino.graphics.Sprite;
+import blockerino.graphics.UI.GameUI;
 import blockerino.resources.ResourceHandler;
 import blockerino.util.*;
 import blockerino.graphics.Font;
@@ -16,6 +17,7 @@ public class PlayState extends GameState {
     public static World world;
     private Player player;
     private Camera2D camera;
+    private GameUI gameUI;
 
     PlayState(GameStateManager _gameStateManager) {
         super(_gameStateManager);
@@ -24,20 +26,22 @@ public class PlayState extends GameState {
         worldGen.setFrequency(16);
         worldGen.setAverageHeight(30);
         world = new World(16, worldGen);
-
+        gameUI = new GameUI();
         player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player")), new Vector2f(10, 10), 32);
 
         camera = new Camera2D(1280); //TODO 1280 should be real screen width
         camera.setZoomValue(128);
-        camera.setPosition(player.getPosition());
+        //camera.setPosition(player.getPosition());
     }
 
     public void update() {
         player.update();
+        gameUI.update();
     }
 
     public void input(MouseHandler _mouse, KeyHandler _key) {
         player.input(_mouse, _key);
+        gameUI.input(_key);
     }
 
     public void render(Graphics2D _graphics2D) {

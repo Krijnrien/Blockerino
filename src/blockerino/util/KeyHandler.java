@@ -64,13 +64,7 @@ public class KeyHandler implements KeyListener {
         }
 
         void toggle() {
-            if (toggle == false) {
-                System.out.println("true");
-                toggle = true;
-            } else {
-                System.out.println("false");
-                toggle = false;
-            }
+            toggle = !toggle;
         }
 
         void hold(boolean _pressed) {

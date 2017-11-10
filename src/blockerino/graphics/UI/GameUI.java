@@ -17,7 +17,6 @@ public class GameUI {
 
     private void createMenu() {
         if (escapeKey.escape.toggle) {
-            System.out.println("escape");
             escapeKey.escape.toggle = false;
         }
     }
