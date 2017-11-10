@@ -1,24 +1,40 @@
 package blockerino.graphics.UI;
 
+
 import blockerino.GamePanel;
+import blockerino.Window;
 
 import javax.swing.*;
 
-public class EscapeGameUI{
+class EscapeGameUI extends JPanel {
+
+    private boolean isActive;
+    private JPanel gamePanel;
 
     EscapeGameUI() {
-
+        gamePanel = Window.getInstance().getGamePanel();
     }
 
-    public void createUI() {
-        JPanel jPanel = new JPanel();
-        JButton okButton = new JButton("OK");
-        jPanel.add(okButton);
-        jPanel.setLocation(0, 0);
-
+    void manageUI() {
+        if (!isActive) {
+            createUI();
+            System.out.println("Creating escape menu");
+        } else {
+            destroyUI();
+            System.out.println("Destroying escape menu");
+        }
     }
 
-    public void destroyUI() {
+    private void createUI() {
+//        JButton okButton = new JButton("OK");
+//        this.add(okButton);
+//        this.setLocation(20, 200);
+//        isActive = true;
+//        System.out.println(gamePanel.getWidth());
+//        //gamePanel.add(okButton);
+    }
 
+    private void destroyUI() {
+        isActive = false;
     }
 }
