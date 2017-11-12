@@ -1,6 +1,5 @@
 package blockerino;
 
-import blockerino.resources.Resource;
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
 import blockerino.resources.blocks.BlockAir;
@@ -14,6 +13,8 @@ import java.awt.image.BufferedImage;
 
 
 public class GamePanel extends JPanel implements Runnable {
+
+    private JPanel gamePanel;
 
     public static int width;
     public static int height;
@@ -29,14 +30,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     private GameStateManager gameStateManager;
 
-    public GamePanel() {
-    }
-
     GamePanel(int _width, int _height) {
         height = _height;
         width = _width;
+    }
 
-        setPreferredSize(new Dimension(_width, _height));
+    public JPanel createGamePanel(){
+        gamePanel = new JPanel();
+        gamePanel.setPreferredSize(new Dimension(width, height));
+        return gamePanel;
     }
 
     public void addNotify() {

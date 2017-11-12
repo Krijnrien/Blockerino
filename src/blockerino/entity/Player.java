@@ -1,5 +1,10 @@
 package blockerino.entity;
 
+import blockerino.combat.bullet.Bullet;
+import blockerino.combat.bullet.projectile.StandardBullet;
+import blockerino.combat.weapon.Weapon;
+import blockerino.combat.weapon.projectile.IProjectileWeapon;
+import blockerino.combat.weapon.projectile.pistol.RevolverPistol;
 import blockerino.graphics.Sprite;
 import blockerino.util.KeyHandler;
 import blockerino.util.MouseHandler;
@@ -99,5 +104,9 @@ public class Player extends Entity {
 		right = _key.right.down;
 
 		attack = _key.attack.down;
+
+		Bullet bullet = new StandardBullet();
+		Weapon revolver = new RevolverPistol(8,bullet);
+		revolver.input();
 	}
 }
