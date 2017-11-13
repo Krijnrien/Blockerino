@@ -1,4 +1,4 @@
-package blockerino.entity.physics;
+package blockerino.world.physics;
 
 public class Gravity {
 

@@ -15,7 +15,6 @@ public class KeyHandler implements KeyListener {
     public Key down = new Key();
     public Key left = new Key();
     public Key right = new Key();
-    public Key attack = new Key();
     public Key menu = new Key();
     public Key enter = new Key();
     public Key escape = new Key();
@@ -29,7 +28,6 @@ public class KeyHandler implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_S) down.hold(pressed);
         if (e.getKeyCode() == KeyEvent.VK_A) left.hold(pressed);
         if (e.getKeyCode() == KeyEvent.VK_D) right.hold(pressed);
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) attack.hold(pressed);
     }
 
     private void pressed(KeyEvent e) {

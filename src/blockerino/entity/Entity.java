@@ -10,149 +10,214 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
-	private final int UP = 3;
-	private final int DOWN = 2;
-	private final int RIGHT = 0;
-	private final int LEFT = 1;
+    //region class variables
+    private Sprite sprite;
 
-	Animation animation;
-	private Sprite sprite;
-	Vector2f position;
-	int size;
-	private int currentAnimation;
+    //endregion
 
-	//TODO Getter & setters.
-	boolean up;
-	boolean down;
-	boolean right;
-	boolean left;
-	boolean attack;
+    private final int sheetRowUp = 3;
+    private final int sheetRowDown = 2;
+    private final int sheetRowRight = 0;
+    private final int sheetRowLeft = 1;
 
-	float dx;
-	float dy;
-	boolean airborne;
-	float weight;
+    private Animation animation;
+    protected Vector2f position;
+    private int currentAnimation;
 
-	float maxSpeed = 3f;
-	float acc = 2f;
-	float deacc = 0.3f;
+    private boolean up;
+    private boolean down;
+    private boolean right;
+    private boolean left;
+    private boolean primaryUse;
+    private boolean secondaryUse;
 
-	private AABB hitBounds;
-	private AABB bounds;
+    private float dx;
+    private float dy;
 
-	Entity(Sprite _sprite, Vector2f _origin, int _size) {
-		this.sprite = _sprite;
-		position = _origin;
-		this.size = _size;
+    private float flSizeTemp; // Declaring sizeTamp as it's used multiple times across different methods.
+    private AABB hitBounds;
+    private AABB bounds;
 
-		bounds = new AABB(_origin, _size, _size);
-		hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
+    Entity(Sprite _sprite, Vector2f _origin, int _size) {
+        this.sprite = _sprite;
+        position = _origin;
+        flSizeTemp = getSize();
 
-		animation = new Animation();
-		setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
-	}
+        bounds = new AABB(_origin, _size, _size);
+        hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
 
-	/**
-	 * Gravity affects weight. Weight affects entities closer to the planets core, heavier equals a larger gravity pull force.
-	 */
-	public void setWeight() {
-	}
+        animation = new Animation();
+        setAnimation(sheetRowRight, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
+    }
 
-	public void getWeight() {
-	}
+    public abstract void render(Graphics2D _graphics2D);
 
-	public void setSprite(Sprite _sprite) {
-		this.sprite = _sprite;
-	}
+    public void update() {
+        animate();
+        setHitBoxDirection();
+        animation.update();
+    }
 
-	public void setSize(int _size) {
-		size = _size;
-	}
+    private void animate() {
+        if (up) {
+            if (currentAnimation != sheetRowUp || animation.getDelay() == -1) {
+                setAnimation(sheetRowUp, sprite.getTexture().getPartOfImageDataArray(24, 31), 5);
+            }
+        } else if (down) {
+            if (currentAnimation != sheetRowDown || animation.getDelay() == -1) {
+                setAnimation(sheetRowDown, sprite.getTexture().getPartOfImageDataArray(16, 23), 5);
+            }
+        } else if (left) {
+            if (currentAnimation != sheetRowLeft || animation.getDelay() == -1) {
+                setAnimation(sheetRowLeft, sprite.getTexture().getPartOfImageDataArray(8, 15), 5);
+            }
+        } else if (right) {
+            if (currentAnimation != sheetRowRight || animation.getDelay() == -1) {
+                setAnimation(sheetRowRight, sprite.getTexture().getPartOfImageDataArray(0, 7), 5);
+            }
+        } else {
+            setAnimation(currentAnimation, sprite.getTexture().getImageData(), -1);
+        }
+    }
 
-	public void setMaxSpeed(float _maxSpeed) {
-		maxSpeed = _maxSpeed;
-	}
+    private void setHitBoxDirection() {
+        if (up) {
+            hitBounds.setYOffset(-flSizeTemp / 2);
+            hitBounds.setXOffset(-flSizeTemp / 2);
+        } else if (down) {
+            hitBounds.setYOffset(flSizeTemp / 2);
+            hitBounds.setXOffset(-flSizeTemp / 2);
+        } else if (left) {
+            hitBounds.setXOffset(-flSizeTemp);
+            hitBounds.setYOffset(0);
+        } else if (right) {
+            hitBounds.setXOffset(0);
+            hitBounds.setYOffset(0);
+        }
 
-	public void setAcc(float _acc) {
-		acc = _acc;
-	}
+    }
 
-	public void setDeacc(float _deacc) {
-		_deacc = _deacc;
-	}
+    //region Getter & setters
 
-	public AABB getBounds() {
-		return bounds;
-	}
+    void setAnimation(int _currentAnimation, BufferedImage[] _frames, int _delay) {
+        currentAnimation = _currentAnimation;
+        animation.setFrames(_frames);
+        animation.setDelay(_delay);
+    }
 
-	public int getSize() {
-		return size;
-	}
+    void setAnimation(int _currentAnimation, BufferedImage _frame, int _delay) {
+        BufferedImage[] frames = new BufferedImage[1];
+        frames[0] = _frame;
 
-	public Animation getAnimation() {
-		return animation;
-	}
+        currentAnimation = _currentAnimation;
+        animation.setFrames(frames);
+        animation.setDelay(_delay);
+    }
 
-	private void setAnimation(int _currentAnimation, BufferedImage[] _frames, int _delay) {
-		currentAnimation = _currentAnimation;
-		animation.setFrames(_frames);
-		animation.setDelay(_delay);
-	}
+    Animation getAnimation() {
+        return animation;
+    }
 
-	private void setAnimation(int _currentAnimation, BufferedImage _frame, int _delay) {
-		BufferedImage[] frames = new BufferedImage[1];
-		frames[0] = _frame;
+    void setSheetRowUp(boolean _up) {
+        this.up = _up;
+    }
 
-		currentAnimation = _currentAnimation;
-		animation.setFrames(frames);
-		animation.setDelay(_delay);
-	}
+    boolean getSheetRowUp() {
+        return this.up;
+    }
 
-	private void animate() {
-		if(up) {
-			if(currentAnimation != UP || animation.getDelay() == -1) {
-				setAnimation(UP, sprite.getTexture().getPartOfImageDataArray(24, 31), 5);
-			}
-		} else if(down) {
-			if(currentAnimation != DOWN || animation.getDelay() == -1) {
-				setAnimation(DOWN, sprite.getTexture().getPartOfImageDataArray(16, 23), 5);
-			}
-		} else if(left) {
-			if(currentAnimation != LEFT || animation.getDelay() == -1) {
-				setAnimation(LEFT, sprite.getTexture().getPartOfImageDataArray(8, 15), 5);
-			}
-		} else if(right) {
-			if(currentAnimation != RIGHT || animation.getDelay() == -1) {
-				setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 5);
-			}
-		} else {
-			setAnimation(currentAnimation, sprite.getTexture().getImageData(), -1);
-		}
-	}
+    void setDown(boolean _down) {
+        this.down = _down;
+    }
 
-	private void setHitBoxDirection() {
-		if(up) {
-			hitBounds.setYOffset(-size / 2);
-			hitBounds.setXOffset(-size / 2);
-		} else if(down) {
-			hitBounds.setYOffset(size / 2);
-			hitBounds.setXOffset(-size / 2);
-		} else if(left) {
-			hitBounds.setXOffset(-size);
-			hitBounds.setYOffset(0);
-		} else if(right) {
-			hitBounds.setXOffset(0);
-			hitBounds.setYOffset(0);
-		}
+    boolean getDown() {
+        return this.down;
+    }
 
-	}
+    boolean getLeft() {
+        return this.left;
+    }
 
-	public void update() {
-		animate();
-		setHitBoxDirection();
-		animation.update();
-	}
+    void setLeft(boolean right) {
+        this.left = right;
+    }
 
-	public abstract void render(Graphics2D _graphics2D);
+    boolean getRight() {
+        return this.right;
+    }
+
+    void setRight(boolean right) {
+        this.right = right;
+    }
+
+    boolean getPrimaryUse() {
+        return this.primaryUse;
+    }
+
+    void setPrimaryUse(boolean _primaryUse) {
+        this.primaryUse = _primaryUse;
+    }
+
+    boolean getSecondaryUse() {
+        return this.secondaryUse;
+    }
+
+    void setSecondaryUse(boolean _secondaryUse) {
+        this.secondaryUse = _secondaryUse;
+    }
+
+    public float getDx() {
+        return dx;
+    }
+
+    public void setDx(float dx) {
+        this.dx = dx;
+    }
+
+    public float getDy() {
+        return dy;
+    }
+
+    public void setDy(float dy) {
+        this.dy = dy;
+    }
+
+    void setBounds(AABB _bounds) {
+        this.bounds = _bounds;
+    }
+
+    AABB getBounds() {
+        return bounds;
+    }
+
+
+    //endregion
+
+    //region Abstract methods
+    public void setSprite(Sprite _sprite) {
+        this.sprite = _sprite;
+    }
+
+    public abstract void setWeight(float _weight);
+
+    public abstract float getWeight();
+
+    public abstract void setMaxSpeed(float _maxSpeed);
+
+    public abstract float getMaxSpeed();
+
+    public abstract void setAcceleration(float _acceleration);
+
+    public abstract float getAcceleration();
+
+    public abstract void setDeceleration(float _deceleration);
+
+    public abstract float getDeceleration();
+
+    public abstract float getSize();
+
+    public abstract void setSize(float _size);
+
+    //endregion
 
 }

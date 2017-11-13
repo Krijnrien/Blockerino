@@ -13,12 +13,12 @@ public class AABB {
     private float radius;
     private int size;
 
-    public AABB(Vector2f _position, int _width, int _height) {
+    public AABB(Vector2f _position, float _width, float _height) {
         this.position = _position;
         this.width = _width;
         this.height = _height;
 
-        size = Math.max(_width, _height);
+        size = Math.max((int) _width, (int) _height);
     }
 
     public AABB(Vector2f _position, int _radius, Entity _entity) {

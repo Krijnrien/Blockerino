@@ -16,19 +16,14 @@ public class RevolverPistol extends IProjectileWeapon {
     private ArrayList<ProjectileFireType> fireTypes = new ArrayList<>();
     private Bullet bullet;
 
-    public RevolverPistol(int _clipSizeLeftover, Bullet _bullet) {
-
-
-        /*  private void shootWeapon(){
-
-    }*/
+    public RevolverPistol(Bullet _bullet) {
 
         java.util.ArrayList<ProjectileFireType> setFireTypes = new ArrayList<>() {{
             add(ProjectileFireType.SINGLE);
         }};
 
         setClipSizeTotal(8);
-        setClipSizeLeftover(_clipSizeLeftover);
+        setClipSizeLeftover(1); //TODO Get redacted bullet amount
         setReloadTime(2000); // 2000 milliseconds
         setBulletInterval(1000); // 1000 milliseconds
 

@@ -3,29 +3,20 @@ package blockerino.combat.bullet.projectile;
 import blockerino.combat.bullet.Bullet;
 import blockerino.resources.Texture;
 
-public class ProjectileBullet extends Bullet{
-    @Override
-    public int weight() {
-        return 0;
+public abstract class ProjectileBullet extends Bullet {
+
+
+    public Texture texture() {
+        return null; //TODO temporary null to avoid compile error
     }
 
-    @Override
-    public int speed() {
-        return 0;
-    }
+    public abstract int getWeight();
 
-    @Override
-    public int resistance() {
-        return 0;
-    }
+    public abstract int getSpeed();
 
-    @Override
-    public Texture trail() {
-        return null;
-    }
+    public abstract int getResistance(); // Amount of resistance to traveling bullet resulting in deceleration.
 
-    @Override
-    public Texture collissionEffect() {
-        return null;
-    }
+    public abstract Texture getTail();
+
+    public abstract Texture getColissionEffect();
 }
