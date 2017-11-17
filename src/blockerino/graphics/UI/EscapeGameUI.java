@@ -12,7 +12,8 @@ class EscapeGameUI extends JPanel {
     private JPanel gamePanel;
 
     EscapeGameUI() {
-        gamePanel = Window.getInstance().getGamePanel();
+        //gamePanel = Window.getInstance().getGamePanel();
+        //^SINGLETON NOT WORKING
     }
 
     void manageUI() {

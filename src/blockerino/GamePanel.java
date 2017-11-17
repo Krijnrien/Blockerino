@@ -14,8 +14,6 @@ import java.awt.image.BufferedImage;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    private JPanel gamePanel;
-
     public static int width;
     public static int height;
 
@@ -33,12 +31,8 @@ public class GamePanel extends JPanel implements Runnable {
     GamePanel(int _width, int _height) {
         height = _height;
         width = _width;
-    }
 
-    public JPanel createGamePanel(){
-        gamePanel = new JPanel();
-        gamePanel.setPreferredSize(new Dimension(width, height));
-        return gamePanel;
+        setPreferredSize(new Dimension(_width, _height));
     }
 
     public void addNotify() {

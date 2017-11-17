@@ -2,15 +2,12 @@ package blockerino.entity;
 
 import blockerino.combat.bullet.Bullet;
 import blockerino.combat.bullet.projectile.StandardBullet;
-import blockerino.combat.weapon.Weapon;
 import blockerino.graphics.Sprite;
 import blockerino.util.KeyHandler;
 import blockerino.util.MouseHandler;
 import blockerino.util.Vector2f;
 
 import java.awt.*;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 public class Player extends Entity {
 
@@ -120,16 +117,16 @@ public class Player extends Entity {
 
         Bullet bullet = new StandardBullet();
 
-        try {
-            //TODO Find proper place to instantiate weapon & bullet. Reminder that weapons can be swapped in UI.
-            Class<?> weaponClass = Class.forName("RevolverPistol");
-            Constructor<?> constructor = weaponClass.getConstructor(Bullet.class);
-            Weapon weapon = (Weapon) constructor.newInstance(bullet);
-            weapon.input();
-        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            //TODO Proper error handling if gun class can't be found.
-            e.printStackTrace();
-        }
+//        try {
+//            //TODO Find proper place to instantiate weapon & bullet. Reminder that weapons can be swapped in UI.
+////            Class<?> weaponClass = Class.forName("RevolverPistol");
+////            Constructor<?> constructor = weaponClass.getConstructor(Bullet.class);
+////            Weapon weapon = (Weapon) constructor.newInstance(bullet);
+////            weapon.input();
+//        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+//            //TODO Proper error handling if gun class can't be found.
+//            e.printStackTrace();
+//        }
 
 
     }
