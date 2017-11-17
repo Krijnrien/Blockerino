@@ -3,11 +3,13 @@ package blockerino.entity;
 import blockerino.combat.bullet.Bullet;
 import blockerino.combat.bullet.projectile.StandardBullet;
 import blockerino.graphics.Sprite;
+import blockerino.resources.Texture;
 import blockerino.util.KeyHandler;
 import blockerino.util.MouseHandler;
 import blockerino.util.Vector2f;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class Player extends Entity {
 
@@ -101,8 +103,10 @@ public class Player extends Entity {
     }
 
     @Override
-    public void render(Graphics2D _graphics2D) {
-        _graphics2D.drawImage(getAnimation().getImage(), (int) position.x, (int) position.y, (int) size, (int) size, null);
+    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
+        System.out.println(position.toString());
+        Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, new Vector2f(1, 1));
+        s.render(_graphics2D, _projectionViewMatrix);
     }
 
     public void input(MouseHandler _mouse, KeyHandler _key) {

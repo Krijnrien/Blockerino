@@ -6,12 +6,13 @@ import blockerino.util.AABB;
 import blockerino.util.Vector2f;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 
     //region class variables
-    private Sprite sprite;
+    protected Sprite sprite;
 
     //endregion
 
@@ -50,7 +51,7 @@ public abstract class Entity {
         setAnimation(sheetRowRight, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
     }
 
-    public abstract void render(Graphics2D _graphics2D);
+    public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
 
     public void update() {
         animate();

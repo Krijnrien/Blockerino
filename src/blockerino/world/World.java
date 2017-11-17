@@ -43,11 +43,11 @@ public class World {
      * Render world chunk by chunk
      * @param _graphics2D graphics2D Object
      */
-    public void render(Graphics2D _graphics2D)
+    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix)
     {
         for(int i = 0; i < loadedChunks.size(); i++)
         {
-            loadedChunks.get(i).render(_graphics2D);
+            loadedChunks.get(i).render(_graphics2D, _projectionViewMatrix);
         }
     }
 

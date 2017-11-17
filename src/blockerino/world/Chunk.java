@@ -10,6 +10,7 @@ import blockerino.util.Vector2f;
 import blockerino.world.generation.Generator;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 /**
@@ -112,7 +113,7 @@ public class Chunk {
     /**
      * Render the chunk on screen
      */
-    public void render(Graphics2D _graphics2) {
-        sprite.render(_graphics2);
+    public void render(Graphics2D _graphics2, AffineTransform _projectionViewMatrix) {
+        sprite.render(_graphics2, _projectionViewMatrix);
     }
 }
