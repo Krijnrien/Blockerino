@@ -112,6 +112,21 @@ public class World {
     }
 
     /**
+     * First doodle for a method that places a block on given coords, not finished
+     * @param _xPos
+     * @param _yPos
+     */
+    public void setBlock(int _xPos, int _yPos){
+        Chunk chunk = getChunk(_xPos, _yPos);
+        int xPosInChunk = _xPos % chunkSize;
+        int yPosInChunk = _yPos % chunkSize;
+
+        if (chunk != null){
+
+        }
+    }
+
+    /**
      * Render world chunk by chunk
      * @param _graphics2D graphics2D Object
      */

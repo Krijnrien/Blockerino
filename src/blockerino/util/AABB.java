@@ -77,8 +77,8 @@ public class AABB {
     public boolean collides(AABB bBox) {
         float ax = ((position.getWorldVar().x + (xOffset)) + (width / 2));
         float ay = ((position.getWorldVar().y + (yOffset)) + (height / 2));
-        float bx = ((bBox.getPosition().getWorldVar().x + (xOffset)) + (width / 2));
-        float by = ((bBox.getPosition().getWorldVar().y + (yOffset)) + (height / 2));
+        float bx = ((bBox.getPosition().getWorldVar().x + (xOffset) + (width / 2)));
+        float by = ((bBox.getPosition().getWorldVar().y + (yOffset) + (height / 2)));
 
         if (Math.abs(ax - bx) < (this.width / 2) + (bBox.width / 2)) {
             if (Math.abs(ay - by) < (this.height / 2) + (bBox.height / 2)) {
@@ -86,6 +86,22 @@ public class AABB {
             }
         }
         return false;
+
+    }
+
+    public boolean collides(AABB bBox, float targetXOffset, float targetYOffset) {
+        float ax = ((position.getWorldVar().x + (xOffset)) + (width / 2));
+        float ay = ((position.getWorldVar().y + (yOffset)) + (height / 2));
+        float bx = ((bBox.getPosition().getWorldVar().x + (targetXOffset) + (width / 2)));
+        float by = ((bBox.getPosition().getWorldVar().y + (targetYOffset) + (height / 2)));
+
+        if (Math.abs(ax - bx) < (this.width / 2) + (bBox.width / 2)) {
+            if (Math.abs(ay - by) < (this.height / 2) + (bBox.height / 2)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     public boolean colCircleBox(AABB aBox) {

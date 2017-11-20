@@ -8,5 +8,6 @@ public class BlockAir extends Block {
     public BlockAir()
     {
         setTexture(ResourceHandler.getLoadedTexture("air"));
+        setSolid(false);
     }
 }

@@ -6,12 +6,15 @@ import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
 import blockerino.resources.blocks.BlockAir;
 import blockerino.resources.blocks.BlockStone;
+import blockerino.util.AABB;
 import blockerino.util.Vector2f;
 import blockerino.world.generation.Generator;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Chunk is an allocation and display object for a grid(chunk) of blocks.
@@ -29,6 +32,31 @@ public class Chunk {
         yPos = _yPos;
 
         construct(_chunkSize, _worldGen);
+    }
+
+    /**
+     * Return all block collisions by given AABB
+     * @param _collision AABB
+     * @return block list
+     */
+    public List<Block> getBlockCollisions(AABB _collision){
+
+        List<Block> collisions = new ArrayList<>();
+
+        for (int i = 0; i < blockData.length; i++){
+            for (int j = 0; j < blockData[i].length; j++){
+                // If the specific block has collision set
+                if (blockData[i][j].getCollision() != null && blockData[i][j].getSolid()) {
+                    if (_collision.collides(blockData[i][j].getCollision(), xPos + i, yPos + j)) {
+
+                        collisions.add(blockData[i][j]);
+                        //System.out.println("Collision on block: " + (xPos + i) + ", " + (yPos + j));
+                    }
+                }
+            }
+        }
+
+        return collisions;
     }
 
     /**
