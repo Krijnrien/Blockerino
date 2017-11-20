@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 import blockerino.GamePanel;
+import blockerino.Window;
 import blockerino.util.*;
 
 
@@ -14,7 +15,7 @@ public class GameStateManager {
 
 
     public GameStateManager() {
-        map = new Vector2f(GamePanel.width, GamePanel.height);
+        map = new Vector2f(Window.width, Window.height);
         Vector2f.setWorldVar(map.x, map.y);
 
         states = new HashMap<>();

@@ -1,14 +1,12 @@
 package blockerino.states;
 
-import blockerino.GamePanel;
+import blockerino.Window;
 import blockerino.entity.Player;
 import blockerino.graphics.Sprite;
 import blockerino.graphics.UI.GameUI;
 import blockerino.resources.ResourceHandler;
 import blockerino.util.*;
-import blockerino.graphics.Font;
 import blockerino.world.Camera2D;
-import blockerino.world.Chunk;
 import blockerino.world.World;
 import blockerino.world.generation.NoiseGenerator;
 
@@ -63,7 +61,7 @@ public class PlayState extends GameState {
 
     public void updateProjectionMatrix(){
         projectionMatrix = new AffineTransform();
-        projectionMatrix.translate((double) GamePanel.width / 2, (double)GamePanel.height / 2);
+        projectionMatrix.translate((double) Window.width / 2, (double)Window.height / 2);
     }
 
     public void updateProjectionViewMatrix(){

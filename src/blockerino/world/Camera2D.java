@@ -1,6 +1,7 @@
 package blockerino.world;
 
 import blockerino.GamePanel;
+import blockerino.Window;
 import blockerino.entity.Entity;
 import blockerino.util.Vector2f;
 
@@ -57,7 +58,7 @@ public class Camera2D {
     public void updateViewMatrixWidthOnly(){
 
         viewMatrix = new AffineTransform();
-        viewMatrix.scale((double)GamePanel.width / scale.x, (double)GamePanel.width / scale.y);
+        viewMatrix.scale((double)Window.width / scale.x, (double) Window.width / scale.y);
 
         if (target != null){
             viewMatrix.translate(-target.getPosition().x, -target.getPosition().y);

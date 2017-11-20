@@ -6,26 +6,38 @@ import java.awt.event.ComponentEvent;
 
 public class Window extends JFrame {
 
-    void createWindow() {
-        JFrame jFrame = new JFrame("blockerino2");
-        jFrame.setTitle("Blockerino");
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public static int width;
+	public static int height;
 
-        JPanel gamePanel = new GamePanel(1280, 720);
-        jFrame.setContentPane(gamePanel);
-        jFrame.pack();
-        jFrame.setLocationRelativeTo(null);
-        jFrame.setVisible(true);
-        jFrame.setFocusable(true);
-        jFrame.requestFocus();
-        jFrame.addComponentListener(new ResizeListener());
-    }
+	private JFrame jFrame;
+	private JLayeredPane gameContainer;
+	private JPanel gamePanel;
 
+	void createWindow() {
+		width = 1280;
+		height = 720;
 
-    class ResizeListener extends ComponentAdapter {
-        public void componentResized(ComponentEvent e) {
-            GamePanel.width = e.getComponent().getWidth();
-            GamePanel.height = e.getComponent().getHeight();
-        }
-    }
+		jFrame = new JFrame("Blockerino");
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		gameContainer = new GameContainer();
+
+		gamePanel = new GamePanel();
+		gameContainer.add(gamePanel, 1);
+
+		jFrame.setContentPane(gameContainer);
+		jFrame.pack();
+		jFrame.setLocationRelativeTo(null);
+		jFrame.setVisible(true);
+		jFrame.setFocusable(true);
+		jFrame.requestFocus();
+		jFrame.addComponentListener(new ResizeListener());
+	}
+
+	class ResizeListener extends ComponentAdapter {
+		public void componentResized(ComponentEvent e) {
+			width = e.getComponent().getWidth();
+			height = e.getComponent().getHeight();
+		}
+	}
 }

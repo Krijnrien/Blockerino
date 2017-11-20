@@ -12,5 +12,4 @@ public class Gravity {
 		return this.gravityForce;
 	}
 
-
 }

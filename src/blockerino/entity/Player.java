@@ -88,6 +88,9 @@ public class Player extends Entity {
             }
         }
 
+        setDx(dx);
+        setDy(dy);
+
         //TODO Update Y position cause gravity
     }
 
