@@ -94,6 +94,7 @@ public class Sprite {
     }
 
     public void updateMatrix(){
+        transformMatrix = new AffineTransform();
         transformMatrix.translate(position.x, position.y);
         transformMatrix.scale(scale.x, scale.y);
     }

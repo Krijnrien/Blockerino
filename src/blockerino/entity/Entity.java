@@ -59,6 +59,10 @@ public abstract class Entity {
         animation.update();
     }
 
+    public Vector2f getPosition(){
+        return position;
+    }
+
     private void animate() {
         if (up) {
             if (currentAnimation != sheetRowUp || animation.getDelay() == -1) {
@@ -83,15 +87,19 @@ public abstract class Entity {
 
     private void setHitBoxDirection() {
         if (up) {
+            position.y -= getMaxSpeed();
             hitBounds.setYOffset(-flSizeTemp / 2);
             hitBounds.setXOffset(-flSizeTemp / 2);
         } else if (down) {
+            position.y += getMaxSpeed();
             hitBounds.setYOffset(flSizeTemp / 2);
             hitBounds.setXOffset(-flSizeTemp / 2);
         } else if (left) {
+            position.x -= getMaxSpeed();
             hitBounds.setXOffset(-flSizeTemp);
             hitBounds.setYOffset(0);
         } else if (right) {
+            position.x += getMaxSpeed();
             hitBounds.setXOffset(0);
             hitBounds.setYOffset(0);
         }

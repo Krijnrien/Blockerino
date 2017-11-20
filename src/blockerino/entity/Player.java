@@ -19,7 +19,7 @@ public class Player extends Entity {
     private float acceleration = 2f;
     private float deceleration = 0.3f;
 
-    private float maxSpeed = 3f;
+    private float maxSpeed = 1 / 4f;
 
     private float size;
     //endregion
@@ -102,9 +102,12 @@ public class Player extends Entity {
         position.y += getDy(); // get player Y position
     }
 
+    public Vector2f getPosition(){
+        return position;
+    }
+
     @Override
     public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
-        System.out.println(position.toString());
         Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, new Vector2f(1, 1));
         s.render(_graphics2D, _projectionViewMatrix);
     }

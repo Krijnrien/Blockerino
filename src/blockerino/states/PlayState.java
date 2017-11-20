@@ -39,7 +39,9 @@ public class PlayState extends GameState {
 
         camera = new Camera2D();
         camera.setScaleValue(80);
+        camera.setTarget(player);
         camera.updateViewMatrixWidthOnly();
+
 
         projectionViewMatrix = new AffineTransform(projectionMatrix);
         updateProjectionViewMatrix();
@@ -49,14 +51,18 @@ public class PlayState extends GameState {
     public void update() {
         player.update();
         gameUI.update();
+        camera.updateViewMatrixWidthOnly();
+        updateProjectionViewMatrix();
     }
 
     public void updateProjectionMatrix(){
+        projectionMatrix = new AffineTransform();
         projectionMatrix.translate((double) GamePanel.width / 2, (double)GamePanel.height / 2);
     }
 
     public void updateProjectionViewMatrix(){
         //Combine projection matrix with camera matrix
+        projectionViewMatrix = new AffineTransform(projectionMatrix);
         projectionViewMatrix.concatenate(camera.getViewMatrix());
     }
 
