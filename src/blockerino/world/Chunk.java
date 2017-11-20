@@ -107,7 +107,7 @@ public class Chunk {
         }
 
         // Create new Sprite with our freshly painted texture
-        sprite = new Sprite(texture, new Vector2f(xPos, yPos), new Vector2f(_chunkSize, _chunkSize));
+        sprite = new Sprite(texture, new Vector2f(xPos + _chunkSize / 2 - 0.5f, yPos + _chunkSize / 2 - 0.5f), new Vector2f(_chunkSize, _chunkSize));
     }
 
     /**
@@ -115,5 +115,13 @@ public class Chunk {
      */
     public void render(Graphics2D _graphics2, AffineTransform _projectionViewMatrix) {
         sprite.render(_graphics2, _projectionViewMatrix);
+    }
+
+    public int getXPos(){
+        return xPos;
+    }
+
+    public int getYPos(){
+        return yPos;
     }
 }

@@ -8,6 +8,7 @@ import blockerino.resources.ResourceHandler;
 import blockerino.util.*;
 import blockerino.graphics.Font;
 import blockerino.world.Camera2D;
+import blockerino.world.Chunk;
 import blockerino.world.World;
 import blockerino.world.generation.NoiseGenerator;
 
@@ -30,6 +31,7 @@ public class PlayState extends GameState {
         worldGen.setAmplitude(32);
         worldGen.setFrequency(16);
         worldGen.setAverageHeight(30);
+
         world = new World(16, worldGen);
         gameUI = new GameUI();
         player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)), new Vector2f(0, 0), 32);
@@ -38,7 +40,7 @@ public class PlayState extends GameState {
         updateProjectionMatrix();
 
         camera = new Camera2D();
-        camera.setScaleValue(80);
+        camera.setScaleValue(200);
         camera.setTarget(player);
         camera.updateViewMatrixWidthOnly();
 
@@ -51,8 +53,12 @@ public class PlayState extends GameState {
     public void update() {
         player.update();
         gameUI.update();
+
         camera.updateViewMatrixWidthOnly();
         updateProjectionViewMatrix();
+
+        //Generate chunks around player if needed
+        world.generateChunksRadius(player.getPosition());
     }
 
     public void updateProjectionMatrix(){
