@@ -15,7 +15,6 @@ public abstract class Entity extends WorldObject {
 
 	//region Class variables
 	private Sprite sprite;// Texture
-	private Vector2f position;// Position
 	private int size;// Size of entity
 	private int weight;//weight of entity
 	private AABB hitBounds;// Bounds entity for hits
@@ -26,7 +25,6 @@ public abstract class Entity extends WorldObject {
 
 	public Entity(Sprite _sprite, Vector2f _origin, int _size) {
 		this.sprite = _sprite;
-		position = _origin;
 		size = _size;
 
 		bounds = new AABB(_origin, _size, _size);
@@ -46,14 +44,6 @@ public abstract class Entity extends WorldObject {
 
 	public void setSprite(Sprite sprite) {
 		this.sprite = sprite;
-	}
-
-	public Vector2f getPosition() {
-		return position;
-	}
-
-	public void setPosition(Vector2f position) {
-		this.position = position;
 	}
 
 	public int getSize() {

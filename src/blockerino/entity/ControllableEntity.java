@@ -194,5 +194,22 @@ public abstract class ControllableEntity extends Entity {
 	public float getMaxSpeed() {
 		return this.maxSpeed;
 	}
+
+	public float getAcceleration() {
+		return acceleration;
+	}
+
+	public void setAcceleration(float acceleration) {
+		this.acceleration = acceleration;
+	}
+
+	public float getDeceleration() {
+		return deceleration;
+	}
+
+	public void setDeceleration(float deceleration) {
+		this.deceleration = deceleration;
+	}
+
 	//endregion
 }

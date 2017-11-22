@@ -10,7 +10,7 @@ public class GamePanel extends JPanel {
 	public GamePanel() {
 		setPreferredSize(new Dimension(Window.width, Window.height));
 		GameLoop gameLoop = new GameLoop(this);
-		Thread t = new Thread(gameLoop, "testing");
+		Thread t = new Thread(gameLoop, "GameThread");
 		t.start();
 	}
 

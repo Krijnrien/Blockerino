@@ -10,79 +10,99 @@ import blockerino.world.Camera2D;
 import blockerino.world.World;
 import blockerino.world.generation.NoiseGenerator;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.File;
 
 public class PlayState extends GameState {
 
-	public static World world;
-	private Player player;
-	private Camera2D camera;
-	private GameUI gameUI;
+    public static World world;
+    private Player player;
+    private Camera2D camera;
+    private GameUI gameUI;
 
-	private AffineTransform projectionMatrix;
-	private AffineTransform projectionViewMatrix;
+    private AffineTransform projectionMatrix;
+    private AffineTransform projectionViewMatrix;
 
-	PlayState(GameStateManager _gameStateManager) {
-		super(_gameStateManager);
-		NoiseGenerator worldGen = new NoiseGenerator(1337);
-		worldGen.setAmplitude(32);
-		worldGen.setFrequency(16);
-		worldGen.setAverageHeight(30);
+    PlayState(GameStateManager _gameStateManager) {
+        super(_gameStateManager);
+        NoiseGenerator worldGen = new NoiseGenerator(1337);
+        worldGen.setAmplitude(32);
+        worldGen.setFrequency(16);
+        worldGen.setAverageHeight(30);
 
-		world = new World(16, worldGen);
-		gameUI = new GameUI();
-		player = new Player();
+        world = new World(16, worldGen);
+        gameUI = new GameUI();
 
-		projectionMatrix = new AffineTransform();
-		updateProjectionMatrix();
+        try {
+            File file = new File("entity/player.xml");
+            JAXBContext jaxbContext = JAXBContext.newInstance(Player.class);
+            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+            Player player = (Player) jaxbUnmarshaller.unmarshal(file);
+            System.out.println(player);
 
-		camera = new Camera2D();
-		camera.setScaleValue(50);
-		camera.setTarget(player);
-		camera.updateViewMatrixWidthOnly();
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
+        player.setPosition(new Vector2f(1, 1));
 
 
-		projectionViewMatrix = new AffineTransform(projectionMatrix);
-		updateProjectionViewMatrix();
-		//camera.setPosition(player.getPosition());
-	}
+        //player = new Player();
 
-	public void update() {
-		player.update();
-		gameUI.update();
+        projectionMatrix = new AffineTransform();
+        updateProjectionMatrix();
 
-		camera.updateViewMatrixWidthOnly();
-		updateProjectionViewMatrix();
+        camera = new Camera2D();
+        camera.setScaleValue(50);
+        camera.setTarget(player);
+        camera.updateViewMatrixWidthOnly();
 
-		//Generate chunks around player if needed
-		world.generateChunksRadius(player.getPosition());
-	}
 
-	public void updateProjectionMatrix() {
-		projectionMatrix = new AffineTransform();
-		projectionMatrix.translate((double) Window.width / 2, (double) Window.height / 2);
-	}
+        projectionViewMatrix = new AffineTransform(projectionMatrix);
+        updateProjectionViewMatrix();
+        //camera.setPosition(player.getPosition());
+    }
 
-	public void updateProjectionViewMatrix() {
-		//Combine projection matrix with camera matrix
-		projectionViewMatrix = new AffineTransform(projectionMatrix);
-		projectionViewMatrix.concatenate(camera.getViewMatrix());
-	}
+    public void update() {
+        player.update();
+        gameUI.update();
 
-	public void input(MouseHandler _mouse, KeyHandler _key) {
-		player.input(_mouse, _key);
-		gameUI.input(_key);
-	}
+        camera.updateViewMatrixWidthOnly();
+        updateProjectionViewMatrix();
 
-	public void render(Graphics2D _graphics2D) {
-		world.render(_graphics2D, projectionViewMatrix);
-		player.render(_graphics2D, projectionViewMatrix);
+        //Generate chunks around player if needed
+        world.generateChunksRadius(player.getPosition());
+    }
 
-		world.renderCollision(_graphics2D, projectionViewMatrix);
-	}
+    public void updateProjectionMatrix() {
+        projectionMatrix = new AffineTransform();
+        projectionMatrix.translate((double) Window.width / 2, (double) Window.height / 2);
+    }
 
-	public Camera2D getCamera() {
-		return camera;
-	}
+    public void updateProjectionViewMatrix() {
+        //Combine projection matrix with camera matrix
+        projectionViewMatrix = new AffineTransform(projectionMatrix);
+        projectionViewMatrix.concatenate(camera.getViewMatrix());
+    }
+
+    public void input(MouseHandler _mouse, KeyHandler _key) {
+        player.input(_mouse, _key);
+        gameUI.input(_key);
+    }
+
+    public void render(Graphics2D _graphics2D) {
+        world.render(_graphics2D, projectionViewMatrix);
+        player.render(_graphics2D, projectionViewMatrix);
+
+        world.renderCollision(_graphics2D, projectionViewMatrix);
+    }
+
+    public Camera2D getCamera() {
+        return camera;
+    }
 }
