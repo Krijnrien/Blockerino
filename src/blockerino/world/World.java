@@ -138,6 +138,13 @@ public class World {
         }
     }
 
+    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
+        for(int i = 0; i < loadedChunks.size(); i++)
+        {
+            loadedChunks.get(i).renderCollision(_graphics2D, _projectionViewMatrix);
+        }
+    }
+
     public int getChunkSize() {
         return chunkSize;
     }

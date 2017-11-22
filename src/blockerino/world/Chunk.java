@@ -145,6 +145,17 @@ public class Chunk {
         sprite.render(_graphics2, _projectionViewMatrix);
     }
 
+    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
+        for (int i = 0; i < blockData.length; i++) {
+            for (int j = 0; j < blockData[i].length; j++) {
+
+                if (blockData[i][j].hasCollision()) {
+                    blockData[i][j].renderCollision(_graphics2D, _projectionViewMatrix, new Vector2f(xPos + i, yPos + j));
+                }
+            }
+        }
+    }
+
     public int getXPos(){
         return xPos;
     }

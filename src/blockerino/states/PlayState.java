@@ -38,7 +38,7 @@ public class PlayState extends GameState {
         updateProjectionMatrix();
 
         camera = new Camera2D();
-        camera.setScaleValue(200);
+        camera.setScaleValue(50);
         camera.setTarget(player);
         camera.updateViewMatrixWidthOnly();
 
@@ -78,6 +78,8 @@ public class PlayState extends GameState {
     public void render(Graphics2D _graphics2D) {
         world.render(_graphics2D, projectionViewMatrix);
         player.render(_graphics2D, projectionViewMatrix);
+
+        world.renderCollision(_graphics2D, projectionViewMatrix);
     }
 
     public Camera2D getCamera() {
