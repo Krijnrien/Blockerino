@@ -12,7 +12,6 @@ public abstract class BagItem extends Item {
 
 	private Item[] items = new Item[getSize()]; // Bag size of 20.
 
-
 	public void indexDefaultBag() {
 		Arrays.fill(getItems(), null);
 	}
@@ -23,10 +22,9 @@ public abstract class BagItem extends Item {
 
 	public void addItemToBagOnPosition(int position, Item item) {
 //		items.remove(position);
-
 	}
 
-	public void dropItemFromBag(){
+	public void dropItemFromBag() {
 		//TODO Remove item stack from items list
 		//TODO Call drop item function (FloatingItem?)
 	}

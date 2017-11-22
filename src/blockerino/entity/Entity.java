@@ -4,229 +4,89 @@ import blockerino.graphics.Animation;
 import blockerino.graphics.Sprite;
 import blockerino.util.AABB;
 import blockerino.util.Vector2f;
+import blockerino.world.World;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public abstract class Entity {
+//TODO extends world
+public abstract class Entity extends WorldObject {
 
-    //region class variables
-    protected Sprite sprite;
+	//region Class variables
+	private Sprite sprite;// Texture
+	private Vector2f position;// Position
+	private int size;// Size of entity
+	private int weight;//weight of entity
+	private AABB hitBounds;// Bounds entity for hits
+	private AABB bounds; //bounds entity for collision
+	//endregion
 
-    //endregion
+	public Entity(){}
 
-    private final int sheetRowUp = 3;
-    private final int sheetRowDown = 2;
-    private final int sheetRowRight = 0;
-    private final int sheetRowLeft = 1;
+	public Entity(Sprite _sprite, Vector2f _origin, int _size) {
+		this.sprite = _sprite;
+		position = _origin;
+		size = _size;
 
-    private Animation animation;
-    protected Vector2f position;
-    private int currentAnimation;
+		bounds = new AABB(_origin, _size, _size);
+		hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
+	}
 
-    private boolean up;
-    private boolean down;
-    private boolean right;
-    private boolean left;
-    private boolean primaryUse;
-    private boolean secondaryUse;
+	//region Abstract methods
+	public abstract void update();
 
-    private float dx;
-    private float dy;
+	public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
+	//endregion
 
-    private float flSizeTemp; // Declaring sizeTamp as it's used multiple times across different methods.
-    private AABB hitBounds;
-    private AABB bounds;
+	//region Getters and setters
+	public Sprite getSprite() {
+		return sprite;
+	}
 
-    Entity(Sprite _sprite, Vector2f _origin, int _size) {
-        this.sprite = _sprite;
-        position = _origin;
-        flSizeTemp = getSize();
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
 
-        bounds = new AABB(_origin, _size, _size);
-        hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
+	public Vector2f getPosition() {
+		return position;
+	}
 
-        animation = new Animation();
-        setAnimation(sheetRowRight, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
-    }
+	public void setPosition(Vector2f position) {
+		this.position = position;
+	}
 
-    public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
+	public int getSize() {
+		return size;
+	}
 
-    public void update() {
-        animate();
-        setHitBoxDirection();
-        animation.update();
-    }
+	public void setSize(int size) {
+		this.size = size;
+	}
 
-    public Vector2f getPosition(){
-        return position;
-    }
+	public int getWeight() {
+		return weight;
+	}
 
-    private void animate() {
-        if (up) {
-            if (currentAnimation != sheetRowUp || animation.getDelay() == -1) {
-                setAnimation(sheetRowUp, sprite.getTexture().getPartOfImageDataArray(24, 31), 5);
-            }
-        } else if (down) {
-            if (currentAnimation != sheetRowDown || animation.getDelay() == -1) {
-                setAnimation(sheetRowDown, sprite.getTexture().getPartOfImageDataArray(16, 23), 5);
-            }
-        } else if (left) {
-            if (currentAnimation != sheetRowLeft || animation.getDelay() == -1) {
-                setAnimation(sheetRowLeft, sprite.getTexture().getPartOfImageDataArray(8, 15), 5);
-            }
-        } else if (right) {
-            if (currentAnimation != sheetRowRight || animation.getDelay() == -1) {
-                setAnimation(sheetRowRight, sprite.getTexture().getPartOfImageDataArray(0, 7), 5);
-            }
-        } else {
-            setAnimation(currentAnimation, sprite.getTexture().getImageData(), -1);
-        }
-    }
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
 
-    private void setHitBoxDirection() {
-        if (up) {
-            position.y -= getMaxSpeed();
-            hitBounds.setYOffset(-flSizeTemp / 2);
-            hitBounds.setXOffset(-flSizeTemp / 2);
-        } else if (down) {
-            position.y += getMaxSpeed();
-            hitBounds.setYOffset(flSizeTemp / 2);
-            hitBounds.setXOffset(-flSizeTemp / 2);
-        } else if (left) {
-            position.x -= getMaxSpeed();
-            hitBounds.setXOffset(-flSizeTemp);
-            hitBounds.setYOffset(0);
-        } else if (right) {
-            position.x += getMaxSpeed();
-            hitBounds.setXOffset(0);
-            hitBounds.setYOffset(0);
-        }
+	public AABB getHitBounds() {
+		return hitBounds;
+	}
 
-    }
+	public void setHitBounds(AABB hitBounds) {
+		this.hitBounds = hitBounds;
+	}
 
-    //region Getter & setters
+	public AABB getBounds() {
+		return bounds;
+	}
 
-    void setAnimation(int _currentAnimation, BufferedImage[] _frames, int _delay) {
-        currentAnimation = _currentAnimation;
-        animation.setFrames(_frames);
-        animation.setDelay(_delay);
-    }
-
-    void setAnimation(int _currentAnimation, BufferedImage _frame, int _delay) {
-        BufferedImage[] frames = new BufferedImage[1];
-        frames[0] = _frame;
-
-        currentAnimation = _currentAnimation;
-        animation.setFrames(frames);
-        animation.setDelay(_delay);
-    }
-
-    Animation getAnimation() {
-        return animation;
-    }
-
-    void setSheetRowUp(boolean _up) {
-        this.up = _up;
-    }
-
-    boolean getSheetRowUp() {
-        return this.up;
-    }
-
-    void setDown(boolean _down) {
-        this.down = _down;
-    }
-
-    boolean getDown() {
-        return this.down;
-    }
-
-    boolean getLeft() {
-        return this.left;
-    }
-
-    void setLeft(boolean right) {
-        this.left = right;
-    }
-
-    boolean getRight() {
-        return this.right;
-    }
-
-    void setRight(boolean right) {
-        this.right = right;
-    }
-
-    boolean getPrimaryUse() {
-        return this.primaryUse;
-    }
-
-    void setPrimaryUse(boolean _primaryUse) {
-        this.primaryUse = _primaryUse;
-    }
-
-    boolean getSecondaryUse() {
-        return this.secondaryUse;
-    }
-
-    void setSecondaryUse(boolean _secondaryUse) {
-        this.secondaryUse = _secondaryUse;
-    }
-
-    public float getDx() {
-        return dx;
-    }
-
-    public void setDx(float dx) {
-        this.dx = dx;
-    }
-
-    public float getDy() {
-        return dy;
-    }
-
-    public void setDy(float dy) {
-        this.dy = dy;
-    }
-
-    void setBounds(AABB _bounds) {
-        this.bounds = _bounds;
-    }
-
-    AABB getBounds() {
-        return bounds;
-    }
-
-
-    //endregion
-
-    //region Abstract methods
-    public void setSprite(Sprite _sprite) {
-        this.sprite = _sprite;
-    }
-
-    public abstract void setWeight(float _weight);
-
-    public abstract float getWeight();
-
-    public abstract void setMaxSpeed(float _maxSpeed);
-
-    public abstract float getMaxSpeed();
-
-    public abstract void setAcceleration(float _acceleration);
-
-    public abstract float getAcceleration();
-
-    public abstract void setDeceleration(float _deceleration);
-
-    public abstract float getDeceleration();
-
-    public abstract float getSize();
-
-    public abstract void setSize(float _size);
-
-    //endregion
+	public void setBounds(AABB bounds) {
+		this.bounds = bounds;
+	}
+	//endregion
 
 }
