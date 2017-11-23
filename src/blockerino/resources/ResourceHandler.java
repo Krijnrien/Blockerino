@@ -1,9 +1,6 @@
 package blockerino.resources;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ResourceHandler {
 
@@ -41,8 +38,7 @@ public class ResourceHandler {
      */
     public static Texture getLoadedTexture(String _name) {
         for ( ResourceHandle rhandle : loadedTextures.keySet() ) {
-
-            if (rhandle.getName() == _name) {
+            if (Objects.equals(rhandle.getName(), _name)) {
                 return loadedTextures.get(rhandle);
             }
         }

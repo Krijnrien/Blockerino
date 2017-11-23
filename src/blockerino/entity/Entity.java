@@ -13,104 +13,102 @@ import java.awt.geom.AffineTransform;
 @XmlTransient
 public abstract class Entity extends WorldObject {
 
-	//region Class variables
-	private Sprite sprite;// Texture
-	private int weight;//weight of entity
-	private Vector2f size;
-	private AABB hitBounds;// Bounds entity for hits
-	private AABB bounds; //bounds entity for collision
+    //region Class variables
+    private Sprite sprite;// Texture
+    protected String textureName;
+    private int weight;//weight of entity
+    private Vector2f size;
+    private AABB hitBounds;// Bounds entity for hits
+    private AABB bounds; //bounds entity for collision
 
-	private AABB leftCollision;
-	private AABB rightCollision;
-	private AABB topCollision;
-	private AABB bottomCollision;
-	//endregion
+    private AABB leftCollision;
+    private AABB rightCollision;
+    private AABB topCollision;
+    private AABB bottomCollision;
+    //endregion
 
-	//public Entity(){}
+    public void setBothBounds() {
+        Vector2f _origin = position;
+        Vector2f _scale = getScale();
 
-	/*public Entity(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
-		position = _origin;
-		this.sprite = _sprite;
-		scale = _scale;
+        bounds = new AABB(_origin, _scale.x, _scale.y);
+        hitBounds = new AABB(new Vector2f(_origin.x + (scale.x / 2), _origin.y), _scale.x, _scale.y);
+    }
 
+    public void setCollissions() {
+        Vector2f _origin = position;
+        Vector2f _scale = getScale();
+        float collWidth = scale.x / 4;
+        float collHeight = scale.y / 4;
 
-		}*/
+        leftCollision = new AABB(new Vector2f(_origin.x - (scale.x / 2) + (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+        rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+        topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
+        bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
 
-	public void setBothBounds() {
-		Vector2f _origin = position;
-		Vector2f _scale = getScale();
+    }
 
-		bounds = new AABB(_origin, _scale.x, _scale.y);
- 		hitBounds = new AABB(new Vector2f(_origin.x + (scale.x / 2), _origin.y), _scale.x, _scale.y);
+    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
+        leftCollision.render(_graphics2D, _projectionViewMatrix, position);
+        rightCollision.render(_graphics2D, _projectionViewMatrix, position);
+        topCollision.render(_graphics2D, _projectionViewMatrix, position);
+        bottomCollision.render(_graphics2D, _projectionViewMatrix, position);
+    }
 
-	}
+    //region Abstract methods
+    public abstract void update();
 
-	public void setCollissions() {
-		Vector2f _origin = position;
-		Vector2f _scale = getScale();
-		float collWidth = scale.x / 4;
-		float collHeight = scale.y / 4;
+    public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
+    //endregion
 
-		leftCollision = new AABB(new Vector2f(_origin.x - (scale.x / 2) + (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
-		rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
-		topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
-		bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
+    //region Getters and setters
+    public Sprite getSprite() {
+        return sprite;
+    }
 
-	}
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
 
-	public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
-		leftCollision.render(_graphics2D, _projectionViewMatrix, position);
-		rightCollision.render(_graphics2D, _projectionViewMatrix, position);
-		topCollision.render(_graphics2D, _projectionViewMatrix, position);
-		bottomCollision.render(_graphics2D, _projectionViewMatrix, position);
-	}
+    public String getTextureName() {
+        return textureName;
+    }
 
-	//region Abstract methods
-	public abstract void update();
+    public void setTextureName(String textureName) {
+        this.textureName = textureName;
+    }
 
-	public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
-	//endregion
+    public int getWeight() {
+        return weight;
+    }
 
-	//region Getters and setters
-	public Sprite getSprite() {
-		return sprite;
-	}
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
-	public void setSprite(Sprite sprite) {
-		this.sprite = sprite;
-	}
+    public Vector2f getSize() {
+        return size;
+    }
 
-	public int getWeight() {
-		return weight;
-	}
+    public void setSize(Vector2f size) {
+        this.size = size;
+    }
 
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
+    public AABB getHitBounds() {
+        return hitBounds;
+    }
 
-	public AABB getHitBounds() {
-		return hitBounds;
-	}
+    public void setHitBounds(AABB hitBounds) {
+        this.hitBounds = hitBounds;
+    }
 
-	public void setHitBounds(AABB hitBounds) {
-		this.hitBounds = hitBounds;
-	}
+    public AABB getBounds() {
+        return bounds;
+    }
 
-	public AABB getBounds() {
-		return bounds;
-	}
+    public void setBounds(AABB bounds) {
+        this.bounds = bounds;
+    }
 
-	public void setBounds(AABB bounds) {
-		this.bounds = bounds;
-	}
-
-	public Vector2f getSize() {
-		return size;
-	}
-
-	public void setSize(Vector2f size) {
-		this.size = size;
-	}
-	//endregion
-
+    //endregion
 }
