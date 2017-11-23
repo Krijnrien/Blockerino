@@ -1,9 +1,6 @@
 package blockerino.entity;
 
 import blockerino.graphics.Animation;
-import blockerino.graphics.Sprite;
-import blockerino.util.AABB;
-import blockerino.util.Vector2f;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
@@ -19,7 +16,6 @@ public abstract class ControllableEntity extends Entity {
 	private final int sheetRowLeft = 1;
 
 	private Animation animation;
-	protected Vector2f position;
 	private int currentAnimation;
 
 	private boolean up;
@@ -33,28 +29,27 @@ public abstract class ControllableEntity extends Entity {
 	private float dy;
 
 	//Standard movement speed
-	protected float maxSpeed = (float)1 / 4;
-	protected float acceleration = 2f / 4;
-	protected float deceleration = 0.3f / 4;
+	protected float maxSpeed;
+	protected float acceleration;
+	protected float deceleration;
 	//endregion
 
-	public ControllableEntity(/*Sprite _sprite, Vector2f _origin, Vector2f _size*/) {
+	/*public ControllableEntity(Sprite _sprite, Vector2f _origin, Vector2f _size) {
 	//	super(_sprite, _origin, _size);
 	//	position = _origin;
 
+		//^^^^^ cant do this because getsprite is not set yet, sprite is NULL
+	}*/
+
+	public void attachAnimation() {
 		animation = new Animation();
 		setAnimation(sheetRowRight, getSprite().getTexture().getPartOfImageDataArray(0, 7), 10);
-		//^^^^^ cant do this because getsprite is not set yet, sprite is NULL
 	}
 
 	public void update() {
 		animate();
 		setHitBoxDirection();
 		animation.update();
-	}
-
-	public Vector2f getPosition() {
-		return position;
 	}
 
 	private void animate() {
@@ -119,10 +114,6 @@ public abstract class ControllableEntity extends Entity {
 		currentAnimation = _currentAnimation;
 		animation.setFrames(frames);
 		animation.setDelay(_delay);
-	}
-
-	protected Animation getAnimation() {
-		return animation;
 	}
 
 	protected void setSheetRowUp(boolean _up) {
@@ -213,5 +204,12 @@ public abstract class ControllableEntity extends Entity {
 		this.deceleration = deceleration;
 	}
 
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
+	}
+
+	protected Animation getAnimation() {
+		return animation;
+	}
 	//endregion
 }

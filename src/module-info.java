@@ -5,6 +5,7 @@ module Blockerino {
 
     opens blockerino.entity;
     opens blockerino.entity.character;
+    opens blockerino.util;
 
     requires java.xml.bind;
 }

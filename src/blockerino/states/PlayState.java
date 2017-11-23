@@ -56,7 +56,14 @@ public class PlayState extends GameState {
 		    e.printStackTrace();
 	    }
 	    player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
+	    player.setSize(new Vector2f(1,1));
 	    player.setPosition(new Vector2f(1, 1));
+	    player.setScale(new Vector2f(3, 3));
+
+		player.setCollissions();
+		player.setBothBounds();
+		player.setCollissions();
+		player.attachAnimation();
 
         projectionMatrix = new AffineTransform();
         updateProjectionMatrix();

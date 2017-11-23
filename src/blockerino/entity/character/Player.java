@@ -78,7 +78,7 @@ public class Player extends ControllableEntity {
 				dx -= deceleration;
 				if(dx < 0) {
 					dx = 0;
-				}
+					}
 			}
 		}
 
