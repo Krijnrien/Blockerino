@@ -14,8 +14,6 @@ public abstract class Resource {
         name = _name;
     }
 
-    public abstract void load(String _file);
-
     public int getID(){
         return id;
     }

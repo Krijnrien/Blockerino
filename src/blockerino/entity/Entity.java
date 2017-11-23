@@ -1,146 +1,116 @@
 package blockerino.entity;
 
-import blockerino.graphics.Animation;
 import blockerino.graphics.Sprite;
 import blockerino.util.AABB;
 import blockerino.util.Vector2f;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.awt.geom.AffineTransform;
 
-public abstract class Entity {
+//TODO extends world
 
-    private final int UP = 3;
-    private final int DOWN = 2;
-    private final int RIGHT = 0;
-    private final int LEFT = 1;
+@XmlTransient
+public abstract class Entity extends WorldObject {
 
-    protected Animation animation;
-    protected Sprite sprite;
-    protected Vector2f position;
-    protected int size;
-    protected int currentAnimation;
+	//region Class variables
+	private Sprite sprite;// Texture
+	private int weight;//weight of entity
+	private Vector2f size;
+	private AABB hitBounds;// Bounds entity for hits
+	private AABB bounds; //bounds entity for collision
 
-    protected boolean up;
-    protected boolean down;
-    protected boolean right;
-    protected boolean left;
-    protected boolean attack;
-    protected int attackSpeed;
-    protected int attackDuration;
+	private AABB leftCollision;
+	private AABB rightCollision;
+	private AABB topCollision;
+	private AABB bottomCollision;
+	//endregion
 
-    protected float dx;
-    protected float dy;
+	//public Entity(){}
 
-    protected float maxSpeed = 3f;
-    protected float acc = 2f;
-    protected float deacc = 0.3f;
+	/*public Entity(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
+		position = _origin;
+		this.sprite = _sprite;
+		scale = _scale;
 
-    protected AABB hitBounds;
-    protected AABB bounds;
 
-    public Entity(Sprite _sprite, Vector2f _origin, int _size) {
-        this.sprite = _sprite;
-        position = _origin;
-        this.size = _size;
+		}*/
 
-        bounds = new AABB(_origin, _size, _size);
-        hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
+	public void setBothBounds() {
+		Vector2f _origin = position;
+		Vector2f _scale = getScale();
 
-        animation = new Animation();
-        setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 10);
-    }
+		bounds = new AABB(_origin, _scale.x, _scale.y);
+ 		hitBounds = new AABB(new Vector2f(_origin.x + (scale.x / 2), _origin.y), _scale.x, _scale.y);
 
-    public void setSprite(Sprite _sprite) {
-        this.sprite = _sprite;
-    }
+	}
 
-    public void setSize(int _size) {
-        size = _size;
-    }
+	public void setCollissions() {
+		Vector2f _origin = position;
+		Vector2f _scale = getScale();
+		float collWidth = scale.x / 4;
+		float collHeight = scale.y / 4;
 
-    public void setMaxSpeed(float _maxSpeed) {
-        maxSpeed = _maxSpeed;
-    }
+		leftCollision = new AABB(new Vector2f(_origin.x - (scale.x / 2) + (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+		rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+		topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
+		bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
 
-    public void setAcc(float _acc) {
-        acc = _acc;
-    }
+	}
 
-    public void setDeacc(float _deacc) {
-        _deacc = _deacc;
-    }
+	public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
+		leftCollision.render(_graphics2D, _projectionViewMatrix, position);
+		rightCollision.render(_graphics2D, _projectionViewMatrix, position);
+		topCollision.render(_graphics2D, _projectionViewMatrix, position);
+		bottomCollision.render(_graphics2D, _projectionViewMatrix, position);
+	}
 
-    public AABB getBounds(){return bounds;}
+	//region Abstract methods
+	public abstract void update();
 
-    public int getSize() {
-        return size;
-    }
+	public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);
+	//endregion
 
-    public Animation getAnimation() {
-        return animation;
-    }
+	//region Getters and setters
+	public Sprite getSprite() {
+		return sprite;
+	}
 
-    public void setAnimation(int _currentAnimation, BufferedImage[] _frames, int _delay) {
-        currentAnimation = _currentAnimation;
-        animation.setFrames(_frames);
-        animation.setDelay(_delay);
-    }
+	public void setSprite(Sprite sprite) {
+		this.sprite = sprite;
+	}
 
-    public void setAnimation(int _currentAnimation, BufferedImage _frame, int _delay) {
-        BufferedImage[] frames = new BufferedImage[1];
-        frames[0] = _frame;
+	public int getWeight() {
+		return weight;
+	}
 
-        currentAnimation = _currentAnimation;
-        animation.setFrames(frames);
-        animation.setDelay(_delay);
-    }
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
 
-    public void animate() {
-        if (up) {
-            if (currentAnimation != UP || animation.getDelay() == -1) {
-                setAnimation(UP, sprite.getTexture().getPartOfImageDataArray(24, 31), 5);
-            }
-        } else if (down) {
-            if (currentAnimation != DOWN || animation.getDelay() == -1) {
-                setAnimation(DOWN, sprite.getTexture().getPartOfImageDataArray(16, 23), 5);
-            }
-        } else if (left) {
-            if (currentAnimation != LEFT || animation.getDelay() == -1) {
-                setAnimation(LEFT, sprite.getTexture().getPartOfImageDataArray(8, 15), 5);
-            }
-        } else if (right) {
-            if (currentAnimation != RIGHT || animation.getDelay() == -1) {
-                setAnimation(RIGHT, sprite.getTexture().getPartOfImageDataArray(0, 7), 5);
-            }
-        } else {
-            setAnimation(currentAnimation, sprite.getTexture().getImageData(), -1);
-        }
-    }
+	public AABB getHitBounds() {
+		return hitBounds;
+	}
 
-    private void setHitBoxDirection() {
-        if (up) {
-            hitBounds.setYOffset(-size / 2);
-            hitBounds.setXOffset(-size / 2);
-        } else if (down) {
-            hitBounds.setYOffset(size / 2);
-            hitBounds.setXOffset(-size / 2);
-        } else if (left) {
-            hitBounds.setXOffset(-size);
-            hitBounds.setYOffset(0);
-        } else if (right) {
-            hitBounds.setXOffset(0);
-            hitBounds.setYOffset(0);
-        }
+	public void setHitBounds(AABB hitBounds) {
+		this.hitBounds = hitBounds;
+	}
 
-    }
+	public AABB getBounds() {
+		return bounds;
+	}
 
-    public void update() {
-        animate();
-        setHitBoxDirection();
-        animation.update();
-    }
+	public void setBounds(AABB bounds) {
+		this.bounds = bounds;
+	}
 
-    public abstract void render(Graphics2D _graphics2D);
+	public Vector2f getSize() {
+		return size;
+	}
+
+	public void setSize(Vector2f size) {
+		this.size = size;
+	}
+	//endregion
 
 }

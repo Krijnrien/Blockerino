@@ -8,36 +8,42 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Vector;
 
 /**
  * Texture holds either a single image buffer or an array of image buffers
  */
-public class Texture extends Resource{
+public class Texture{
     private BufferedImage[] imageData;
+    private String file;
 
-    public Texture(int _id, String _name, String _file) {
+    public Texture(String _file) {
 
-        super(_id, _name);
+        file = _file;
 
         System.out.println("Loading" + _file + "...");
-        load(_file);
+        load();
     }
 
-    public Texture(int _id, String _name, String _file, int _tileCols, int _tileRows) {
+    public Texture(String _file, int _tileCols, int _tileRows) {
 
-        super(_id, _name);
+        file = _file;
 
         System.out.println("Loading" + _file + "...");
-        load(_file);
+        load();
 
         splitImageData(_tileCols, _tileRows);
     }
 
-    @Override
-    public void load(String _file){
+    public Texture(BufferedImage _imageData){
+        imageData = new BufferedImage[1];
+        imageData[0] = _imageData;
+    }
+
+    public void load(){
         try {
             imageData = new BufferedImage[1];
-            imageData[0] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(_file));
+            imageData[0] = ImageIO.read(getClass().getResourceAsStream(file));
         } catch (IOException e) {
             //TODO proper error handling
             System.out.println("ERROR" + e);
@@ -82,6 +88,16 @@ public class Texture extends Resource{
         }
 
         imageData = newImageData;
+    }
+
+    public void drawOnImage(BufferedImage[] _images, Vector2f[] _positions){
+
+        Graphics g = imageData[0].getGraphics();
+
+        //Calculate new width and height
+        for (int i = 0; i < _images.length; i++) {
+            g.drawImage(_images[i], (int)_positions[i].x, (int)_positions[i].y, null);
+        }
     }
 
     /*

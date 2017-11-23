@@ -4,18 +4,6 @@ out/
 
 README.md
 
-### Angular ###
-## Angular ##
-# compiled output
-/dist
-/tmp
-/app/**/*.js
-/app/**/*.js.racer.map
-
-# dependencies
-/node_modules
-/bower_components
-
 # IDEs and editors
 /.idea
 
@@ -35,7 +23,7 @@ testem.log
 #System Files
 .DS_Store
 
-### Go ###
+
 # Binaries for programs and plugins
 *.exe
 *.dll
@@ -105,10 +93,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-### Intellij+all Patch ###
-# Ignores the whole idea folder
-# See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
-
 .idea/
 
 ### Windows ###
@@ -131,5 +115,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# End of https://www.gitignore.io/api/go,windows,angular,intellij+all

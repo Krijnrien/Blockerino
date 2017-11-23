@@ -9,5 +9,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="" scope="RUNTIME">
+      <library name="JABX">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib/jaxb" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib/jaxb" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
