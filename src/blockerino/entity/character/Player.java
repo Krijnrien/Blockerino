@@ -13,126 +13,117 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 @XmlRootElement
-@XmlType(propOrder = {"name", "spriteSheet", "weight", "size", "maxSpeed", "acceleration", "deceleration"})
 public class Player extends ControllableEntity {
-    private String name;
-    private String spriteSheet;
+	private String name;
+	private String spriteSheet;
 
-    //region Class variables
-    //TODO Load these from XML using JABX
+	//region Class variables
+	//TODO Load these from XML using JABX
 
-    //endregion
+	//endregion
 
-    public Player() {
+	private void move() {
+		float dx = getDx();
+		float dy = getDy();
 
-    }
+		if(getSheetRowUp()) {
+			dy -= acceleration;
+			if(dy < -maxSpeed) {
+				dy = -maxSpeed;
+			}
+		} else {
+			if(dy < 0) {
+				dy += deceleration;
+				if(dy > 0) {
+					dy = 0;
+				}
+			}
+		}
 
-    public Player(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
-        super(_sprite, _origin, _scale);
-    }
+		if(getDown()) {
+			dy += acceleration;
+			if(dy > maxSpeed) {
+				dy = maxSpeed;
+			}
+		} else {
+			if(dy > 0) {
+				dy -= deceleration;
+				if(dy < 0) {
+					dy = 0;
+				}
+			}
+		}
 
-    private void move() {
-        float dx = getDx();
-        float dy = getDy();
+		if(getLeft()) {
+			dx -= acceleration;
+			if(dx < -maxSpeed) {
+				dx = -maxSpeed;
+			}
+		} else {
+			if(dx < 0) {
+				dx += deceleration;
+				if(dx > 0) {
+					dx = 0;
+				}
+			}
+		}
 
-        if (getSheetRowUp()) {
-            dy -= acceleration;
-            if (dy < -maxSpeed) {
-                dy = -maxSpeed;
-            }
-        } else {
-            if (dy < 0) {
-                dy += deceleration;
-                if (dy > 0) {
-                    dy = 0;
-                }
-            }
-        }
+		if(getRight()) {
+			dx += acceleration;
+			if(dx > maxSpeed) {
+				dx = maxSpeed;
+			}
+		} else {
+			if(dx > 0) {
+				dx -= deceleration;
+				if(dx < 0) {
+					dx = 0;
+				}
+			}
+		}
 
-        if (getDown()) {
-            dy += acceleration;
-            if (dy > maxSpeed) {
-                dy = maxSpeed;
-            }
-        } else {
-            if (dy > 0) {
-                dy -= deceleration;
-                if (dy < 0) {
-                    dy = 0;
-                }
-            }
-        }
+		setDx(dx);
+		setDy(dy);
 
-        if (getLeft()) {
-            dx -= acceleration;
-            if (dx < -maxSpeed) {
-                dx = -maxSpeed;
-            }
-        } else {
-            if (dx < 0) {
-                dx += deceleration;
-                if (dx > 0) {
-                    dx = 0;
-                }
-            }
-        }
+		//TODO Update Y position cause gravity
+	}
 
-        if (getRight()) {
-            dx += acceleration;
-            if (dx > maxSpeed) {
-                dx = maxSpeed;
-            }
-        } else {
-            if (dx > 0) {
-                dx -= deceleration;
-                if (dx < 0) {
-                    dx = 0;
-                }
-            }
-        }
+	public void update() {
+		super.update();
+		move();
+		position.x += getDx(); // get player X position
+		position.y += getDy(); // get player Y position
+	}
 
-        setDx(dx);
-        setDy(dy);
+	@Override
+	public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
+		Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, scale);
+		s.render(_graphics2D, _projectionViewMatrix);
+	}
 
-        //TODO Update Y position cause gravity
-    }
+	public void input(MouseHandler _mouse, KeyHandler _key) {
+		setSheetRowUp(_key.up.down);
+		setDown(_key.down.down);
+		setLeft(_key.left.down);
+		setRight(_key.right.down);
 
-    public void update() {
-        super.update();
-        move();
-        position.x += getDx(); // get player X position
-        position.y += getDy(); // get player Y position
-    }
+		setPrimaryUse(_mouse.button1.down);
+		setSecondaryUse(_mouse.button2.down);
+	}
 
-    @Override
-    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
-        Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, scale);
-        s.render(_graphics2D, _projectionViewMatrix);
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void input(MouseHandler _mouse, KeyHandler _key) {
-        setSheetRowUp(_key.up.down);
-        setDown(_key.down.down);
-        setLeft(_key.left.down);
-        setRight(_key.right.down);
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        setPrimaryUse(_mouse.button1.down);
-        setSecondaryUse(_mouse.button2.down);
-    }
+	public String getSpriteSheet() {
+		return spriteSheet;
+	}
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSpriteSheet() {
-        return spriteSheet;
-    }
-
-    public void setSpriteSheet(String spriteSheet) {
-        this.spriteSheet = spriteSheet;
-    }
+	public void setSpriteSheet(String spriteSheet) {
+		this.spriteSheet = spriteSheet;
+	}
 }

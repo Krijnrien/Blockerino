@@ -5,10 +5,12 @@ import blockerino.graphics.Sprite;
 import blockerino.util.AABB;
 import blockerino.util.Vector2f;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+@XmlTransient
 public abstract class ControllableEntity extends Entity {
 	//region class variables
 	private final int sheetRowUp = 3;
@@ -36,14 +38,13 @@ public abstract class ControllableEntity extends Entity {
 	protected float deceleration = 0.3f / 4;
 	//endregion
 
-	public ControllableEntity(){}
-
-	public ControllableEntity(Sprite _sprite, Vector2f _origin, Vector2f _size) {
-		super(_sprite, _origin, _size);
-		position = _origin;
+	public ControllableEntity(/*Sprite _sprite, Vector2f _origin, Vector2f _size*/) {
+	//	super(_sprite, _origin, _size);
+	//	position = _origin;
 
 		animation = new Animation();
 		setAnimation(sheetRowRight, getSprite().getTexture().getPartOfImageDataArray(0, 7), 10);
+		//^^^^^ cant do this because getsprite is not set yet, sprite is NULL
 	}
 
 	public void update() {

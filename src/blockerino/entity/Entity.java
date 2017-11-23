@@ -6,11 +6,14 @@ import blockerino.util.AABB;
 import blockerino.util.Vector2f;
 import blockerino.world.World;
 
+import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 //TODO extends world
+
+@XmlTransient
 public abstract class Entity extends WorldObject {
 
 	//region Class variables
@@ -27,7 +30,7 @@ public abstract class Entity extends WorldObject {
 	protected Vector2f scale;
 	//endregion
 
-	public Entity(){}
+	/*public Entity(){}
 
 	public Entity(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
 		position = _origin;
@@ -44,7 +47,7 @@ public abstract class Entity extends WorldObject {
 		rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
 		topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
 		bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
-	}
+	}*/
 
 	public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
 		leftCollision.render(_graphics2D, _projectionViewMatrix, position);

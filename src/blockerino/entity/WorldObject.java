@@ -2,6 +2,10 @@ package blockerino.entity;
 
 import blockerino.util.Vector2f;
 
+import javax.xml.bind.annotation.XmlTransient;
+
+
+@XmlTransient
 public abstract class WorldObject {
     //TODO just placeholder class
 

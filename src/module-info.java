@@ -3,5 +3,8 @@ module Blockerino {
     requires javafx.graphics;
     requires java.desktop;
 
+    opens blockerino.entity;
+    opens blockerino.entity.character;
+
     requires java.xml.bind;
 }

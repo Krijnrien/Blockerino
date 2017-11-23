@@ -12,11 +12,11 @@ import blockerino.world.generation.NoiseGenerator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 public class PlayState extends GameState {
 
@@ -38,30 +38,25 @@ public class PlayState extends GameState {
         world = new World(16, worldGen);
         gameUI = new GameUI();
 
-        player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player"),
+        /*player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player"),
                             new Vector2f(0, 0),
                             new Vector2f(1, 1)),
                             new Vector2f(0, 0),
                             new Vector2f(3, 3));
+*/
 
-        /*
-        try {
-            File file = new File("entity/player.xml");
-            JAXBContext jaxbContext = JAXBContext.newInstance(Player.class);
-            Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-            Player player = (Player) jaxbUnmarshaller.unmarshal(file);
-            System.out.println(player);
-
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        }
-        */
-
-        //player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
-        //player.setPosition(new Vector2f(1, 1));
-
-
-        //player = new Player();
+	    try {
+		    JAXBContext context = JAXBContext.newInstance(Player.class);
+		    Unmarshaller um = context.createUnmarshaller();
+		    player = (Player) um.unmarshal(new FileReader("player.xml"));
+		    System.out.print(player.getName());
+	    } catch(JAXBException e) {
+		    e.printStackTrace();
+	    } catch(FileNotFoundException e) {
+		    e.printStackTrace();
+	    }
+	    player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
+	    player.setPosition(new Vector2f(1, 1));
 
         projectionMatrix = new AffineTransform();
         updateProjectionMatrix();
