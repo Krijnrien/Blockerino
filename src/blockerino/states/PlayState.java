@@ -38,6 +38,13 @@ public class PlayState extends GameState {
         world = new World(16, worldGen);
         gameUI = new GameUI();
 
+        player = new Player(new Sprite(ResourceHandler.getLoadedTexture("player"),
+                            new Vector2f(0, 0),
+                            new Vector2f(1, 1)),
+                            new Vector2f(0, 0),
+                            new Vector2f(3, 3));
+
+        /*
         try {
             File file = new File("entity/player.xml");
             JAXBContext jaxbContext = JAXBContext.newInstance(Player.class);
@@ -48,8 +55,10 @@ public class PlayState extends GameState {
         } catch (JAXBException e) {
             e.printStackTrace();
         }
-        player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
-        player.setPosition(new Vector2f(1, 1));
+        */
+
+        //player.setSprite(new Sprite(ResourceHandler.getLoadedTexture("player"), new Vector2f(0, 0), new Vector2f(1, 1)));
+        //player.setPosition(new Vector2f(1, 1));
 
 
         //player = new Player();
@@ -100,6 +109,7 @@ public class PlayState extends GameState {
         player.render(_graphics2D, projectionViewMatrix);
 
         world.renderCollision(_graphics2D, projectionViewMatrix);
+        player.renderCollision(_graphics2D, projectionViewMatrix);
     }
 
     public Camera2D getCamera() {

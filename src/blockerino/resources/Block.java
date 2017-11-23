@@ -47,26 +47,4 @@ public abstract class Block {
     public boolean hasCollision(){
         return hasCollision;
     }
-
-    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix, Vector2f _worldPos){
-        AffineTransform matrix = new AffineTransform();
-
-        AffineTransform transformCollisionMatrix = new AffineTransform();
-        transformCollisionMatrix.translate(_worldPos.x, _worldPos.y);
-        transformCollisionMatrix.scale(collision.getWidth(), collision.getHeight());
-
-        // Create MVP matrix with Projection-View matrix and transform matrix
-        matrix.concatenate(_projectionViewMatrix);
-        matrix.concatenate(transformCollisionMatrix);
-
-        //transform matrix position to top left of the sprite and scale down to model scale
-        matrix.translate(-0.5f, -0.5f);
-        matrix.scale((double)1 / 32, (double)1 / 32);
-
-        //Create copy of Graphics2D and set matrix;
-        Graphics2D g = (Graphics2D)_graphics2D.create();
-        g.setTransform(matrix);
-        g.setColor(new Color(0, 255, 0));
-        g.drawRect(0, 0, 32, 32);
-    }
 }

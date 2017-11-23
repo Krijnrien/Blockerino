@@ -15,20 +15,42 @@ public abstract class Entity extends WorldObject {
 
 	//region Class variables
 	private Sprite sprite;// Texture
-	private int size;// Size of entity
 	private int weight;//weight of entity
 	private AABB hitBounds;// Bounds entity for hits
 	private AABB bounds; //bounds entity for collision
+
+	private AABB leftCollision;
+	private AABB rightCollision;
+	private AABB topCollision;
+	private AABB bottomCollision;
+
+	protected Vector2f scale;
 	//endregion
 
 	public Entity(){}
 
-	public Entity(Sprite _sprite, Vector2f _origin, int _size) {
+	public Entity(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
+		position = _origin;
 		this.sprite = _sprite;
-		size = _size;
+		scale = _scale;
 
-		bounds = new AABB(_origin, _size, _size);
-		hitBounds = new AABB(new Vector2f(_origin.x + (_size / 2), _origin.y), _size, _size);
+		bounds = new AABB(_origin, _scale.x, _scale.y);
+		hitBounds = new AABB(new Vector2f(_origin.x + (scale.x / 2), _origin.y), _scale.x, _scale.y);
+
+		float collWidth = scale.x / 4;
+		float collHeight = scale.y / 4;
+
+		leftCollision = new AABB(new Vector2f(_origin.x - (scale.x / 2) + (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+		rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
+		topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
+		bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
+	}
+
+	public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
+		leftCollision.render(_graphics2D, _projectionViewMatrix, position);
+		rightCollision.render(_graphics2D, _projectionViewMatrix, position);
+		topCollision.render(_graphics2D, _projectionViewMatrix, position);
+		bottomCollision.render(_graphics2D, _projectionViewMatrix, position);
 	}
 
 	//region Abstract methods
@@ -46,12 +68,12 @@ public abstract class Entity extends WorldObject {
 		this.sprite = sprite;
 	}
 
-	public int getSize() {
-		return size;
+	public Vector2f getSize() {
+		return scale;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setSize(Vector2f size) {
+		this.scale = size;
 	}
 
 	public int getWeight() {

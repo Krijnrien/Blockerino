@@ -13,7 +13,7 @@ public abstract class UncontrollableEntity extends Entity {
 	private float dy;
 	//endregion
 
-	public UncontrollableEntity(Sprite _sprite, Vector2f _origin, int _size) {
+	public UncontrollableEntity(Sprite _sprite, Vector2f _origin, Vector2f _size) {
 		super(_sprite, _origin, _size);
 		position = _origin;
 	}

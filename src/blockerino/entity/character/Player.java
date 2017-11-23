@@ -27,6 +27,10 @@ public class Player extends ControllableEntity {
 
     }
 
+    public Player(Sprite _sprite, Vector2f _origin, Vector2f _scale) {
+        super(_sprite, _origin, _scale);
+    }
+
     private void move() {
         float dx = getDx();
         float dy = getDy();
@@ -102,7 +106,7 @@ public class Player extends ControllableEntity {
 
     @Override
     public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
-        Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, new Vector2f(1, 1));
+        Sprite s = new Sprite(new Texture(getAnimation().getImage()), position, scale);
         s.render(_graphics2D, _projectionViewMatrix);
     }
 

@@ -150,7 +150,7 @@ public class Chunk {
             for (int j = 0; j < blockData[i].length; j++) {
 
                 if (blockData[i][j].hasCollision()) {
-                    blockData[i][j].renderCollision(_graphics2D, _projectionViewMatrix, new Vector2f(xPos + i, yPos + j));
+                    blockData[i][j].getCollision().render(_graphics2D, _projectionViewMatrix, new Vector2f(xPos + i, yPos + j));
                 }
             }
         }

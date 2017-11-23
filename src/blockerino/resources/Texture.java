@@ -43,7 +43,7 @@ public class Texture{
     public void load(){
         try {
             imageData = new BufferedImage[1];
-            imageData[0] = ImageIO.read(getClass().getClassLoader().getResourceAsStream(file));
+            imageData[0] = ImageIO.read(getClass().getResourceAsStream(file));
         } catch (IOException e) {
             //TODO proper error handling
             System.out.println("ERROR" + e);

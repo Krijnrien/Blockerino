@@ -30,14 +30,15 @@ public abstract class ControllableEntity extends Entity {
 	private float dx;
 	private float dy;
 
-	protected float maxSpeed;
-	protected float acceleration;
-	protected float deceleration;
+	//Standard movement speed
+	protected float maxSpeed = (float)1 / 4;
+	protected float acceleration = 2f / 4;
+	protected float deceleration = 0.3f / 4;
 	//endregion
 
 	public ControllableEntity(){}
 
-	public ControllableEntity(Sprite _sprite, Vector2f _origin, int _size) {
+	public ControllableEntity(Sprite _sprite, Vector2f _origin, Vector2f _size) {
 		super(_sprite, _origin, _size);
 		position = _origin;
 
@@ -80,15 +81,15 @@ public abstract class ControllableEntity extends Entity {
 	private void setHitBoxDirection() {
 		if(up) {
 			position.y -= getMaxSpeed();
-			getHitBounds().setYOffset(-getSize() / 2);
-			getHitBounds().setXOffset(-getSize() / 2);
+			getHitBounds().setYOffset(-getSize().x / 2);
+			getHitBounds().setXOffset(-getSize().y / 2);
 		} else if(down) {
 			position.y += getMaxSpeed();
-			getHitBounds().setYOffset(getSize() / 2);
-			getHitBounds().setXOffset(-getSize() / 2);
+			getHitBounds().setYOffset(getSize().x / 2);
+			getHitBounds().setXOffset(-getSize().y / 2);
 		} else if(left) {
 			position.x -= getMaxSpeed();
-			getHitBounds().setXOffset(-getSize());
+			getHitBounds().setXOffset(-getSize().x);
 			getHitBounds().setYOffset(0);
 		} else if(right) {
 			position.x += getMaxSpeed();

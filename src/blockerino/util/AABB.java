@@ -2,6 +2,9 @@ package blockerino.util;
 
 import blockerino.entity.Entity;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+
 public class AABB {
     private Vector2f position;
     private Entity entity;
@@ -105,8 +108,8 @@ public class AABB {
     }
 
     public boolean colCircleBox(AABB aBox) {
-        float cx = (float) (position.getWorldVar().x + radius / Math.sqrt(2) - entity.getSize() / Math.sqrt(2));
-        float cy = (float) (position.getWorldVar().y + radius / Math.sqrt(2) - entity.getSize() / Math.sqrt(2));
+        float cx = (float) (position.getWorldVar().x + radius / Math.sqrt(2) - entity.getSize().x / Math.sqrt(2));
+        float cy = (float) (position.getWorldVar().y + radius / Math.sqrt(2) - entity.getSize().y / Math.sqrt(2));
 
         float xDelta = cx - Math.max(aBox.position.getWorldVar().x + (aBox.getWidth() / 2), Math.min(cx, aBox.position.getWorldVar().x));
         float yDelta = cx - Math.max(aBox.position.getWorldVar().y + (aBox.getHeight() / 2), Math.min(cx, aBox.position.getWorldVar().y));
@@ -116,5 +119,27 @@ public class AABB {
         }
 
         return false;
+    }
+
+    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix, Vector2f _worldPos){
+        AffineTransform matrix = new AffineTransform();
+
+        AffineTransform transformCollisionMatrix = new AffineTransform();
+        transformCollisionMatrix.translate(_worldPos.x + position.x, _worldPos.y + position.y);
+        transformCollisionMatrix.scale(width, height);
+
+        // Create MVP matrix with Projection-View matrix and transform matrix
+        matrix.concatenate(_projectionViewMatrix);
+        matrix.concatenate(transformCollisionMatrix);
+
+        //transform matrix position to top left of the sprite and scale down to model scale
+        matrix.translate(-0.5f, -0.5);
+        matrix.scale((double)1 / 32, (double)1 / 32);
+
+        //Create copy of Graphics2D and set matrix;
+        Graphics2D g = (Graphics2D)_graphics2D.create();
+        g.setTransform(matrix);
+        g.setColor(new Color(0, 255, 0));
+        g.drawRect(0, 0, 32, 32);
     }
 }

@@ -5,7 +5,7 @@ import blockerino.util.Vector2f;
 public abstract class WorldObject {
     //TODO just placeholder class
 
-    private Vector2f position;
+    protected Vector2f position;
 
     public Vector2f getPosition() {
         return position;
