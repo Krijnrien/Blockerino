@@ -73,7 +73,6 @@ public class PlayState extends GameState {
         camera.setTarget(player);
         camera.updateViewMatrixWidthOnly();
 
-
         projectionViewMatrix = new AffineTransform(projectionMatrix);
         updateProjectionViewMatrix();
         //camera.setPosition(player.getPosition());
