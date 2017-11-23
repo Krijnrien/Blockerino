@@ -1,9 +1,0 @@
-<player>
-    <name>Playerino</name>
-    <spriteSheet>linkFormatted.png</spriteSheet>
-    <weight>80</weight>
-    <size>32</size>
-    <maxSpeed>0.1</maxSpeed>
-    <acceleration>1.5</acceleration>
-    <deceleration>0.3</deceleration>
-</player>
