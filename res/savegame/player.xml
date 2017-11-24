@@ -1,12 +1,12 @@
 <player>
     <equipment>
         <armour>
-            <helm></helm>
-            <shoulders></shoulders>
-            <chest></chest>
-            <gloves></gloves>
-            <pants></pants>
-            <shoes></shoes>
+            <helm>cobaltHelm</helm>
+            <shoulders>cobaltShoulders</shoulders>
+            <chest>cobaltChest</chest>
+            <gloves>cobaltGloves</gloves>
+            <pants>cobaltPants</pants>
+            <shoes>cobaltShoes</shoes>
         </armour>
         <weapon>
             <primaryWeapon></primaryWeapon>

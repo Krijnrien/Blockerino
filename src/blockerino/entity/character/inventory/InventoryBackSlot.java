@@ -1,11 +1,11 @@
 package blockerino.entity.character.inventory;
 
-import blockerino.items.bag.BagItem;
+import blockerino.items.container.ContainerItem;
 
 public class InventoryBackSlot extends Inventory {
 
 	private int isOccupied;
-	private BagItem backpack;
+	private ContainerItem backpack;
 
 	public int getIsOccupied() {
 		return isOccupied;
@@ -15,11 +15,11 @@ public class InventoryBackSlot extends Inventory {
 		this.isOccupied = isOccupied;
 	}
 
-	public BagItem getBackpack() {
+	public ContainerItem getBackpack() {
 		return backpack;
 	}
 
-	public void setBackpack(BagItem backpack) {
+	public void setBackpack(ContainerItem backpack) {
 		this.backpack = backpack;
 	}
 }

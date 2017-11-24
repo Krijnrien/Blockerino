@@ -4,7 +4,10 @@ import blockerino.Window;
 import blockerino.entity.character.Player;
 import blockerino.graphics.Sprite;
 import blockerino.graphics.UI.GameUI;
+import blockerino.items.Item;
+import blockerino.items.container.ContainerItem;
 import blockerino.resources.ResourceHandler;
+import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.world.Camera2D;
 import blockerino.world.World;
@@ -12,9 +15,11 @@ import blockerino.world.generation.NoiseGenerator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -38,6 +43,34 @@ public class PlayState extends GameState {
         world = new World(16, worldGen);
         gameUI = new GameUI();
 
+
+//        ContainerItem containerItem = new ContainerItem();
+//        containerItem.setId(1);
+//        containerItem.setName("TravelersBeltpouch");
+//        containerItem.setType(Item.ItemTypeEnum.CONTAINER);
+//        containerItem.setRarity(Item.ItemRarityEnum.BASIC);
+//        containerItem.setStackSize(1);
+//        containerItem.setDescription("a beltpouch for travelers");
+//        containerItem.setIcon(ResourceHandler.getLoadedTexture("stone"));
+//        containerItem.setTexture(ResourceHandler.getLoadedTexture("stone"));
+//        containerItem.setSize(20);
+//
+//
+//        try {
+//            File file = new File("bag.xml");
+//            JAXBContext jaxbContext = JAXBContext.newInstance(ContainerItem.class);
+//            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+//            // output pretty printed
+//            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//            jaxbMarshaller.marshal(containerItem, file);
+//            jaxbMarshaller.marshal(containerItem, System.out);
+//        } catch (JAXBException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println("reached!");
+//        System.out.println(containerItem);
+
         try {
             JAXBContext context = JAXBContext.newInstance(Player.class);
             Unmarshaller um = context.createUnmarshaller();
@@ -46,6 +79,7 @@ public class PlayState extends GameState {
             e.printStackTrace();
             //TODO Proper error handling
         }
+
 
         player.setSprite(new Sprite(ResourceHandler.getLoadedTexture(player.getTextureName()), new Vector2f(0, 0), new Vector2f(1, 1)));
         player.setPosition(new Vector2f(1, 1));

@@ -1,8 +1,0 @@
-<bullet>
-    <texture>9mmTexture.png?</texture>
-    <speed>100</speed>
-    <weight>50</weight>
-    <resistance>10</resistance>
-    <tailTexture>samllBulletTexture??</tailTexture>
-    <colissionEffect>smallBulletHoleEffect()?</colissionEffect>
-</bullet>
