@@ -2,9 +2,9 @@ package blockerino;
 
 import blockerino.states.GameStateManager;
 import blockerino.util.KeyHandler;
+import blockerino.util.LoadTextures;
 import blockerino.util.MouseHandler;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 

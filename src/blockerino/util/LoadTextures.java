@@ -1,4 +1,4 @@
-package blockerino;
+package blockerino.util;
 
 import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
