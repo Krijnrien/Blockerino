@@ -1,4 +1,6 @@
-package blockerino;
+package Server;
+
+import blockerino.Window;
 
 public class Main {
 
@@ -7,6 +9,5 @@ public class Main {
     }
 
     public Main() {
-        new Window().createWindow();
     }
 }
