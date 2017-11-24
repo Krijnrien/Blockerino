@@ -1,0 +1,10 @@
+<weapon >
+    <texture>revolver.png?</texture>
+    <clipSizeTotal>8</clipSizeTotal>
+    <magazineReloadTimeInMs>1400</magazineReloadTimeInMs>
+    <fireRateInMs>700</fireRateInMs>
+    <firetypes>
+        <fireType>SINGLE</fireType>
+        <fireType>BURST_3</fireType>
+    </firetypes>
+</weapon>

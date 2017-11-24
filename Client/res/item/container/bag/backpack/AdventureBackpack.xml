@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<containerItem>
+    <description>a backpack for adventures</description>
+    <id>2</id>
+    <name>Adventures backpack</name>
+    <rarity>BASIC</rarity>
+    <stackSize>1</stackSize>
+    <type>CONTAINER</type>
+    <size>20</size>
+</containerItem>
