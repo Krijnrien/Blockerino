@@ -39,24 +39,24 @@ public class Chunk {
      * @param _collision AABB
      * @return block list
      */
-    public List<Block> getBlockCollisions(AABB _collision){
+    public boolean getBlockCollisions(AABB _collision){
 
         List<Block> collisions = new ArrayList<>();
 
         for (int i = 0; i < blockData.length; i++){
             for (int j = 0; j < blockData[i].length; j++){
                 // If the specific block has collision set
-                if (blockData[i][j].getCollision() != null && blockData[i][j].getSolid()) {
-                    if (_collision.collides(blockData[i][j].getCollision(), xPos + i, yPos + j)) {
 
-                        collisions.add(blockData[i][j]);
-                        //System.out.println("Collision on block: " + (xPos + i) + ", " + (yPos + j));
+                if (blockData[i][j].getCollision() != null && blockData[i][j].getSolid()) {
+
+                    if (_collision.collides(blockData[i][j].getCollision())) {
+                        return true;
                     }
                 }
             }
         }
 
-        return collisions;
+        return false;
     }
 
     /**
@@ -88,6 +88,8 @@ public class Chunk {
                 else{
                     blockData[i][j] = new BlockAir();
                 }
+
+                blockData[i][j].setCollision(new AABB(new Vector2f(i + xPos, j + yPos), 1, 1));
             }
         }
     }
@@ -150,7 +152,7 @@ public class Chunk {
             for (int j = 0; j < blockData[i].length; j++) {
 
                 if (blockData[i][j].hasCollision()) {
-                    blockData[i][j].getCollision().render(_graphics2D, _projectionViewMatrix, new Vector2f(xPos + i, yPos + j));
+                    blockData[i][j].getCollision().render(_graphics2D, _projectionViewMatrix);
                 }
             }
         }

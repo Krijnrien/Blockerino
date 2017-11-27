@@ -1,12 +1,16 @@
 package blockerino.entity;
 
 import blockerino.graphics.Sprite;
+import blockerino.resources.Block;
+import blockerino.states.PlayState;
 import blockerino.util.AABB;
 import blockerino.util.Vector2f;
+import blockerino.world.Chunk;
 
 import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.List;
 
 //TODO extends world
 
@@ -38,6 +42,7 @@ public abstract class Entity extends WorldObject {
     public void setCollissions() {
         Vector2f _origin = position;
         Vector2f _scale = getScale();
+
         float collWidth = scale.x / 4;
         float collHeight = scale.y / 4;
 
@@ -45,14 +50,58 @@ public abstract class Entity extends WorldObject {
         rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
         topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
         bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
-
     }
 
     public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
-        leftCollision.render(_graphics2D, _projectionViewMatrix, position);
-        rightCollision.render(_graphics2D, _projectionViewMatrix, position);
-        topCollision.render(_graphics2D, _projectionViewMatrix, position);
-        bottomCollision.render(_graphics2D, _projectionViewMatrix, position);
+        leftCollision.render(_graphics2D, _projectionViewMatrix);
+        rightCollision.render(_graphics2D, _projectionViewMatrix);
+        topCollision.render(_graphics2D, _projectionViewMatrix);
+        bottomCollision.render(_graphics2D, _projectionViewMatrix);
+    }
+
+    public void testCollision(){
+        Chunk chunk = PlayState.world.getChunk(position);
+
+        if (chunk != null){
+            if (chunk.getBlockCollisions(leftCollision)){
+                leftCollision.setColliding(true);
+            } else {
+                leftCollision.setColliding(false);
+            }
+
+            if (chunk.getBlockCollisions(rightCollision)){
+                rightCollision.setColliding(true);
+            } else {
+                rightCollision.setColliding(false);
+            }
+
+            if (chunk.getBlockCollisions(topCollision)){
+                topCollision.setColliding(true);
+            } else {
+                topCollision.setColliding(false);
+            }
+
+            if (chunk.getBlockCollisions(bottomCollision)){
+                bottomCollision.setColliding(true);
+            } else {
+                bottomCollision.setColliding(false);
+            }
+
+        } else{
+            System.out.println("chunk == null");
+        }
+    }
+
+    public void updateCollisions(){
+        float collWidth = scale.x / 4;
+        float collHeight = scale.y / 4;
+
+        System.out.println(scale.toString());
+
+        leftCollision.setPosition(new Vector2f(position.x - (scale.x / 2) + (collWidth / 2), position.y));
+        rightCollision.setPosition(new Vector2f(position.x + (scale.x / 2) - (collWidth / 2), position.y));
+        topCollision.setPosition(new Vector2f(position.x, position.y - (scale.y / 2) + (collHeight / 2)));
+        bottomCollision.setPosition(new Vector2f(position.x, position.y + (scale.y / 2) - (collHeight / 2)));
     }
 
     //region Abstract methods

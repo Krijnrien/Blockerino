@@ -4,6 +4,8 @@ import blockerino.entity.Entity;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AABB {
     private Vector2f position;
@@ -14,20 +16,24 @@ public class AABB {
     private float height;
 
     private float radius;
-    private int size;
+    private boolean isColliding;
 
     public AABB(Vector2f _position, float _width, float _height) {
         this.position = _position;
         this.width = _width;
         this.height = _height;
-
-        size = Math.max((int) _width, (int) _height);
+        //collidingObjects = new ArrayList<>();
     }
 
     public AABB(Vector2f _position, int _radius, Entity _entity) {
         this.position = _position;
         this.radius = _radius;
         this.entity = _entity;
+        //collidingObjects = new ArrayList<>();
+    }
+
+    public void setPosition(Vector2f _position){
+        position = _position;
     }
 
     public Vector2f getPosition() {
@@ -50,15 +56,11 @@ public class AABB {
         this.position = _position;
         this.width = _width;
         this.height = _height;
-
-        size = Math.max(_width, _height);
     }
 
     public void setCircle(Vector2f _position, int _radius) {
         this.position = _position;
         this.radius = _radius;
-
-        size = _radius;
     }
 
     public void setWidth(float _width) {
@@ -78,25 +80,10 @@ public class AABB {
     }
 
     public boolean collides(AABB bBox) {
-        float ax = ((position.getWorldVar().x + (xOffset)) + (width / 2));
-        float ay = ((position.getWorldVar().y + (yOffset)) + (height / 2));
-        float bx = ((bBox.getPosition().getWorldVar().x + (xOffset) + (width / 2)));
-        float by = ((bBox.getPosition().getWorldVar().y + (yOffset) + (height / 2)));
-
-        if (Math.abs(ax - bx) < (this.width / 2) + (bBox.width / 2)) {
-            if (Math.abs(ay - by) < (this.height / 2) + (bBox.height / 2)) {
-                return true;
-            }
-        }
-        return false;
-
-    }
-
-    public boolean collides(AABB bBox, float targetXOffset, float targetYOffset) {
-        float ax = ((position.getWorldVar().x + (xOffset)) + (width / 2));
-        float ay = ((position.getWorldVar().y + (yOffset)) + (height / 2));
-        float bx = ((bBox.getPosition().getWorldVar().x + (targetXOffset) + (width / 2)));
-        float by = ((bBox.getPosition().getWorldVar().y + (targetYOffset) + (height / 2)));
+        float ax = ((position.getWorldVar().x) + (width / 2));
+        float ay = ((position.getWorldVar().y) + (height / 2));
+        float bx = ((bBox.getPosition().getWorldVar().x + (width / 2)));
+        float by = ((bBox.getPosition().getWorldVar().y + (height / 2)));
 
         if (Math.abs(ax - bx) < (this.width / 2) + (bBox.width / 2)) {
             if (Math.abs(ay - by) < (this.height / 2) + (bBox.height / 2)) {
@@ -121,11 +108,11 @@ public class AABB {
         return false;
     }
 
-    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix, Vector2f _worldPos){
+    public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
         AffineTransform matrix = new AffineTransform();
 
         AffineTransform transformCollisionMatrix = new AffineTransform();
-        transformCollisionMatrix.translate(_worldPos.x + position.x, _worldPos.y + position.y);
+        transformCollisionMatrix.translate(position.x, position.y);
         transformCollisionMatrix.scale(width, height);
 
         // Create MVP matrix with Projection-View matrix and transform matrix
@@ -139,7 +126,17 @@ public class AABB {
         //Create copy of Graphics2D and set matrix;
         Graphics2D g = (Graphics2D)_graphics2D.create();
         g.setTransform(matrix);
-        g.setColor(new Color(0, 255, 0));
+
+        if (isColliding){
+            g.setColor(new Color(255, 0, 0));
+            //isColliding = false;
+        } else {
+            g.setColor(new Color(0, 255, 0));
+        }
         g.drawRect(0, 0, 32, 32);
+    }
+
+    public void setColliding(boolean _state){
+        isColliding = _state;
     }
 }

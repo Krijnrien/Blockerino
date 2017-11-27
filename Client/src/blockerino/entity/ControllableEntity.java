@@ -69,20 +69,20 @@ public abstract class ControllableEntity extends Entity {
     private void setHitBoxDirection() {
         if (up) {
             position.y -= maxSpeed;
-            getHitBounds().setYOffset(-getSize().x / 2);
-            getHitBounds().setXOffset(-getSize().y / 2);
+            //getHitBounds().setYOffset(-getSize().x / 2);
+            //getHitBounds().setXOffset(-getSize().y / 2);
         } else if (down) {
             position.y += maxSpeed;
-            getHitBounds().setYOffset(getSize().x / 2);
-            getHitBounds().setXOffset(-getSize().y / 2);
+            //getHitBounds().setYOffset(getSize().x / 2);
+            //getHitBounds().setXOffset(-getSize().y / 2);
         } else if (left) {
             position.x -= maxSpeed;
-            getHitBounds().setXOffset(-getSize().x);
-            getHitBounds().setYOffset(0);
+            //getHitBounds().setXOffset(-getSize().x);
+            //getHitBounds().setYOffset(0);
         } else if (right) {
             position.x += maxSpeed;
-            getHitBounds().setXOffset(0);
-            getHitBounds().setYOffset(0);
+            //getHitBounds().setXOffset(0);
+            //getHitBounds().setYOffset(0);
         }
 
     }

@@ -12,6 +12,7 @@ import blockerino.util.*;
 import blockerino.world.Camera2D;
 import blockerino.world.World;
 import blockerino.world.generation.NoiseGenerator;
+import blockerino.world.generation.SuperFlat;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -35,10 +36,10 @@ public class PlayState extends GameState {
 
     PlayState(GameStateManager _gameStateManager) {
         super(_gameStateManager);
-        NoiseGenerator worldGen = new NoiseGenerator(1337);
-        worldGen.setAmplitude(32);
-        worldGen.setFrequency(16);
-        worldGen.setAverageHeight(30);
+        SuperFlat worldGen = new SuperFlat(10);
+        //worldGen.setAmplitude(32);
+        //worldGen.setFrequency(16);
+        //worldGen.setAverageHeight(30);
 
         world = new World(16, worldGen);
         gameUI = new GameUI();
@@ -74,7 +75,7 @@ public class PlayState extends GameState {
         try {
             JAXBContext context = JAXBContext.newInstance(Player.class);
             Unmarshaller um = context.createUnmarshaller();
-            player = (Player) um.unmarshal(new FileReader("res/entity/player.xml"));
+            player = (Player) um.unmarshal(new FileReader("client/res/entity/player.xml"));
         } catch (JAXBException | FileNotFoundException e) {
             e.printStackTrace();
             //TODO Proper error handling
@@ -82,7 +83,7 @@ public class PlayState extends GameState {
 
 
         player.setSprite(new Sprite(ResourceHandler.getLoadedTexture(player.getTextureName()), new Vector2f(0, 0), new Vector2f(1, 1)));
-        player.setPosition(new Vector2f(1, 1));
+        player.setPosition(new Vector2f(0, 0));
         player.setScale(new Vector2f(3, 3));
 
         player.setCollissions();
@@ -104,6 +105,9 @@ public class PlayState extends GameState {
 
     public void update() {
         player.update();
+        player.updateCollisions();
+        player.testCollision();
+
         gameUI.update();
 
         camera.updateViewMatrixWidthOnly();
