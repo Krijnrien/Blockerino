@@ -137,6 +137,12 @@ public class AABB {
     }
 
     public void setColliding(boolean _state){
-        isColliding = _state;
+        if (isColliding != _state) {
+            isColliding = _state;
+        } //else do nothing
+    }
+
+    public boolean isColliding(){
+        return isColliding;
     }
 }

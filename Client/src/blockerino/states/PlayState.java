@@ -36,10 +36,10 @@ public class PlayState extends GameState {
 
     PlayState(GameStateManager _gameStateManager) {
         super(_gameStateManager);
-        SuperFlat worldGen = new SuperFlat(10);
-        //worldGen.setAmplitude(32);
-        //worldGen.setFrequency(16);
-        //worldGen.setAverageHeight(30);
+        NoiseGenerator worldGen = new NoiseGenerator(1337);
+        worldGen.setAmplitude(32);
+        worldGen.setFrequency(16);
+        worldGen.setAverageHeight(30);
 
         world = new World(16, worldGen);
         gameUI = new GameUI();

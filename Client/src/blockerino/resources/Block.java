@@ -16,7 +16,7 @@ public abstract class Block {
     private AABB collision;
 
     public Block() {
-        setCollision(new AABB(new Vector2f(0, 0), 1, 1));
+
     }
 
     public Texture getTexture() {

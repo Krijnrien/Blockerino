@@ -3,7 +3,7 @@ package blockerino;
 public class Main {
 
     public static void main(String[] args) {
-        new Server.Main();
+        new Main();
     }
 
     public Main() {

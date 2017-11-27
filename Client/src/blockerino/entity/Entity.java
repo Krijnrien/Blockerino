@@ -25,10 +25,10 @@ public abstract class Entity extends WorldObject {
     private AABB hitBounds;// Bounds entity for hits
     private AABB bounds; //bounds entity for collision
 
-    private AABB leftCollision;
-    private AABB rightCollision;
-    private AABB topCollision;
-    private AABB bottomCollision;
+    protected AABB leftCollision;
+    protected AABB rightCollision;
+    protected AABB topCollision;
+    protected AABB bottomCollision;
     //endregion
 
     public void setBothBounds() {
@@ -95,8 +95,6 @@ public abstract class Entity extends WorldObject {
     public void updateCollisions(){
         float collWidth = scale.x / 4;
         float collHeight = scale.y / 4;
-
-        System.out.println(scale.toString());
 
         leftCollision.setPosition(new Vector2f(position.x - (scale.x / 2) + (collWidth / 2), position.y));
         rightCollision.setPosition(new Vector2f(position.x + (scale.x / 2) - (collWidth / 2), position.y));

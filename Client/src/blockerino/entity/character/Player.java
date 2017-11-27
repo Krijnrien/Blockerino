@@ -20,7 +20,7 @@ public class Player extends ControllableEntity {
     //endregion
 
     private void move() {
-        if (up) {
+        if (up && !topCollision.isColliding()) {
             dy -= acceleration;
             if (dy < -maxSpeed) {
                 dy = -maxSpeed;
@@ -34,7 +34,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (down) {
+        if (down && !bottomCollision.isColliding()) {
             dy += acceleration;
             if (dy > maxSpeed) {
                 dy = maxSpeed;
@@ -48,7 +48,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (left) {
+        if (left && !leftCollision.isColliding()) {
             dx -= acceleration;
             if (dx < -maxSpeed) {
                 dx = -maxSpeed;
@@ -62,7 +62,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (right) {
+        if (right && !rightCollision.isColliding()) {
             dx += acceleration;
             if (dx > maxSpeed) {
                 dx = maxSpeed;

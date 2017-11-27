@@ -67,6 +67,7 @@ public abstract class ControllableEntity extends Entity {
     }
 
     private void setHitBoxDirection() {
+        /*
         if (up) {
             position.y -= maxSpeed;
             //getHitBounds().setYOffset(-getSize().x / 2);
@@ -84,7 +85,7 @@ public abstract class ControllableEntity extends Entity {
             //getHitBounds().setXOffset(0);
             //getHitBounds().setYOffset(0);
         }
-
+        */
     }
 
     //region Abstract methods
