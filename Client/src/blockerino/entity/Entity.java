@@ -10,6 +10,7 @@ import blockerino.world.Chunk;
 import javax.xml.bind.annotation.XmlTransient;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.ArrayList;
 import java.util.List;
 
 //TODO extends world
@@ -59,36 +60,85 @@ public abstract class Entity extends WorldObject {
         bottomCollision.render(_graphics2D, _projectionViewMatrix);
     }
 
+    /**
+     * Test if the collisions are colliding with the world
+     * TODO: Clean-up / abstract it more
+     */
     public void testCollision(){
-        Chunk chunk = PlayState.world.getChunk(position);
+        Chunk chunk = null;
 
+        List<Chunk> chunks = new ArrayList<>();
         if (chunk != null){
-            if (chunk.getBlockCollisions(leftCollision)){
-                leftCollision.setColliding(true);
-            } else {
-                leftCollision.setColliding(false);
+            chunks.add(chunk);
+        }
+
+        //Get chunk from bounding corners of player
+        Chunk topLeft = PlayState.world.getChunk(new Vector2f(position.x - (0.5f * scale.x), position.y - (0.5f * scale.y)));
+        if (topLeft != null && topLeft != chunk){
+            chunks.add(topLeft);
+        }
+
+        Chunk topRight = PlayState.world.getChunk(new Vector2f(position.x + (0.5f * scale.x), position.y - (0.5f * scale.y)));
+        if (topRight != null && topRight != chunk){
+            chunks.add(topRight);
+        }
+
+        Chunk bottomLeft = PlayState.world.getChunk(new Vector2f(position.x - (0.5f * scale.x), position.y + (0.5f * scale.y)));
+        if (bottomLeft != null && bottomLeft != chunk){
+            chunks.add(bottomLeft);
+        }
+
+        Chunk bottomRight = PlayState.world.getChunk(new Vector2f(position.x + (0.5f * scale.x), position.y + (0.5f * scale.y)));
+        if (bottomRight != null && bottomRight != chunk){
+            chunks.add(bottomRight);
+        }
+
+        int leftCollisionCount = 0;
+        int rightCollisionCount = 0;
+        int topCollisionCount = 0;
+        int bottomCollisionCount = 0;
+
+        for (int i = 0; i < chunks.size(); i++) {
+
+            if (chunks.get(i).getBlockCollisions(leftCollision)) {
+                leftCollisionCount++;
             }
 
-            if (chunk.getBlockCollisions(rightCollision)){
-                rightCollision.setColliding(true);
-            } else {
-                rightCollision.setColliding(false);
+            if (chunks.get(i).getBlockCollisions(rightCollision)) {
+                rightCollisionCount++;
             }
 
-            if (chunk.getBlockCollisions(topCollision)){
-                topCollision.setColliding(true);
-            } else {
-                topCollision.setColliding(false);
+            if (chunks.get(i).getBlockCollisions(topCollision)) {
+                topCollisionCount++;
             }
 
-            if (chunk.getBlockCollisions(bottomCollision)){
-                bottomCollision.setColliding(true);
-            } else {
-                bottomCollision.setColliding(false);
+            if (chunks.get(i).getBlockCollisions(bottomCollision)) {
+                bottomCollisionCount++;
             }
+        }
 
-        } else{
-            System.out.println("chunk == null");
+        if (leftCollisionCount > 0){
+            leftCollision.setColliding(true);
+        } else {
+            leftCollision.setColliding(false);
+        }
+
+        if (rightCollisionCount > 0){
+            rightCollision.setColliding(true);
+        } else {
+            rightCollision.setColliding(false);
+        }
+
+        if (topCollisionCount > 0){
+            topCollision.setColliding(true);
+        } else {
+            topCollision.setColliding(false);
+        }
+
+        if (bottomCollisionCount > 0){
+            bottomCollision.setColliding(true);
+        } else {
+            bottomCollision.setColliding(false);
         }
     }
 

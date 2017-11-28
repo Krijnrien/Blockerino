@@ -68,6 +68,7 @@ public class Sprite {
 
         //Copy current matrix to circle matrix. At this point the matrix is at the center of the sprite
         AffineTransform circleMatrix = new AffineTransform(matrix);
+        AffineTransform boxMatrix = new AffineTransform(matrix);
 
         //transform matrix position to top left of the sprite and scale down to model scale
         matrix.translate(texturePosition.x, texturePosition.y);
@@ -78,6 +79,7 @@ public class Sprite {
 
         /* Rendering Debugging Tools */
 
+        //Middle Circle
         //transform circle draw position so the circle stays centered. Also scale down circle to model scale
         circleMatrix.scale((float)1 / (texture.getWidth()),(float)1 / (texture.getHeight()));
         circleMatrix.translate(-2, -2);
@@ -87,6 +89,22 @@ public class Sprite {
         g.setTransform(circleMatrix);
         g.setColor(new Color(15, 88, 255));
         g.fillOval(0, 0, 4, 4);
+
+
+        //Bounding Rect
+        //transform rect draw position so the rect stays centered. Also scale down rect to model scale
+        boxMatrix.translate(-0.5, -0.5);
+        boxMatrix.scale((float)1 / (texture.getWidth()),(float)1 / (texture.getHeight()));
+
+        float thickness = 2;
+        Stroke oldStroke = g.getStroke();
+        g.setStroke(new BasicStroke(thickness));
+
+        g.setTransform(boxMatrix);
+        g.setColor(new Color(88, 155, 255));
+        g.drawRect(0, 0, texture.getWidth(), texture.getHeight());
+
+        g.setStroke(oldStroke);
     }
 
     public AffineTransform getTransformMatrix() {
