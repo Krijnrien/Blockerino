@@ -1,36 +1,19 @@
 package Server;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import Server.connection.IncomingConnectionHandler;
+import Server.game.GameLoop;
 
 public class Main {
 
-	public static boolean listening;
-	private static final int PORT = 1978;
-
 	public static void main(String args[]) {
-		System.out.println("starting server");
+		System.out.println("Starting world on new thread!"); //TODO add proper logging
 		GameLoop gameLoop = new GameLoop();
-		Thread t = new Thread(gameLoop, "GameThread");
-		t.start();
+		Thread gameLoopThread = new Thread(gameLoop, "GameThread");
+		gameLoopThread.start();
 
-		try {
-			Socket socket = null;
-			ServerSocket serverSocket = new ServerSocket(PORT);
-
-			listening = true;
-			while(listening) {
-				try {
-					socket = serverSocket.accept();
-				} catch(IOException e) {
-					System.out.println("I/O error: " + e);
-				}
-				// new thread for a client
-				new Client(socket).start();
-			}
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Listening on incoming connections..."); //TODO add proper logging
+		IncomingConnectionHandler incomingConnectionHandler = new IncomingConnectionHandler();
+		Thread connectionHandlerThread = new Thread(incomingConnectionHandler, "ConnectionHandlerThread");
+		connectionHandlerThread.start();
 	}
 }
