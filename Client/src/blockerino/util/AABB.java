@@ -10,8 +10,6 @@ import java.util.List;
 public class AABB {
     private Vector2f position;
     private Entity entity;
-    private float xOffset = 0;
-    private float yOffset = 0;
     private float width;
     private float height;
 
@@ -69,14 +67,6 @@ public class AABB {
 
     public void setHeight(float _height) {
         height = _height;
-    }
-
-    public void setXOffset(float _xOffset) {
-        xOffset = _xOffset;
-    }
-
-    public void setYOffset(float _yOffset) {
-        this.yOffset = _yOffset;
     }
 
     public boolean collides(AABB bBox) {

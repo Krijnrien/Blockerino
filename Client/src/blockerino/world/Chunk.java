@@ -39,9 +39,9 @@ public class Chunk {
      * @param _collision AABB
      * @return block list
      */
-    public boolean getBlockCollisions(AABB _collision){
+    public List<AABB> getBlockCollisions(AABB _collision){
 
-        List<Block> collisions = new ArrayList<>();
+        List<AABB> collisions = new ArrayList<>();
 
         for (int i = 0; i < blockData.length; i++){
             for (int j = 0; j < blockData[i].length; j++){
@@ -50,13 +50,13 @@ public class Chunk {
                 if (blockData[i][j].getCollision() != null && blockData[i][j].getSolid()) {
 
                     if (_collision.collides(blockData[i][j].getCollision())) {
-                        return true;
+                        collisions.add(blockData[i][j].getCollision());
                     }
                 }
             }
         }
 
-        return false;
+        return collisions;
     }
 
     /**

@@ -30,6 +30,8 @@ public abstract class Entity extends WorldObject {
     protected AABB rightCollision;
     protected AABB topCollision;
     protected AABB bottomCollision;
+
+    protected Vector2f velocity = new Vector2f(0, 0);
     //endregion
 
     public void setBothBounds() {
@@ -47,10 +49,10 @@ public abstract class Entity extends WorldObject {
         float collWidth = scale.x / 4;
         float collHeight = scale.y / 4;
 
-        leftCollision = new AABB(new Vector2f(_origin.x - (scale.x / 2) + (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
-        rightCollision = new AABB(new Vector2f(_origin.x + (scale.x / 2) - (collWidth / 2), _origin.y), collWidth, _scale.y - 0.5f);
-        topCollision = new AABB(new Vector2f(_origin.x, _origin.y - (scale.y / 2) + (collHeight / 2)), scale.x - 0.5f, collHeight);
-        bottomCollision = new AABB(new Vector2f(_origin.x, _origin.y + (scale.y / 2) - (collHeight / 2)), scale.x - 0.5f, collHeight);
+        leftCollision = new AABB(new Vector2f(0, 0), collWidth, _scale.y - 0.5f);
+        rightCollision = new AABB(new Vector2f(0, 0), collWidth, _scale.y - 0.5f);
+        topCollision = new AABB(new Vector2f(0, 0), scale.x - 0.5f, collHeight);
+        bottomCollision = new AABB(new Vector2f(0, 0), scale.x - 0.5f, scale.y / 2);
     }
 
     public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
@@ -65,77 +67,72 @@ public abstract class Entity extends WorldObject {
      * TODO: Clean-up / abstract it more
      */
     public void testCollision(){
-        Chunk chunk = null;
-
         List<Chunk> chunks = new ArrayList<>();
-        if (chunk != null){
-            chunks.add(chunk);
-        }
 
         //Get chunk from bounding corners of player
         Chunk topLeft = PlayState.world.getChunk(new Vector2f(position.x - (0.5f * scale.x), position.y - (0.5f * scale.y)));
-        if (topLeft != null && topLeft != chunk){
+        if (topLeft != null){
             chunks.add(topLeft);
         }
 
         Chunk topRight = PlayState.world.getChunk(new Vector2f(position.x + (0.5f * scale.x), position.y - (0.5f * scale.y)));
-        if (topRight != null && topRight != chunk){
+        if (topRight != null){
             chunks.add(topRight);
         }
 
         Chunk bottomLeft = PlayState.world.getChunk(new Vector2f(position.x - (0.5f * scale.x), position.y + (0.5f * scale.y)));
-        if (bottomLeft != null && bottomLeft != chunk){
+        if (bottomLeft != null){
             chunks.add(bottomLeft);
         }
 
         Chunk bottomRight = PlayState.world.getChunk(new Vector2f(position.x + (0.5f * scale.x), position.y + (0.5f * scale.y)));
-        if (bottomRight != null && bottomRight != chunk){
+        if (bottomRight != null){
             chunks.add(bottomRight);
         }
 
-        int leftCollisionCount = 0;
-        int rightCollisionCount = 0;
-        int topCollisionCount = 0;
-        int bottomCollisionCount = 0;
+        List<AABB> leftCollisions = new ArrayList<>();
+        List<AABB> rightCollisions = new ArrayList<>();
+        List<AABB> topCollisions = new ArrayList<>();
+        List<AABB> bottomCollisions = new ArrayList<>();
 
         for (int i = 0; i < chunks.size(); i++) {
 
-            if (chunks.get(i).getBlockCollisions(leftCollision)) {
-                leftCollisionCount++;
-            }
+            List<AABB> leftCollisionsChunk = chunks.get(i).getBlockCollisions(leftCollision);
+            leftCollisions.addAll(leftCollisionsChunk);
 
-            if (chunks.get(i).getBlockCollisions(rightCollision)) {
-                rightCollisionCount++;
-            }
+            List<AABB> rightCollisionsChunk = chunks.get(i).getBlockCollisions(rightCollision);
+            rightCollisions.addAll(rightCollisionsChunk);
 
-            if (chunks.get(i).getBlockCollisions(topCollision)) {
-                topCollisionCount++;
-            }
+            List<AABB> topCollisionsChunk = chunks.get(i).getBlockCollisions(topCollision);
+            topCollisions.addAll(topCollisionsChunk);
 
-            if (chunks.get(i).getBlockCollisions(bottomCollision)) {
-                bottomCollisionCount++;
-            }
+            List<AABB> bottomCollisionsChunk = chunks.get(i).getBlockCollisions(bottomCollision);
+            bottomCollisions.addAll(bottomCollisionsChunk);
         }
 
-        if (leftCollisionCount > 0){
+        if (leftCollisions.size() > 0){
             leftCollision.setColliding(true);
+            velocity.x = 0;
         } else {
             leftCollision.setColliding(false);
         }
 
-        if (rightCollisionCount > 0){
+        if (rightCollisions.size() > 0){
+            velocity.x = 0;
             rightCollision.setColliding(true);
         } else {
             rightCollision.setColliding(false);
         }
 
-        if (topCollisionCount > 0){
+        if (topCollisions.size() > 0){
+            velocity.y = 0;
             topCollision.setColliding(true);
         } else {
             topCollision.setColliding(false);
         }
 
-        if (bottomCollisionCount > 0){
+        if (bottomCollisions.size() > 0){
+            velocity.y = 0;
             bottomCollision.setColliding(true);
         } else {
             bottomCollision.setColliding(false);
@@ -149,7 +146,7 @@ public abstract class Entity extends WorldObject {
         leftCollision.setPosition(new Vector2f(position.x - (scale.x / 2) + (collWidth / 2), position.y));
         rightCollision.setPosition(new Vector2f(position.x + (scale.x / 2) - (collWidth / 2), position.y));
         topCollision.setPosition(new Vector2f(position.x, position.y - (scale.y / 2) + (collHeight / 2)));
-        bottomCollision.setPosition(new Vector2f(position.x, position.y + (scale.y / 2) - (collHeight / 2)));
+        bottomCollision.setPosition(new Vector2f(position.x, position.y + (scale.y / 2 / 2)));
     }
 
     //region Abstract methods

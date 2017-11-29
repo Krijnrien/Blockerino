@@ -12,7 +12,8 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD) // JAXB uses fields directly to create object and not getter and setter. Use @XmlValue above getter / setter to make JAXB use the getter/setter.
+@XmlAccessorType(XmlAccessType.FIELD)
+// JAXB uses fields directly to create object and not getter and setter. Use @XmlValue above getter / setter to make JAXB use the getter/setter.
 public class Player extends ControllableEntity {
 
     //region Class variables
@@ -20,59 +21,72 @@ public class Player extends ControllableEntity {
     //endregion
 
     private void move() {
-        if (up && !topCollision.isColliding()) {
-            dy -= acceleration;
-            if (dy < -maxSpeed) {
-                dy = -maxSpeed;
+        testCollision();
+
+        //apply gravity
+        if (dy < 1f) {
+            dy += 0.02f;
+        }
+
+        if (!topCollision.isColliding()) {
+            if (up) {
+                if (bottomCollision.isColliding()) {
+                    dy = -0.5f;
+                }
             }
         } else {
             if (dy < 0) {
-                dy += deceleration;
-                if (dy > 0) {
-                    dy = 0;
-                }
+                dy = 0;
             }
         }
 
-        if (down && !bottomCollision.isColliding()) {
-            dy += acceleration;
-            if (dy > maxSpeed) {
-                dy = maxSpeed;
-            }
-        } else {
+        if (bottomCollision.isColliding()) {
             if (dy > 0) {
-                dy -= deceleration;
-                if (dy < 0) {
-                    dy = 0;
-                }
+                dy = 0;
             }
         }
 
-        if (left && !leftCollision.isColliding()) {
-            dx -= acceleration;
-            if (dx < -maxSpeed) {
-                dx = -maxSpeed;
+        if (!leftCollision.isColliding()) {
+            if (left) {
+                dx -= acceleration;
+                if (dx < -maxSpeed) {
+                    dx = -maxSpeed;
+                }
+            } else {
+                if (dx < 0) {
+                    dx += deceleration;
+                    if (dx > 0) {
+                        dx = 0;
+                    }
+                }
             }
+
+            dx += velocity.x;
+
         } else {
-            if (dx < 0) {
-                dx += deceleration;
-                if (dx > 0) {
-                    dx = 0;
-                }
-            }
+            dx = 0;
         }
 
-        if (right && !rightCollision.isColliding()) {
-            dx += acceleration;
-            if (dx > maxSpeed) {
-                dx = maxSpeed;
+        if (!rightCollision.isColliding()) {
+            if (right) {
+                dx += acceleration;
+                if (dx > maxSpeed) {
+                    dx = maxSpeed;
+                }
+            } else {
+                if (dx > 0) {
+                    dx -= deceleration;
+                    if (dx < 0) {
+                        dx = 0;
+                    }
+                }
             }
+
+            dx += velocity.x;
+
         } else {
             if (dx > 0) {
-                dx -= deceleration;
-                if (dx < 0) {
-                    dx = 0;
-                }
+                dx = 0;
             }
         }
 
@@ -81,9 +95,13 @@ public class Player extends ControllableEntity {
 
     public void update() {
         super.update();
+
         move();
+
         position.x += dx; // get player X position
         position.y += dy; // get player Y position
+
+        updateCollisions();
     }
 
     @Override

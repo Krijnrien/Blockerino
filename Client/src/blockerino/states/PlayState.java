@@ -105,8 +105,6 @@ public class PlayState extends GameState {
 
     public void update() {
         player.update();
-        player.updateCollisions();
-        player.testCollision();
 
         gameUI.update();
 
