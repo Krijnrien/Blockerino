@@ -4,23 +4,17 @@ import blockerino.Window;
 import blockerino.entity.character.Player;
 import blockerino.graphics.Sprite;
 import blockerino.graphics.UI.GameUI;
-import blockerino.items.Item;
-import blockerino.items.container.ContainerItem;
 import blockerino.resources.ResourceHandler;
-import blockerino.resources.Texture;
 import blockerino.util.*;
 import blockerino.world.Camera2D;
 import blockerino.world.World;
 import blockerino.world.generation.NoiseGenerator;
-import blockerino.world.generation.SuperFlat;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -55,7 +49,6 @@ public class PlayState extends GameState {
 //        containerItem.setIcon(ResourceHandler.getLoadedTexture("stone"));
 //        containerItem.setTexture(ResourceHandler.getLoadedTexture("stone"));
 //        containerItem.setSize(20);
-//
 //
 //        try {
 //            File file = new File("bag.xml");

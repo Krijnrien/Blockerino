@@ -5,12 +5,18 @@ import java.net.Socket;
 
 public class Client extends Thread {
 
-	protected Socket socket;
-	ObjectInputStream inputStream;
+	private Socket socket;
+	private ObjectInputStream inputStream;
+
+
 
 	Client(Socket clientSocket) {
 		this.socket = clientSocket;
-		//inputStream = new ObjectInputStream(socket.getInputStream());
+		try {
+			inputStream = new ObjectInputStream(socket.getInputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void run() {
@@ -20,12 +26,19 @@ public class Client extends Thread {
 		try {
 			inp = socket.getInputStream();
 			brinp = new BufferedReader(new InputStreamReader(inp));
-			//out = new DataOutputStream(socket.getOutputStream());
+//			out = new DataOutputStream(socket.getOutputStream());
+			//TODO java read object
+            //TODO Identify object
 		} catch(IOException e) {
 			return;
 		}
-		while(true) {
 
-		}
+        Commands command = Commands.getInstance();
+
+
+//		while(true) {
+//
+//		}
+
 	}
 }
