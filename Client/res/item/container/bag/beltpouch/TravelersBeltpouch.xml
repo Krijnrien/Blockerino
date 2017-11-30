@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<containerItem>
+    <description>a beltpouch for travelers</description>
+    <id>1</id>
+    <name>Travelers beltpouch</name>
+    <rarity>COMMON</rarity>
+    <stackSize>1</stackSize>
+    <type>CONTAINER</type>
+    <size>25</size>
+</containerItem>
