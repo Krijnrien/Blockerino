@@ -2,13 +2,9 @@ package blockerino.world;
 
 import blockerino.graphics.Sprite;
 import blockerino.resources.Block;
-import blockerino.resources.ResourceHandler;
 import blockerino.resources.Texture;
-import blockerino.resources.blocks.BlockAir;
-import blockerino.resources.blocks.BlockStone;
 import blockerino.util.AABB;
 import blockerino.util.Vector2f;
-import blockerino.world.generation.Generator;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -27,11 +23,11 @@ public class Chunk {
     private Sprite sprite = null;
     private Block[][] blockData;
 
-    public Chunk(int _chunkSize, int _xPos, int _yPos, Generator _worldGen) {
+    public Chunk(int _chunkSize, int _xPos, int _yPos) {
         xPos = _xPos;
         yPos = _yPos;
 
-        construct(_chunkSize, _worldGen);
+        construct(_chunkSize);
     }
 
     /**
@@ -62,36 +58,11 @@ public class Chunk {
     /**
      * Construct a new chunk with dimensions chunkSize
      * @param _chunkSize chunk size
-     * @param _worldGen world generator
      */
-    private void construct(int _chunkSize, Generator _worldGen) {
+    private void construct(int _chunkSize) {
         blockData = new Block[_chunkSize][_chunkSize];
 
-        generateBlocks(_chunkSize, _worldGen);
         createSprite(_chunkSize);
-    }
-
-    /**
-     * Generate blocks with generator
-     * @param _chunkSize chunk size
-     * @param _worldGen world generator
-     */
-    private void generateBlocks(int _chunkSize, Generator _worldGen){
-
-        for (int i = 0; i < _chunkSize; i++) {
-            for (int j = 0; j < _chunkSize; j++) {
-
-                // If the generator returns true on the given position, the position should be stone
-                if (_worldGen.getBooleanValue(i + xPos, j + yPos, 0)) {
-                    blockData[i][j] = new BlockStone();
-                }
-                else{
-                    blockData[i][j] = new BlockAir();
-                }
-
-                blockData[i][j].setCollision(new AABB(new Vector2f(i + xPos, j + yPos), 1, 1));
-            }
-        }
     }
 
     /**
