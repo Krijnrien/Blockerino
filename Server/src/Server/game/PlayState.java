@@ -14,7 +14,7 @@ import java.io.FileReader;
 public class PlayState {
 
     public static World world;
-    private Player player;
+    private Player player; //TODO List of players - @krijn use remotePublisher to inform clients about new / disconnected clients?
 
     PlayState(){
         NoiseGenerator worldGen = new NoiseGenerator(1337);
