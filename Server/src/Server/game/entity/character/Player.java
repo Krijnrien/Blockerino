@@ -1,15 +1,14 @@
 package Server.game.entity.character;
 
 import Server.game.entity.ControllableEntity;
-import Server.game.util.KeyHandler;
-import Server.game.util.MouseHandler;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD) // JAXB uses fields directly to create object and not getter and setter. Use @XmlValue above getter / setter to make JAXB use the getter/setter.
+@XmlAccessorType(XmlAccessType.FIELD)
+// JAXB uses fields directly to create object and not getter and setter. Use @XmlValue above getter / setter to make JAXB use the getter/setter.
 public class Player extends ControllableEntity {
 
     //region Class variables
@@ -83,14 +82,15 @@ public class Player extends ControllableEntity {
         position.y += dy; // get player Y position
     }
 
-    public void input(MouseHandler _mouse, KeyHandler _key) {
-        up = _key.up.down;
-        down = _key.down.down;
-        left = _key.left.down;
-        right = _key.right.down;
-
-        primaryUse = _mouse.button1.down;
-        secondaryUse = _mouse.button2.down;
+    public void input() {
+        //TODO Change to commands
+        //        up = _key.up.down;
+        //        down = _key.down.down;
+        //        left = _key.left.down;
+        //        right = _key.right.down;
+        //
+        //        primaryUse = _mouse.button1.down;
+        //        secondaryUse = _mouse.button2.down;
     }
 
     public String getName() {

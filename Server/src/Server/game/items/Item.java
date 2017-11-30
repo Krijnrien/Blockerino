@@ -1,7 +1,4 @@
 package Server.game.items;
-import Server.game.resources.Texture;
-
-import javax.xml.bind.annotation.XmlTransient;
 
 public abstract class Item {
     private int id;
@@ -10,8 +7,6 @@ public abstract class Item {
     private ItemRarityEnum rarity;
     private int stackSize;
     private String description;
-    private Texture icon;
-    private Texture texture;
 
     //region Getters and Setters
     public int getId() {
@@ -60,24 +55,6 @@ public abstract class Item {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Texture getIcon() {
-        return icon;
-    }
-
-    @XmlTransient
-    public void setIcon(Texture icon) {
-        this.icon = icon;
-    }
-
-    public Texture getTexture() {
-        return texture;
-    }
-
-    @XmlTransient
-    public void setTexture(Texture texture) {
-        this.texture = texture;
     }
 
     //endregion

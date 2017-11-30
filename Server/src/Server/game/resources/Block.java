@@ -3,9 +3,6 @@ package Server.game.resources;
 import Server.game.util.AABB;
 
 public abstract class Block {
-
-    private Texture texture = null;
-
     private boolean hasCollision;
     private boolean solid = true;
 
@@ -15,15 +12,7 @@ public abstract class Block {
 
     }
 
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public void setTexture(Texture _texture) {
-        texture = _texture;
-    }
-
-    public void setCollision(AABB _collision){
+    public void setCollision(AABB _collision) {
         collision = _collision;
         hasCollision = true;
     }
@@ -40,7 +29,7 @@ public abstract class Block {
         return this.solid;
     }
 
-    public boolean hasCollision(){
+    public boolean hasCollision() {
         return hasCollision;
     }
 }

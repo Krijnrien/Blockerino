@@ -1,8 +1,6 @@
-package Server.game.states;
+package Server.game;
 
 import Server.game.entity.character.Player;
-import Server.game.util.KeyHandler;
-import Server.game.util.MouseHandler;
 import Server.game.util.Vector2f;
 import Server.game.world.World;
 import Server.game.world.generation.NoiseGenerator;
@@ -51,7 +49,7 @@ public class PlayState {
         world.generateChunksRadius(player.getPosition());
     }
 
-    public void input(MouseHandler _mouse, KeyHandler _key) {
-        player.input(_mouse, _key);
+    public void input() {
+        player.input();
     }
 }

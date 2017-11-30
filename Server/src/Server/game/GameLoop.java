@@ -1,13 +1,10 @@
 package Server.game;
 
-import Server.game.util.KeyHandler;
-import Server.game.util.MouseHandler;
-
 public class GameLoop implements Runnable {
 
 	private boolean running = false;
 
-	private MouseHandler mouseHandler; //TODO Instead should be list of all clients with inputs?
+	//private MousseHandler mousseHandler; //TODO Instead should be list of all clients with inputs?
 
 	private void init() {
 		running = true;
@@ -41,7 +38,7 @@ public class GameLoop implements Runnable {
 		stop();
 	}
 
-	private void input(MouseHandler _mouse, KeyHandler _key) {
+	private void input() {
 		//gameStateManager.input(_mouse, _key);
 	}
 

@@ -19,7 +19,7 @@ import java.util.List;
 public abstract class Entity extends WorldObject {
 
     //region Class variables
-    private Sprite sprite;// Texture
+    private Sprite sprite;// sprite
     protected String textureName;
     private int weight;//weight of entity
     private Vector2f size;

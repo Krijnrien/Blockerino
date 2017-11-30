@@ -1,6 +1,6 @@
 package Server.game.entity;
 
-import Server.game.states.PlayState;
+import Server.game.PlayState;
 import Server.game.util.AABB;
 import Server.game.util.Vector2f;
 import Server.game.world.Chunk;

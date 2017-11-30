@@ -1,11 +1,9 @@
 package Server.game.entity.character.equipment.combat.weapon;
 
 import Server.game.entity.character.equipment.combat.bullet.Bullet;
-import Server.game.resources.Texture;
 
 public abstract class Weapon {
 
-    private Texture texture;
     private Bullet bullet;
     private float pointingDirection;
 
