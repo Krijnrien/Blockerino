@@ -1,6 +1,7 @@
 package blockerino.entity.character;
 
 import blockerino.entity.ControllableEntity;
+import blockerino.graphics.Circle;
 import blockerino.graphics.Sprite;
 import blockerino.resources.Texture;
 import blockerino.util.KeyHandler;
@@ -108,6 +109,8 @@ public class Player extends ControllableEntity {
     public void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
         Sprite s = new Sprite(new Texture(animation.getImage()), position, scale);
         s.render(_graphics2D, _projectionViewMatrix);
+        Circle circle = new Circle(_graphics2D, new Vector2f(1,1));
+        circle.renderCircle(position.x, position.y, 10, Color.BLUE);
     }
 
     public void input(MouseHandler _mouse, KeyHandler _key) {
@@ -120,11 +123,4 @@ public class Player extends ControllableEntity {
         secondaryUse = _mouse.button2.down;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

@@ -40,7 +40,6 @@ public abstract class ControllableEntity extends Entity {
 
     public void update() {
         animate();
-        setHitBoxDirection();
         animation.update();
     }
 
@@ -66,27 +65,6 @@ public abstract class ControllableEntity extends Entity {
         }
     }
 
-    private void setHitBoxDirection() {
-        /*
-        if (up) {
-            position.y -= maxSpeed;
-            //getHitBounds().setYOffset(-getSize().x / 2);
-            //getHitBounds().setXOffset(-getSize().y / 2);
-        } else if (down) {
-            position.y += maxSpeed;
-            //getHitBounds().setYOffset(getSize().x / 2);
-            //getHitBounds().setXOffset(-getSize().y / 2);
-        } else if (left) {
-            position.x -= maxSpeed;
-            //getHitBounds().setXOffset(-getSize().x);
-            //getHitBounds().setYOffset(0);
-        } else if (right) {
-            position.x += maxSpeed;
-            //getHitBounds().setXOffset(0);
-            //getHitBounds().setYOffset(0);
-        }
-        */
-    }
 
     //region Abstract methods
     public abstract void render(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix);

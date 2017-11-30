@@ -7,7 +7,6 @@ public class Main {
     }
 
     private Main() {
-        System.out.println("testing");
         new Window().createWindow();
     }
 }

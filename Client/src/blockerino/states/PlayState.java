@@ -1,6 +1,7 @@
 package blockerino.states;
 
 import blockerino.Window;
+import blockerino.entity.character.AICharacter;
 import blockerino.entity.character.Player;
 import blockerino.graphics.Sprite;
 import blockerino.graphics.UI.GameUI;
@@ -22,6 +23,7 @@ public class PlayState extends GameState {
 
     public static World world;
     private Player player;
+    private AICharacter AINN;
     private Camera2D camera;
     private GameUI gameUI;
 
@@ -37,33 +39,6 @@ public class PlayState extends GameState {
 
         world = new World(16, worldGen);
         gameUI = new GameUI();
-
-
-//        ContainerItem containerItem = new ContainerItem();
-//        containerItem.setId(1);
-//        containerItem.setName("TravelersBeltpouch");
-//        containerItem.setType(Item.ItemTypeEnum.CONTAINER);
-//        containerItem.setRarity(Item.ItemRarityEnum.BASIC);
-//        containerItem.setStackSize(1);
-//        containerItem.setDescription("a beltpouch for travelers");
-//        containerItem.setIcon(ResourceHandler.getLoadedTexture("stone"));
-//        containerItem.setTexture(ResourceHandler.getLoadedTexture("stone"));
-//        containerItem.setSize(20);
-//
-//        try {
-//            File file = new File("bag.xml");
-//            JAXBContext jaxbContext = JAXBContext.newInstance(ContainerItem.class);
-//            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-//            // output pretty printed
-//            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//            jaxbMarshaller.marshal(containerItem, file);
-//            jaxbMarshaller.marshal(containerItem, System.out);
-//        } catch (JAXBException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("reached!");
-//        System.out.println(containerItem);
 
         try {
             JAXBContext context = JAXBContext.newInstance(Player.class);
@@ -83,6 +58,28 @@ public class PlayState extends GameState {
         player.setBothBounds();
         player.attachAnimation();
 
+
+        //region AI NN
+        try {
+            JAXBContext AIcontext = JAXBContext.newInstance(AICharacter.class);
+            Unmarshaller AIum = AIcontext.createUnmarshaller();
+            AINN = (AICharacter) AIum.unmarshal(new FileReader("Client/res/entity/aiCharacter.xml"));
+        } catch (JAXBException | FileNotFoundException e) {
+            e.printStackTrace();
+            //TODO Proper error handling
+        }
+
+
+        AINN.setSprite(new Sprite(ResourceHandler.getLoadedTexture(AINN.getTextureName()), new Vector2f(0, 0), new Vector2f(1, 1)));
+        AINN.setPosition(new Vector2f(-10, 0));
+        AINN.setScale(new Vector2f(3, 3));
+
+        AINN.setCollissions();
+        AINN.setBothBounds();
+        AINN.attachAnimation();
+        //endregion
+
+
         projectionMatrix = new AffineTransform();
         updateProjectionMatrix();
 
@@ -93,11 +90,11 @@ public class PlayState extends GameState {
 
         projectionViewMatrix = new AffineTransform(projectionMatrix);
         updateProjectionViewMatrix();
-        //camera.setPosition(player.getPosition());
     }
 
     public void update() {
         player.update();
+        AINN.update();
 
         gameUI.update();
 
@@ -127,9 +124,11 @@ public class PlayState extends GameState {
     public void render(Graphics2D _graphics2D) {
         world.render(_graphics2D, projectionViewMatrix);
         player.render(_graphics2D, projectionViewMatrix);
+        AINN.render(_graphics2D, projectionViewMatrix);
 
         world.renderCollision(_graphics2D, projectionViewMatrix);
         player.renderCollision(_graphics2D, projectionViewMatrix);
+        AINN.renderCollision(_graphics2D, projectionViewMatrix);
     }
 
     public Camera2D getCamera() {
