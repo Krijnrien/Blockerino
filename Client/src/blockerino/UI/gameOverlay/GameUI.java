@@ -1,8 +1,6 @@
-package blockerino.graphics.UI;
+package blockerino.UI.gameOverlay;
 
-import blockerino.Window;
 import blockerino.util.KeyHandler;
-
 
 public class GameUI {
     private KeyHandler escapeKey;

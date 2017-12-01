@@ -1,4 +1,4 @@
-package blockerino.graphics.UI;
+package blockerino.UI.gameOverlay;
 
 import javax.swing.*;
 import java.awt.*;

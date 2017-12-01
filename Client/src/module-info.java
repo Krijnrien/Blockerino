@@ -5,8 +5,9 @@ module Blockerino {
     requires java.xml.bind;
     requires java.rmi;
     requires java.logging;
+	requires javafx.fxml;
 
-    opens blockerino.util;
+	opens blockerino.util;
     opens blockerino.entity;
     opens blockerino.entity.character;
     opens blockerino.items;

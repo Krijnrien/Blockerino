@@ -1,13 +1,23 @@
 package blockerino;
 
-public class Main {
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-    public static void main(String[] args) {
-        new Main();
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("UI/fxml/main.fxml"));
+        primaryStage.setTitle("Hello World");
+        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.show();
     }
 
-    private Main() {
-        System.out.println("testing");
-        new Window().createWindow();
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }

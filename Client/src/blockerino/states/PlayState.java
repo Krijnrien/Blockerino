@@ -3,12 +3,11 @@ package blockerino.states;
 import blockerino.Window;
 import blockerino.entity.character.Player;
 import blockerino.graphics.Sprite;
-import blockerino.graphics.UI.GameUI;
 import blockerino.resources.ResourceHandler;
 import blockerino.util.*;
 import blockerino.world.Camera2D;
 import blockerino.world.World;
-import blockerino.world.generation.NoiseGenerator;
+import blockerino.UI.gameOverlay.GameUI;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -30,12 +29,8 @@ public class PlayState extends GameState {
 
     PlayState(GameStateManager _gameStateManager) {
         super(_gameStateManager);
-        NoiseGenerator worldGen = new NoiseGenerator(1337);
-        worldGen.setAmplitude(32);
-        worldGen.setFrequency(16);
-        worldGen.setAverageHeight(30);
 
-        world = new World(16, worldGen);
+        world = new World(16);
         gameUI = new GameUI();
 
 

@@ -1,12 +1,9 @@
-package blockerino.graphics.UI;
+package blockerino.UI.gameOverlay;
 
-
-import blockerino.GamePanel;
-import blockerino.Window;
 
 import javax.swing.*;
 
-class EscapeGameUI extends JPanel {
+public class EscapeGameUI extends JPanel {
 
     private boolean isActive;
     private JPanel gamePanel;
