@@ -7,7 +7,6 @@ public class BlockStone extends Block {
 
     public BlockStone() {
         super();
-        setTexture(ResourceHandler.getLoadedTexture("stone"));
         setSolid(true);
     }
 }

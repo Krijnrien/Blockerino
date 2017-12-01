@@ -6,12 +6,16 @@ module Blockerino {
     requires java.rmi;
     requires java.logging;
 	requires javafx.fxml;
+    requires javafx.controls;
 
-	opens blockerino.util;
+    opens blockerino.util;
     opens blockerino.entity;
     opens blockerino.entity.character;
     opens blockerino.items;
     opens blockerino.items.container;
+    opens blockerino.UI.controllers;
 
+    exports blockerino.UI.controllers;
     exports blockerino.items;
+    exports blockerino;
 }
