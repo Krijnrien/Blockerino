@@ -8,5 +8,6 @@
    <children>
       <Button fx:id="buttonLaunch" layoutX="532.0" layoutY="361.0" mnemonicParsing="false" onAction="#handleLaunchAction" text="Launch" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
       <TextField fx:id="textFieldUsername" layoutX="372.0" layoutY="361.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="79.0" />
+      <TextField fx:id="textFieldPassword" layoutX="211.0" layoutY="361.0" />
    </children>
 </AnchorPane>
