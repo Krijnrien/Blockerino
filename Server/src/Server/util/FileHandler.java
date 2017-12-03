@@ -1,6 +1,6 @@
 package Server.util;
 
-import Server.Config;
+import Server.ConfigProperties;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,7 +9,7 @@ import java.io.IOException;
 public class FileHandler {
 
 	public static String StringFromFileBuffered(String file) {
-		try(BufferedReader br = new BufferedReader(new FileReader(Config.resource + file))) {
+		try(BufferedReader br = new BufferedReader(new FileReader(ConfigProperties.resource + file))) {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 

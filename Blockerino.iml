@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Client/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Server/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Client/res" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Server/res" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
       <excludeFolder url="file://$MODULE_DIR$/out" />
     </content>
