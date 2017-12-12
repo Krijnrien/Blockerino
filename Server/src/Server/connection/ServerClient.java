@@ -3,13 +3,13 @@ package Server.connection;
 import java.io.*;
 import java.net.Socket;
 
-public class Client extends Thread {
+public class ServerClient extends Thread {
 
     private Socket socket;
     private ObjectInputStream inputStream;
 
 
-    Client(Socket clientSocket) {
+    ServerClient(Socket clientSocket) {
         this.socket = clientSocket;
         try {
             inputStream = new ObjectInputStream(socket.getInputStream());

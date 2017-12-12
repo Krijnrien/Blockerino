@@ -1,5 +1,6 @@
 package Server.connection;
 
+import Server.ConfigProperties;
 import Server.util.FileHandler;
 import Server.util.ListHandler;
 
@@ -21,17 +22,18 @@ public class IncomingConnectionHandler implements Runnable {
 
     public IncomingConnectionHandler() {
 
-        blacklistIps = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered("blacklistNames.txt"));
-        blacklistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered("blacklistNames.txt"));
-        blacklistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered("blacklistNames.txt"));
-        whitelistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered("whitelistNames.txt"));
+        blacklistIps = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered(ConfigProperties.resource + "blacklistIps.txt"));
+        blacklistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered(ConfigProperties.resource + "blacklistNames.txt"));
+        blacklistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered(ConfigProperties.resource + "whitelistIps.txt"));
+        whitelistNames = ListHandler.StringListByCommaEnd(FileHandler.StringFromFileBuffered(ConfigProperties.resource + "whitelistNames.txt"));
     }
 
     @Override
     public void run() {
         try {
             Socket socket = null;
-            ServerSocket serverSocket = new ServerSocket(PORT);
+            //TODO Fix parsing int .toString()
+            ServerSocket serverSocket = new ServerSocket(Integer.parseInt(ConfigProperties.properties.get("port").toString()));
             listening = true;
             while (listening) {
                 try {
@@ -42,7 +44,7 @@ public class IncomingConnectionHandler implements Runnable {
                 //	socket.getRemoteSocketAddress()
 
                 // new thread for a client
-                new Client(socket).start();
+                new ServerClient(socket).start();
             }
         } catch (IOException e) {
             e.printStackTrace();

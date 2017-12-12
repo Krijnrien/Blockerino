@@ -9,7 +9,8 @@ import java.io.IOException;
 public class FileHandler {
 
 	public static String StringFromFileBuffered(String file) {
-		try(BufferedReader br = new BufferedReader(new FileReader(ConfigProperties.resource + file))) {
+		System.out.println(file);
+		try(BufferedReader br = new BufferedReader(new FileReader(file))) {
 			StringBuilder sb = new StringBuilder();
 			String line = br.readLine();
 

@@ -17,7 +17,7 @@ public class RevolverPistol extends ProjectileWeapon {
 
     public RevolverPistol(Bullet _bullet) {
 
-        java.util.ArrayList<ProjectileFireType> setFireTypes = new ArrayList<>() {{
+        java.util.ArrayList<ProjectileFireType> setFireTypes = new ArrayList<ProjectileFireType>() {{
             add(ProjectileFireType.SINGLE);
         }};
 

@@ -1,8 +1,8 @@
 package blockerino.UI.controllers;
 
+import Server.connection.CommandServer;
+import blockerino.CommandClient;
 import blockerino.ConfigProperties;
-import blockerino.networking.handshake.Handshake;
-import blockerino.networking.handshake.IClientValidation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,10 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import blockerino.auth.User;
 
 public class MenuMultiplayerController {
 
@@ -28,17 +24,23 @@ public class MenuMultiplayerController {
     public void Connect() {
         String[] address = textFieldAddress.getText().split(":", 2);
         String addressIP = address[0];
-        String addressPort = address[1];
+        int addressPort = Integer.parseInt(address[1]);
         System.out.println(addressIP + ":" + addressPort);
         //TODO Set loading scene?
 
-        try {
-            Registry registry = LocateRegistry.getRegistry(addressIP, Integer.parseInt(addressPort));
-            IClientValidation clientValidation = (IClientValidation) registry.lookup("handshake");
-            clientValidation.sendHandshake(new Handshake(User.username));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Registry registry = LocateRegistry.getRegistry(addressIP, Integer.parseInt(addressPort));
+//            IClientValidation clientValidation = (IClientValidation) registry.lookup("handshake");
+//            clientValidation.sendHandshake(new Handshake(User.username));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
+        System.out.println("Starting client kryo"); //TODO add proper logging
+        CommandClient commandClient = new CommandClient(addressIP, addressPort);
+        Thread connectionThread = new Thread(commandClient, "connectionThread");
+        connectionThread.start();
 
     }
 

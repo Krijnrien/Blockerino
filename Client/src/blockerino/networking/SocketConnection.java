@@ -14,7 +14,7 @@ public class SocketConnection {
 	public SocketConnection() {
 		//TODO Check if port is set, otherwise get default one.
 		ConfigProperties configProperties = new ConfigProperties();
-		serverPort = (int) configProperties.properties.get("defaultPort");
+		//serverPort = (int) configProperties.properties.get("defaultPort");
 		Socket client = null;
 
 		try {

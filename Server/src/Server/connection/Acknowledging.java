@@ -13,7 +13,9 @@ public class Acknowledging implements Runnable {
     public void run() {
         try {
             ClientValidation clientValidation = new ClientValidation();
-            Registry registry = LocateRegistry.createRegistry((int) ConfigProperties.properties.get("port"));
+            //TODO Fix parsing int .toString()
+            //RMI
+            Registry registry = LocateRegistry.createRegistry(0);
             registry.rebind("handshake", clientValidation);
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -1,5 +1,6 @@
 package Server;
 
+import Server.connection.CommandServer;
 import Server.connection.IncomingConnectionHandler;
 import Server.connection.Acknowledging;
 import Server.game.GameLoop;
@@ -12,14 +13,14 @@ public class Main {
         Thread gameLoopThread = new Thread(gameLoop, "GameThread");
         gameLoopThread.start();
 
-        System.out.println("Listening on incoming connections..."); //TODO add proper logging
-        IncomingConnectionHandler incomingConnectionHandler = new IncomingConnectionHandler();
-        Thread connectionHandlerThread = new Thread(incomingConnectionHandler, "ConnectionHandlerThread");
-        connectionHandlerThread.start();
+//        System.out.println("Listening on incoming connections..."); //TODO add proper logging
+//        IncomingConnectionHandler incomingConnectionHandler = new IncomingConnectionHandler();
+//        Thread connectionHandlerThread = new Thread(incomingConnectionHandler, "ConnectionHandlerThread");
+//        connectionHandlerThread.start();
 
         System.out.println("Listening for handshakes..."); //TODO add proper logging
-        Acknowledging acknowledging = new Acknowledging();
-        Thread handshakeThread = new Thread(acknowledging, "handshakeThread");
+        CommandServer commandServer = new CommandServer();
+        Thread handshakeThread = new Thread(commandServer, "connectionThread");
         handshakeThread.start();
     }
 }

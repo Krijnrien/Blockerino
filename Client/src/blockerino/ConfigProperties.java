@@ -5,7 +5,7 @@ import java.util.Properties;
 
 public class ConfigProperties {
 
-    public static final String ROOT = "/Client/";
+    public static final String ROOT = "/ServerClient/";
     public static final String source = ROOT + "src/blockerino/";
     public static final String resource = ROOT + "res/";
     public static final String FXML = "/blockerino/UI/fxml/";

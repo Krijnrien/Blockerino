@@ -64,7 +64,7 @@ public class PlayState extends GameState {
             JAXBContext context = JAXBContext.newInstance(Player.class);
             Unmarshaller um = context.createUnmarshaller();
             //TODO Filereader best option here?
-            player = (Player) um.unmarshal(new FileReader("Client/res/entity/player.xml"));
+            player = (Player) um.unmarshal(new FileReader("ServerClient/res/entity/player.xml"));
         } catch (JAXBException | FileNotFoundException e) {
             e.printStackTrace();
             //TODO Proper error handling

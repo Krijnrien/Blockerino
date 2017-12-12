@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigProperties {
-	public static final String ROOT = "/Server";
+	public static final String ROOT = "Server/";
 	public static final String source = ROOT + "src/";
 	public static final String resource = ROOT + "res/";
 
