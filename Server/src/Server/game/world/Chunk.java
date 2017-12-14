@@ -6,14 +6,18 @@ import Server.game.resources.blocks.BlockStone;
 import Server.game.util.AABB;
 import Server.game.util.Vector2f;
 import Server.game.world.generation.Generator;
+import Server.game.entity.ControllableEntity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * Chunk is an allocation and display object for a grid(chunk) of blocks.
  */
 public class Chunk {
+    //TODO Entities are loaded and processed by chunks (Unverified proposal)
+    private List<ControllableEntity> controllableEntities = new ArrayList<>();
 
     private int xPos;
     private int yPos;
@@ -25,6 +29,12 @@ public class Chunk {
         yPos = _yPos;
 
         construct(_chunkSize, _worldGen);
+    }
+
+    public void update() {
+        for (ControllableEntity controllableEntity : controllableEntities) {
+            controllableEntity.update();
+        }
     }
 
     /**

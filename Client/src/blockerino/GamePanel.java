@@ -9,9 +9,11 @@ public class GamePanel extends JPanel {
 
 	public GamePanel() {
 		setPreferredSize(new Dimension(Window.width, Window.height));
-		GameLoop gameLoop = new GameLoop(this);
-		Thread t = new Thread(gameLoop, "GameThread");
-		t.start();
+
+		System.out.println("Starting client kryo"); //TODO add proper logging
+		CommandClient commandClient = new CommandClient("127.0.0.1", 32064);
+		Thread connectionThread = new Thread(commandClient, "connectionThread");
+		connectionThread.start();
 	}
 
 	public JPanel getGamePanel() {

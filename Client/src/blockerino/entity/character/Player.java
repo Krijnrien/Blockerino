@@ -5,7 +5,6 @@ import blockerino.graphics.Sprite;
 import blockerino.resources.Texture;
 import blockerino.util.KeyHandler;
 import blockerino.util.MouseHandler;
-import blockerino.util.Vector2f;
 
 import javax.xml.bind.annotation.*;
 import java.awt.*;
@@ -120,11 +119,4 @@ public class Player extends ControllableEntity {
         secondaryUse = _mouse.button2.down;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

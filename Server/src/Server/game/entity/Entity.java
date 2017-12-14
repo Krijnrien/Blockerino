@@ -1,6 +1,6 @@
 package Server.game.entity;
 
-import Server.game.PlayState;
+import Server.game.GameManager;
 import Server.game.util.AABB;
 import Server.game.util.Vector2f;
 import Server.game.world.Chunk;
@@ -47,7 +47,8 @@ public abstract class Entity extends WorldObject {
 	}
 
 	public void testCollision() {
-		Chunk chunk = PlayState.world.getChunk(position);
+
+		Chunk chunk = GameManager.world.getChunk(position);
 
 		if(chunk != null) {
 			if(chunk.getBlockCollisions(leftCollision)) {

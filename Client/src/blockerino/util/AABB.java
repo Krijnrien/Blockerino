@@ -1,11 +1,9 @@
 package blockerino.util;
 
-import blockerino.entity.Entity;
+import Server.game.entity.Entity;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AABB {
     private Vector2f position;

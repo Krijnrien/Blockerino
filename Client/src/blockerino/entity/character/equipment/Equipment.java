@@ -1,6 +1,6 @@
 package blockerino.entity.character.equipment;
 
-import blockerino.items.Item;
+import Server.game.items.Item;
 
 public class Equipment {
 
@@ -13,7 +13,5 @@ public class Equipment {
 	private Item gloves;
 	private Item pants;
 	private Item shoes;
-
-
 
 }

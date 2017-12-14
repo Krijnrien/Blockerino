@@ -1,5 +1,6 @@
 package blockerino.entity;
 
+
 import blockerino.util.Vector2f;
 
 import javax.xml.bind.annotation.XmlTransient;

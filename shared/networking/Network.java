@@ -11,5 +11,7 @@ public class Network {
         Kryo kryo = endPoint.getKryo();
 
         kryo.register(RegisterNetwork.class);
+        kryo.register(ClientInputNetwork.class);
+        kryo.register(ChunksNetwork.class);
     }
 }

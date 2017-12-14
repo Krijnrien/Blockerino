@@ -32,15 +32,16 @@ public class Chunk {
 
     /**
      * Return all block collisions by given AABB
+     *
      * @param _collision AABB
      * @return block list
      */
-    public List<AABB> getBlockCollisions(AABB _collision){
+    public List<AABB> getBlockCollisions(AABB _collision) {
 
         List<AABB> collisions = new ArrayList<>();
 
-        for (int i = 0; i < blockData.length; i++){
-            for (int j = 0; j < blockData[i].length; j++){
+        for (int i = 0; i < blockData.length; i++) {
+            for (int j = 0; j < blockData[i].length; j++) {
                 // If the specific block has collision set
 
                 if (blockData[i][j].getCollision() != null && blockData[i][j].getSolid()) {
@@ -57,6 +58,7 @@ public class Chunk {
 
     /**
      * Construct a new chunk with dimensions chunkSize
+     *
      * @param _chunkSize chunk size
      */
     private void construct(int _chunkSize) {
@@ -67,9 +69,10 @@ public class Chunk {
 
     /**
      * Create a single sprite from the blocks
+     *
      * @param _chunkSize chunk size
      */
-    private void createSprite(int _chunkSize){
+    private void createSprite(int _chunkSize) {
         BufferedImage[][] images = new BufferedImage[_chunkSize][_chunkSize];
         Vector2f[][] positions = new Vector2f[_chunkSize][_chunkSize];
 
@@ -83,10 +86,10 @@ public class Chunk {
                 int blockTextureWidth = blockData[i][j].getTexture().getWidth();
                 int blockTextureHeight = blockData[i][j].getTexture().getHeight();
 
-                if (blockTextureWidth > highestWidth){
+                if (blockTextureWidth > highestWidth) {
                     highestWidth = blockTextureWidth;
                 }
-                if (blockTextureHeight > highestHeight){
+                if (blockTextureHeight > highestHeight) {
                     highestHeight = blockTextureHeight;
                 }
             }
@@ -118,7 +121,7 @@ public class Chunk {
         sprite.render(_graphics2, _projectionViewMatrix);
     }
 
-    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix){
+    public void renderCollision(Graphics2D _graphics2D, AffineTransform _projectionViewMatrix) {
         for (int i = 0; i < blockData.length; i++) {
             for (int j = 0; j < blockData[i].length; j++) {
 
@@ -129,11 +132,11 @@ public class Chunk {
         }
     }
 
-    public int getXPos(){
+    public int getXPos() {
         return xPos;
     }
 
-    public int getYPos(){
+    public int getYPos() {
         return yPos;
     }
 }

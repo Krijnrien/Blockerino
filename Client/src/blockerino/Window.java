@@ -14,7 +14,7 @@ public class Window extends JFrame {
     private JPanel gamePanel;
     private JLayeredPane layeredPane;
 
-    void createWindow() {
+    public void createWindow() {
         width = 1280;
         height = 720;
 

@@ -1,6 +1,6 @@
 package blockerino.entity;
 
-import blockerino.graphics.Sprite;
+
 import blockerino.util.Vector2f;
 
 import java.awt.*;

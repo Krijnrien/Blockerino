@@ -1,12 +1,9 @@
 package blockerino;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import networking.Network;
-import networking.RegisterNetwork;
-import networking.RegisterRequiredNetwork;
+import networking.*;
 
 import java.io.IOException;
 
@@ -42,6 +39,15 @@ public class CommandClient implements Runnable {
                     System.out.println("Server requested client registration");
                     RegisterNetwork register = new RegisterNetwork();
                     client.sendTCP(register);
+                }
+
+                if (_object instanceof ChunksNetwork) {
+                    ChunksNetwork chunksNetwork = (ChunksNetwork) _object;
+
+                }
+
+                if (_object instanceof PlayerNetwork) {
+                    PlayerNetwork playerNetwork = (PlayerNetwork) _object;
                 }
 
             }

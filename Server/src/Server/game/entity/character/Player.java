@@ -1,6 +1,8 @@
 package Server.game.entity.character;
 
 import Server.game.entity.ControllableEntity;
+import networking.ClientInput;
+import networking.ClientInputNetwork;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,8 +17,8 @@ public class Player extends ControllableEntity {
     protected String name;
     //endregion
 
-    private void move() {
-        if (up && !topCollision.isColliding()) {
+    private void move(ClientInputNetwork clientInputNetwork) {
+        if (clientInputNetwork.clientInput.containsValue(ClientInput.MOVE_UP) && !topCollision.isColliding()) {
             dy -= acceleration;
             if (dy < -maxSpeed) {
                 dy = -maxSpeed;
@@ -30,7 +32,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (down && !bottomCollision.isColliding()) {
+        if (clientInputNetwork.clientInput.containsValue(ClientInput.MOVE_DOWN) && !bottomCollision.isColliding()) {
             dy += acceleration;
             if (dy > maxSpeed) {
                 dy = maxSpeed;
@@ -44,7 +46,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (left && !leftCollision.isColliding()) {
+        if (clientInputNetwork.clientInput.containsValue(ClientInput.MOVE_LEFT) && !leftCollision.isColliding()) {
             dx -= acceleration;
             if (dx < -maxSpeed) {
                 dx = -maxSpeed;
@@ -58,7 +60,7 @@ public class Player extends ControllableEntity {
             }
         }
 
-        if (right && !rightCollision.isColliding()) {
+        if (clientInputNetwork.clientInput.containsValue(ClientInput.MOVE_RIGHT) && !rightCollision.isColliding()) {
             dx += acceleration;
             if (dx > maxSpeed) {
                 dx = maxSpeed;
@@ -75,9 +77,9 @@ public class Player extends ControllableEntity {
         //TODO Update Y position cause gravity
     }
 
-    public void update() {
+    public void update(ClientInputNetwork clientInputNetwork) {
         super.update();
-        move();
+        move(clientInputNetwork);
         position.x += dx; // get player X position
         position.y += dy; // get player Y position
     }

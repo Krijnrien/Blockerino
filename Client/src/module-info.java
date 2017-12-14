@@ -10,8 +10,8 @@
 //    requires javafx.controls;
 //
 //    opens blockerino.util;
-//    opens blockerino.entity;
-//    opens blockerino.entity.character;
+//    opens blockerino.Server.game.entity;
+//    opens blockerino.Server.game.entity.character;
 //    opens blockerino.items;
 //    opens blockerino.items.container;
 //    opens blockerino.UI.controllers;
